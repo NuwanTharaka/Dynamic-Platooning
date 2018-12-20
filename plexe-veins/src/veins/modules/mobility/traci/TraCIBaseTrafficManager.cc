@@ -231,5 +231,5 @@ void sendData(int index, double speed, double acceleration, double positionX, do
     vehData[index].acceleration = acceleration;
     vehData[index].positionX = positionX;
     vehData[index].positionY = positionY;
-    EV << "Vehicle data: " << "Node " << index << ", speed " << vehData[index].speed << ", posX " << vehData[index].positionX << "posY " << vehData[index].positionY << endl;
+    EV << "Vehicle data: " << "Node " << index << ", speed " << vehData[index].speed << ", posX " << vehData[index].positionX << ", posY " << vehData[index].positionY << endl;
 }

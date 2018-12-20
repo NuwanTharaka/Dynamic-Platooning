@@ -125,8 +125,10 @@ void JoinManeuverScenario::handleSelfMsg(cMessage* msg)
         traciVehicle = mobility->getVehicleCommandInterface();
         Plexe::VEHICLE_DATA data;
         traciVehicle->getVehicleData(&data);
+        int indexLane = traciVehicle->getLaneIndex();
+        double position = traciVehicle->getLanePosition();
 
-        sendData(positionHelper->getId(), data.speed, data.acceleration, data.positionX, data.positionY);
+        sendData(positionHelper->getId(), data.speed, data.acceleration, position, indexLane);
 
         startSendPos = new cMessage();
         scheduleAt(simTime() + SimTime(1, SIMTIME_MS), startSendPos);
