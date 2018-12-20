@@ -23,6 +23,17 @@
 #include "veins/modules/mobility/traci/TraCIScenarioManager.h"
 #include "veins/modules/mobility/traci/TraCICommandInterface.h"
 
+/**create a map with data of nodes*/
+void sendData(int index, double speed, double acceleration, double positionX, double positionY);
+
+/** Structure for map data*/
+struct nodeData {
+    double speed; // vehicle speed
+    double acceleration; // vehicle acceleration
+    double positionX; // position of the vehicle in the simulation
+    double positionY; // position of the vehicle in the simulation
+};
+
 class TraCIBaseTrafficManager : public cSimpleModule {
 
 public:

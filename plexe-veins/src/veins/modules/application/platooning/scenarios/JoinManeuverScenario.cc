@@ -16,6 +16,7 @@
 //
 
 #include "veins/modules/application/platooning/scenarios/JoinManeuverScenario.h"
+#include <veins/modules/mobility/traci/TraCIBaseTrafficManager.h>
 
 
 Define_Module(JoinManeuverScenario);
@@ -28,12 +29,11 @@ Define_Module(JoinManeuverScenario);
 Veins::TraCIMobility *mobility;
 Veins::TraCICommandInterface::Vehicle *traciVehicle;
 
-
 void JoinManeuverScenario::initialize(int stage)
 {
 
     BaseScenario::initialize(stage);
-    
+
     if (stage == 1) {
         app = FindModule<GeneralPlatooningApp*>::findSubModule(getParentModule());
         prepareManeuverCars(0);
@@ -121,18 +121,14 @@ void JoinManeuverScenario::handleSelfMsg(cMessage* msg)
     if (msg == startManeuver) app->startJoinManeuver(0, 0, -1);
 
     if (msg == startSendPos) {
-
         mobility = Veins::TraCIMobilityAccess().get(getParentModule());
         traciVehicle = mobility->getVehicleCommandInterface();
+        Plexe::VEHICLE_DATA data;
+        traciVehicle->getVehicleData(&data);
 
-        std::vector<Plexe::VEHICLE_DATA> data;
-        data.push_back(VEHICLE_DATA());
-
-        EV << "idamePos........................................:" << traciVehicle->getLanesCount() << endl;
-        traciVehicle->getVehicleData(&data[0]);
-        EV << "idamePos2.......................................:" << data[0].acceleration << endl;
+        sendData(data.index, data.speed, data.acceleration, data.positionX, data.positionY);
 
         startSendPos = new cMessage();
-        scheduleAt(simTime() + 1.0/*SimTime(1, SIMTIME_MS)*/, startSendPos);
+        scheduleAt(simTime() + SimTime(1, SIMTIME_MS), startSendPos);
     }
 }
