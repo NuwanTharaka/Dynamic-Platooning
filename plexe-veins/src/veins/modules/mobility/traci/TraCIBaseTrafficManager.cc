@@ -19,6 +19,8 @@
 
 using namespace Veins;
 
+std::vector<nodeData> vehData;
+
 Define_Module(TraCIBaseTrafficManager);
 
 void TraCIBaseTrafficManager::initialize(int stage)
@@ -153,8 +155,6 @@ void TraCIBaseTrafficManager::loadSumoScenario()
     scenarioLoaded();
 }
 
-std::vector<nodeData> vehData;
-
 void TraCIBaseTrafficManager::insertVehicles()
 {
 
@@ -166,7 +166,6 @@ void TraCIBaseTrafficManager::insertVehicles()
 
     // insert the vehicles in the queue
     for (InsertQueue::iterator i = vehicleInsertQueue.begin(); i != vehicleInsertQueue.end(); ++i) {
-        vehData.push_back(nodeData());
         std::string route = routeIds[i->first];
         EV << "process " << route << std::endl;
         std::deque<struct Vehicle>::iterator vi = i->second.begin();
@@ -224,12 +223,13 @@ void TraCIBaseTrafficManager::insertVehicles()
 
 void TraCIBaseTrafficManager::addVehicleToQueue(int routeId, struct Vehicle v){
     vehicleInsertQueue[routeId].push_back(v);
+    vehData.push_back(nodeData());
 }
 
 void sendData(int index, double speed, double acceleration, double positionX, double positionY){
-    vehData[index].speed = speed;
-    vehData[index].acceleration = acceleration;
-    vehData[index].positionX = positionX;
-    vehData[index].positionY = positionY
-    EV << "idamePOs2........................................:" << vehData[index]positionX << endl;
+    vehData[0].speed = speed;
+    vehData[0].acceleration = acceleration;
+    vehData[0].positionX = positionX;
+    vehData[0].positionY = positionY;
+    EV << "idamePOs2........................................:" << index << "........size of array "<< vehData.size() <<endl;
 }
