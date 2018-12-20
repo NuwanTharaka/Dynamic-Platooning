@@ -110,6 +110,9 @@ JoinManeuverScenario::~JoinManeuverScenario()
 {
     cancelAndDelete(startManeuver);
     startManeuver = nullptr;
+
+    cancelAndDelete(startSendPos);
+    startSendPos = nullptr;
 }
 
 void JoinManeuverScenario::handleSelfMsg(cMessage* msg)
