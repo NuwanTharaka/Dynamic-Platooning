@@ -227,9 +227,9 @@ void TraCIBaseTrafficManager::addVehicleToQueue(int routeId, struct Vehicle v){
 }
 
 void sendData(int index, double speed, double acceleration, double positionX, double positionY){
-    vehData[0].speed = speed;
-    vehData[0].acceleration = acceleration;
-    vehData[0].positionX = positionX;
-    vehData[0].positionY = positionY;
-    EV << "idamePOs2........................................:" << index << "........size of array "<< vehData.size() <<endl;
+    vehData[index].speed = speed;
+    vehData[index].acceleration = acceleration;
+    vehData[index].positionX = positionX;
+    vehData[index].positionY = positionY;
+    EV << "Vehicle data: " << "Node " << index << ", speed " << vehData[index].speed << ", posX " << vehData[index].positionX << "posY " << vehData[index].positionY << endl;
 }
