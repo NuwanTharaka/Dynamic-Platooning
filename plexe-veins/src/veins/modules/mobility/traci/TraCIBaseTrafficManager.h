@@ -26,6 +26,7 @@
 /**create a map with data of nodes*/
 void sendData(int index, double speed, double acceleration, double positionX, double positionY);
 
+
 /** Structure for map data*/
 struct nodeData {
     double speed; // vehicle speed
@@ -33,6 +34,8 @@ struct nodeData {
     double positionX; // position of the vehicle in the simulation
     double positionY; // position of the vehicle in the simulation
 };
+
+std::vector<nodeData> getData();
 
 class TraCIBaseTrafficManager : public cSimpleModule {
 

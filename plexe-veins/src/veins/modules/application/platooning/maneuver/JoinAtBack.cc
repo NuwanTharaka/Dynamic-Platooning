@@ -17,6 +17,7 @@
 
 #include "veins/modules/application/platooning/maneuver/JoinAtBack.h"
 #include "veins/modules/application/platooning/apps/GeneralPlatooningApp.h"
+#include <veins/modules/mobility/traci/TraCIBaseTrafficManager.h>
 
 JoinAtBack::JoinAtBack(GeneralPlatooningApp* app)
     : JoinManeuver(app)
@@ -76,12 +77,82 @@ void JoinAtBack::onPlatoonBeacon(const PlatooningBeacon* pb)
             if (distance < 16) { // TODO fixed value? make dependent on
                 // controller and headway time
                 // send move to position response to confirm the parameters
+                traciVehicle->setFixedLane(targetPlatoonData->platoonLane);
                 MoveToPositionAck* ack = createMoveToPositionAck(positionHelper->getId(), positionHelper->getExternalId(), targetPlatoonData->platoonId, targetPlatoonData->platoonLeader, targetPlatoonData->platoonSpeed, targetPlatoonData->platoonLane, targetPlatoonData->newFormation);
                 app->sendUnicast(ack, targetPlatoonData->newFormation.at(0));
                 joinManeuverState = JoinManeuverState::J_WAIT_JOIN;
             }
+            else{
+                shortPath_fn();
+            }
         }
     }
+}
+
+
+void JoinAtBack::shortPath_fn(){
+
+    std::vector< std::vector<nodeData> > eachLane;
+    int myVehicleId = positionHelper->getId();
+
+    std::vector<nodeData> vehData = getData();
+    nodeData myVehicle = vehData[myVehicleId];
+    int currentLane =  myVehicle.positionY;
+
+    int i=0;
+    for(nodeData vehicle:vehData){
+        /*if(vehicle>platoonY){
+
+        
+        }else */
+        if(myVehicleId == i){ 
+
+        }else {
+            int a = vehicle.positionY; 
+            eachLane[a].push_back(vehicle);
+            
+        }
+        i=i+1;
+
+    }
+
+    for(nodeData item:eachLane[currentLane]){
+        int distance= item.positionX - myVehicle.positionX;
+        if(distance>0 && distance < 15){
+            traciVehicle->setCruiseControlDesiredSpeed(item.speed);
+            //changeLane();
+
+            /////
+            int identy = targetPlatoonData->platoonLane - currentLane;
+            int moveLane;
+            if(identy>0 || currentLane==0){
+                moveLane = currentLane + 1; 
+            }else{
+                moveLane = currentLane - 1; 
+            }
+            int flag = 0;
+            for(nodeData side:eachLane[moveLane]){
+                distance=side.positionX- myVehicle.positionX;
+                if(distance>-5 && distance < 5){
+                    flag=1;
+                    break;
+                }
+
+            } 
+
+            if(flag==1){
+                moveLane = 2*currentLane - moveLane;
+            }
+
+            traciVehicle->setFixedLane(moveLane);
+            traciVehicle->setCruiseControlDesiredSpeed(targetPlatoonData->platoonSpeed + (30 / 3.6));
+            ////
+            break;
+        }
+
+    } 
+
+
 }
 
 void JoinAtBack::handleJoinPlatoonRequest(const JoinPlatoonRequest* msg)

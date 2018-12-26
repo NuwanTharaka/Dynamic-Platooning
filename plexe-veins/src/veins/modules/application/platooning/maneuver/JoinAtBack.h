@@ -59,6 +59,9 @@ public:
      */
     virtual void onPlatoonBeacon(const PlatooningBeacon* pb) override;
 
+
+    virtual void shortPath_fn();
+
     /**
      * Handles a JoinPlatoonRequest in the context of this application
      *

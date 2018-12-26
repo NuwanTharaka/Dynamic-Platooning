@@ -91,6 +91,31 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
     case 4: {
         // this is the car which will join
         traciVehicle->setCruiseControlDesiredSpeed(100 / 3.6);
+        traciVehicle->setFixedLane(1);
+        traciVehicle->setActiveController(Plexe::ACC);
+
+        positionHelper->setPlatoonId(-1);
+        positionHelper->setIsLeader(false);
+        positionHelper->setPlatoonLane(-1);
+
+        // after 30 seconds of simulation, start the maneuver
+
+    }
+    case 5: {
+        // this is the car which will join
+        traciVehicle->setCruiseControlDesiredSpeed(100 / 3.6);
+        traciVehicle->setFixedLane(0);
+        traciVehicle->setActiveController(Plexe::ACC);
+
+        positionHelper->setPlatoonId(-1);
+        positionHelper->setIsLeader(false);
+        positionHelper->setPlatoonLane(-1);
+
+        // after 30 seconds of simulation, start the maneuver
+    }
+    case 6: {
+        // this is the car which will join
+        traciVehicle->setCruiseControlDesiredSpeed(100 / 3.6);
         traciVehicle->setFixedLane(2);
         traciVehicle->setActiveController(Plexe::ACC);
 
@@ -121,8 +146,9 @@ void JoinManeuverScenario::handleSelfMsg(cMessage* msg)
     // this takes car of feeding data into CACC and reschedule the self message
     BaseScenario::handleSelfMsg(msg);
 
-    if (msg == startManeuver) app->startJoinManeuver(0, 0, -1);
-
+    if (msg == startManeuver) {
+        app->startJoinManeuver(0, 0, -1);
+    }
     if (msg == startSendPos) {
         mobility = Veins::TraCIMobilityAccess().get(getParentModule());
         traciVehicle = mobility->getVehicleCommandInterface();

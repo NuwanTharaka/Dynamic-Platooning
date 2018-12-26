@@ -34,6 +34,8 @@ public:
 
 protected:
     cMessage* insertJoinerMessage;
+    cMessage* insertJoinerMessage2;
+    cMessage* insertJoinerMessage3;
 
     void insertJoiner();
 
