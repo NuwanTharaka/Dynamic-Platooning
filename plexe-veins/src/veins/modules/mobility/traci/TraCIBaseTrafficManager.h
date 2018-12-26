@@ -34,6 +34,10 @@ struct nodeData {
     double positionY; // position of the vehicle in the simulation
 };
 
+std::vector<nodeData> getData();
+
+
+
 class TraCIBaseTrafficManager : public cSimpleModule {
 
 public:

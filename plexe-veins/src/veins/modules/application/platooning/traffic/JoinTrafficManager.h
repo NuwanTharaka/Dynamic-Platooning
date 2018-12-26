@@ -29,13 +29,18 @@ public:
         : PlatoonsTrafficManager()
     {
         insertJoinerMessage = 0;
+        insertJoinerMessage2 = 0;
+        insertJoinerMessage3 = 0;
     }
     virtual ~JoinTrafficManager();
 
 protected:
     cMessage* insertJoinerMessage;
+    cMessage* insertJoinerMessage2;
+    cMessage* insertJoinerMessage3;
 
-    void insertJoiner();
+
+    void insertJoiner(int lane);
 
     virtual void handleSelfMsg(cMessage* msg);
 };

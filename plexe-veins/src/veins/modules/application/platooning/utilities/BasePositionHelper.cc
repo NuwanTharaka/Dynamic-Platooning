@@ -21,6 +21,11 @@ using namespace Veins;
 
 Define_Module(BasePositionHelper);
 
+#ifndef coreEV
+#define coreEV_clear EV
+#define coreEV EV << logName() << "::" << getClassName() << ": "
+#endif
+
 void BasePositionHelper::initialize(int stage)
 {
 
@@ -44,6 +49,7 @@ std::string BasePositionHelper::getExternalId() const
 
 int BasePositionHelper::getId() const
 {
+    EV<<"EasyToFind.....saying"<< myId << endl;
     return myId;
 }
 
@@ -122,6 +128,7 @@ int BasePositionHelper::getPlatoonSize() const
 
 void BasePositionHelper::setId(const int id)
 {
+    EV<<"EasyToFind.....naming"<< id << endl;
     myId = id;
 }
 
