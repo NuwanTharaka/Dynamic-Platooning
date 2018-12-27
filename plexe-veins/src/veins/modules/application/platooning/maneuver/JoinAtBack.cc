@@ -19,6 +19,13 @@
 #include "veins/modules/application/platooning/apps/GeneralPlatooningApp.h"
 #include <veins/modules/mobility/traci/TraCIBaseTrafficManager.h>
 
+
+
+#ifndef coreEV
+#define coreEV_clear EV
+#define coreEV EV << logName() << "::" << getClassName() << ": "
+#endif
+
 JoinAtBack::JoinAtBack(GeneralPlatooningApp* app)
     : JoinManeuver(app)
     , joinManeuverState(JoinManeuverState::IDLE)
@@ -83,6 +90,7 @@ void JoinAtBack::onPlatoonBeacon(const PlatooningBeacon* pb)
                 joinManeuverState = JoinManeuverState::J_WAIT_JOIN;
             }
             else{
+                EV<<"EasyToFind....shortPath"<< endl;
                 shortPath_fn();
             }
         }

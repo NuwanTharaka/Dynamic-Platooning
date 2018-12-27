@@ -106,7 +106,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
     case 5: {
         traciVehicle->setCruiseControlDesiredSpeed(100 / 3.6);
         traciVehicle->setActiveController(Plexe::ACC);
-        traciVehicle->setFixedLane(0);
+        traciVehicle->setFixedLane(2);
 
         positionHelper->setPlatoonId(-1);
         positionHelper->setIsLeader(false);
@@ -149,7 +149,13 @@ void JoinManeuverScenario::handleSelfMsg(cMessage* msg)
 
     if (msg == startManeuver_error){
         EV<<"EasyToFind....goti"<<positionHelper->getId()<< endl;
-        app->startJoinManeuver(0, 0, -1);
+        shortPath_fn();
+        scheduleAt(simTime() + SimTime(1), startManeuver_error);
+
+
+
+
+        //app->startJoinManeuver(0, 0, -1);
     }
 
     if (msg == startSendPos) {
@@ -166,3 +172,72 @@ void JoinManeuverScenario::handleSelfMsg(cMessage* msg)
         scheduleAt(simTime() + SimTime(1, SIMTIME_MS), startSendPos);
     }
 }
+
+
+void JoinManeuverScenario::shortPath_fn(){
+
+    std::vector< std::vector<nodeData> > eachLane;
+    for(int x=0;x<6;x=x+1){
+        std::vector<nodeData> kill;
+        eachLane.push_back(kill);
+    }
+
+    int myVehicleId = positionHelper->getId();
+
+    std::vector<nodeData> vehData = getData();
+    nodeData myVehicle = vehData[myVehicleId];
+    int currentLane =  myVehicle.positionY;
+
+    int i=0;
+    for(nodeData vehicle:vehData){
+
+        if(myVehicleId == i){ 
+
+        }else {
+            int a = vehicle.positionY; 
+            eachLane[a].push_back(vehicle);
+            
+        }
+        i=i+1;
+
+    }
+    
+
+    for(nodeData item:eachLane[currentLane]){
+        int distance= item.positionX - myVehicle.positionX;
+        if(distance>0 && distance < 15){
+            //traciVehicle->setCruiseControlDesiredSpeed(item.speed);
+            
+
+            /////
+            int identy = 2 - currentLane;
+            int moveLane;
+            if(identy>0 || currentLane==0){
+                moveLane = currentLane + 1; 
+            }else{
+                moveLane = currentLane - 1; 
+            }
+            int flag = 0;
+            for(nodeData side:eachLane[moveLane]){
+                distance=side.positionX- myVehicle.positionX;
+                if(distance>-5 && distance < 5){
+                    flag=1;
+                    break;
+                }
+
+            } 
+
+            if(flag==1){
+                moveLane = 2*currentLane - moveLane;
+            }
+
+              //traciVehicle->setFixedLane(moveLane);
+              //traciVehicle->setCruiseControlDesiredSpeed((100 / 3.6) + (30 / 3.6));
+            ////
+            break;
+        }
+
+    } 
+
+}
+

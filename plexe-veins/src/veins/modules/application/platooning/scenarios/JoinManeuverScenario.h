@@ -38,6 +38,7 @@ public:
     static const int MANEUVER_TYPE = 12347;
 
     virtual void initialize(int stage) override;
+    void shortPath_fn();
 
 protected:
     void sendUnicast(cPacket* msg, int destination);
