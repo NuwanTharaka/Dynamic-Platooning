@@ -80,6 +80,7 @@ struct VEHICLE_DATA {
     double angle; // vehicle angle in radians
 };
 
+
 #define MAX_N_CARS 8
 
 #define CC_ENGINE_MODEL_FOLM 0x00 // first order lag model

@@ -19,6 +19,8 @@
 
 using namespace Veins;
 
+std::vector<nodeData> vehData;
+
 Define_Module(TraCIBaseTrafficManager);
 
 void TraCIBaseTrafficManager::initialize(int stage)
@@ -219,7 +221,15 @@ void TraCIBaseTrafficManager::insertVehicles()
     }
 }
 
-void TraCIBaseTrafficManager::addVehicleToQueue(int routeId, struct Vehicle v)
-{
+void TraCIBaseTrafficManager::addVehicleToQueue(int routeId, struct Vehicle v){
     vehicleInsertQueue[routeId].push_back(v);
+    vehData.push_back(nodeData());
+}
+
+void sendData(int index, double speed, double acceleration, double positionX, double positionY){
+    vehData[index].speed = speed;
+    vehData[index].acceleration = acceleration;
+    vehData[index].positionX = positionX;
+    vehData[index].positionY = positionY;
+    EV << "Vehicle data: " << "Node " << index << ", speed " << vehData[index].speed << ", posX " << vehData[index].positionX << ", posY " << vehData[index].positionY << endl;
 }
