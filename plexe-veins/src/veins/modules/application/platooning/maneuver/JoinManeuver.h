@@ -47,6 +47,14 @@ public:
 
     virtual void onManeuverMessage(const ManeuverMessage* mm) override;
 
+    int flag_shortPath =0;
+    int flag_nearPlatoon =0;
+
+    virtual void shortPath_fn() = 0;
+    virtual void nearPlatoon_fn() = 0;
+
+
+
 protected:
     /**
      * Creates a JoinPlatoonRequest message
@@ -161,6 +169,8 @@ protected:
      * @param JoinFormationAck msg to handle
      */
     virtual void handleJoinFormationAck(const JoinFormationAck* msg) = 0;
+
+
 };
 
 #endif

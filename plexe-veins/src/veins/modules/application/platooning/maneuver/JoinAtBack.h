@@ -29,6 +29,8 @@
 
 using namespace Veins;
 
+
+
 class JoinAtBack : public JoinManeuver {
 
 public:
@@ -37,6 +39,14 @@ public:
      *
      * @param app pointer to the generic application used to fetch parameters and inform it about a concluded maneuver
      */
+
+
+    int direction=0;
+    int stucked=0;
+    int stucked_lane=0;
+
+
+  
     JoinAtBack(GeneralPlatooningApp* app);
     virtual ~JoinAtBack(){};
 
@@ -60,7 +70,10 @@ public:
     virtual void onPlatoonBeacon(const PlatooningBeacon* pb) override;
 
 
-    virtual void shortPath_fn();
+    virtual void shortPath_fn() override;
+
+    virtual void nearPlatoon_fn() override;
+
 
     /**
      * Handles a JoinPlatoonRequest in the context of this application

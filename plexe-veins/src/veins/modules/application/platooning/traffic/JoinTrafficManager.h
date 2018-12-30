@@ -38,6 +38,10 @@ protected:
     cMessage* insertJoinerMessage;
     cMessage* insertJoinerMessage2;
     cMessage* insertJoinerMessage3;
+    cMessage* insertJoinerMessage4;
+    cMessage* insertJoinerMessage5;
+    cMessage* insertJoinerMessage6;
+    cMessage* insertJoinerMessage7;
 
 
     void insertJoiner(int lane);

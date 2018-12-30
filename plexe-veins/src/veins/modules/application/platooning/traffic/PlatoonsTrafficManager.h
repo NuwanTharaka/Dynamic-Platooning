@@ -42,6 +42,7 @@ public:
 protected:
     // this is used to start traffic generation
     cMessage* insertPlatoonMessage;
+    cMessage* insertPlatoonMessage1;
 
     void insertPlatoons();
 

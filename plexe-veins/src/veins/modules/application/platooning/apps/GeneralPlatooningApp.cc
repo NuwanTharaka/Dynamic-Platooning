@@ -148,6 +148,34 @@ UpdatePlatoonFormation* GeneralPlatooningApp::createUpdatePlatoonFormation(int v
     return msg;
 }
 
+bool GeneralPlatooningApp::isShortPath(){
+    if(joinManeuver->flag_shortPath == 1){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+void GeneralPlatooningApp::shortPath_function(){
+    joinManeuver->shortPath_fn();
+}
+
+bool GeneralPlatooningApp::isNearPlatoon(){
+    if(joinManeuver->flag_nearPlatoon == 1){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+void GeneralPlatooningApp::nearPlatoon_function(){
+    joinManeuver->nearPlatoon_fn();
+}
+
+
+
 GeneralPlatooningApp::~GeneralPlatooningApp()
 {
     delete joinManeuver;

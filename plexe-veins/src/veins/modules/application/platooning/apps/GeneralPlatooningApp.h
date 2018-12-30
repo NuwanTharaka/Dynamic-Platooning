@@ -177,6 +177,14 @@ public:
 
     bool isJoinAllowed() const;
 
+    bool isShortPath();
+
+    virtual void shortPath_function();
+
+    bool isNearPlatoon();
+
+    virtual void nearPlatoon_function();
+
 protected:
     /** override this method of BaseApp. we want to handle it ourself */
     virtual void handleLowerMsg(cMessage* msg) override;
@@ -196,6 +204,10 @@ protected:
     virtual void onManeuverMessage(ManeuverMessage* mm);
 
     /** am i in a maneuver? */
+    
+
+
+
     bool inManeuver;
 
 private:

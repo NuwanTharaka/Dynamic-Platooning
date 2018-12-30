@@ -32,13 +32,22 @@ protected:
     //message to start sending pos
     cMessage* startSendPos;
     // pointer to protocol
+    cMessage* workShortPath;
+
+    cMessage* workNearPlatoon;
+
+
+
     GeneralPlatooningApp* app;
 
 public:
     static const int MANEUVER_TYPE = 12347;
 
     virtual void initialize(int stage) override;
-    void shortPath_fn();
+
+    int joinReady=1;
+    
+    /*void shortPath_fn();*/
 
 protected:
     void sendUnicast(cPacket* msg, int destination);
