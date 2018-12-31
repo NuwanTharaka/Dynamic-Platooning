@@ -67,7 +67,7 @@ void JoinTrafficManager::handleSelfMsg(cMessage* msg)
         insertJoiner(0);
     }
     if (msg == insertJoinerMessage4) {
-        insertJoiner(0);
+      //  insertJoiner(0);
     }
 }
 

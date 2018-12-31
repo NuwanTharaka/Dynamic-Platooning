@@ -65,13 +65,21 @@ void JoinAtBack::onPlatoonBeacon(const PlatooningBeacon* pb)
         ASSERT(app->getPlatoonRole() == PlatoonRole::JOINER);
 
         // if the message comes from the leader
-        if (pb->getVehicleId() == targetPlatoonData->newFormation.at(0)) {
+    
+
+
+    //    if (pb->getVehicleId() == targetPlatoonData->newFormation.at(0))
+         if (pb->getVehicleId() == 10)
+        {
             traciVehicle->setLeaderVehicleFakeData(pb->getControllerAcceleration(), pb->getAcceleration(), pb->getSpeed());
         }
         // if the message comes from the front vehicle
         int frontPosition = targetPlatoonData->joinIndex - 1;
         int frontId = targetPlatoonData->newFormation.at(frontPosition);
+        frontId = 10;
+        EV<<"EasyToFind.....1::::Beacon"<< endl;
         if (pb->getVehicleId() == frontId) {
+            
             // get front vehicle position
             Coord frontPosition(pb->getPositionX(), pb->getPositionY(), 0);
             // get my position
@@ -81,13 +89,16 @@ void JoinAtBack::onPlatoonBeacon(const PlatooningBeacon* pb)
             double distance = position.distance(frontPosition) - pb->getLength();
             traciVehicle->setFrontVehicleFakeData(pb->getControllerAcceleration(), pb->getAcceleration(), pb->getSpeed(), distance);
             // if we are in position, tell the leader about that
-            if ((distance < 16) && (flag_shortPath==0) && (flag_nearPlatoon==0)) { // TODO fixed value? make dependent on ..................................................................metthana < daanna
+
+            EV<<"EasyToFind.....2::::Beacon"<< distance<<" "<< targetPlatoonData->platoonLeader  << " " << flag_nearPlatoon<< endl;
+            if ((distance < 10) && (flag_shortPath==0) && (flag_nearPlatoon==0)) { // TODO fixed value? make dependent on ..................................................................metthana < daanna
                 // controller and headway time
                 // send move to position response to confirm the parameters
                 traciVehicle->setFixedLane(targetPlatoonData->platoonLane);
                 MoveToPositionAck* ack = createMoveToPositionAck(positionHelper->getId(), positionHelper->getExternalId(), targetPlatoonData->platoonId, targetPlatoonData->platoonLeader, targetPlatoonData->platoonSpeed, targetPlatoonData->platoonLane, targetPlatoonData->newFormation);
                 app->sendUnicast(ack, targetPlatoonData->newFormation.at(0));
                 joinManeuverState = JoinManeuverState::J_WAIT_JOIN;
+                
             }
             else{
                 
@@ -137,13 +148,13 @@ void JoinAtBack::shortPath_fn()
 
     bool p;
     if(currentLane == (targetPlatoonData->platoonLane)){
-        if((needDistance>0) && (needDistance<20)){
+        if((needDistance>0) && (needDistance<10)){
             p= false;
         }else{
             p=true;
         }
     }else{
-        if((needDistance>-20) && (needDistance<20) ){
+        if((needDistance>-20) && (needDistance<10) ){
             p= false;
         }else{
             p=true;
@@ -342,8 +353,11 @@ void JoinAtBack::nearPlatoon_fn(){
         }
     }else{
         flag_nearPlatoon=0;
-        if((needDistance < 0) || (needDistance > 20)){
+        if((needDistance < 0) || (needDistance > 10)){
             flag_shortPath = 1;
+            direction=1;
+        }else{
+            traciVehicle->setCruiseControlDesiredSpeed((targetPlatoonData->platoonSpeed)+ (30 / 3.6));
         }
     }
 
@@ -438,7 +452,7 @@ void JoinAtBack::handleMoveToPosition(const MoveToPosition* msg)
 
     // activate faked CACC. this way we can approach the front car
     // using data obtained through GPS
-    traciVehicle->setCACCConstantSpacing(5);
+    traciVehicle->setCACCConstantSpacing(10);
     // we have no data so far, so for the moment just initialize
     // with some fake data
     traciVehicle->setLeaderVehicleFakeData(0, 0, targetPlatoonData->platoonSpeed);
@@ -454,7 +468,7 @@ void JoinAtBack::handleMoveToPosition(const MoveToPosition* msg)
     joinManeuverState = JoinManeuverState::J_MOVE_IN_POSITION;
 
     flag_shortPath =1;
-    direction= 1;
+    direction= -1;
     traciVehicle->setCruiseControlDesiredSpeed(targetPlatoonData->platoonSpeed + ((20 / 3.6)*direction));
     EV<<"EasyToFind.....4"<<positionHelper->getId()<< endl;
 }
@@ -492,7 +506,7 @@ void JoinAtBack::handleJoinFormation(const JoinFormation* msg)
     traciVehicle->setActiveController(Plexe::CACC);
     // set spacing to 5 meters to get close to the platoon
     traciVehicle->setCACCConstantSpacing(5);
-
+    traciVehicle->setCruiseControlDesiredSpeed(targetPlatoonData->platoonSpeed);
     // update platoon information
     positionHelper->setPlatoonId(msg->getPlatoonId());
     positionHelper->setPlatoonLane(targetPlatoonData->platoonLane);

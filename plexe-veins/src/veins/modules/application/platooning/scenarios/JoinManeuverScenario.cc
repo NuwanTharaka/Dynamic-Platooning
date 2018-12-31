@@ -134,10 +134,10 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
         positionHelper->setPlatoonLane(-1);
         break;
 
-    }case 4: {
+    }case 6: {
         traciVehicle->setCruiseControlDesiredSpeed(100 / 3.6);
         traciVehicle->setActiveController(Plexe::ACC);
-        traciVehicle->setFixedLane(1);
+        traciVehicle->setFixedLane(0);
 
         positionHelper->setPlatoonId(-1);
         positionHelper->setIsLeader(false);
@@ -149,7 +149,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
     case 5: {
         traciVehicle->setCruiseControlDesiredSpeed(100 / 3.6);
         traciVehicle->setActiveController(Plexe::ACC);
-        traciVehicle->setFixedLane(3);
+        traciVehicle->setFixedLane(0);
 
         positionHelper->setPlatoonId(-1);
         positionHelper->setIsLeader(false);
@@ -157,11 +157,11 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
         break;
 
     }
-    case 6: {
+    case 4: {
        // traciVehicle->setCruiseControlDesiredSpeed(100 / 3.6);
         traciVehicle->setCruiseControlDesiredSpeed((100 / 3.6));
         traciVehicle->setActiveController(Plexe::ACC);
-        traciVehicle->setFixedLane(3);
+        traciVehicle->setFixedLane(0);
 
         positionHelper->setPlatoonId(-1);
         positionHelper->setIsLeader(false);
@@ -195,7 +195,7 @@ void JoinManeuverScenario::handleSelfMsg(cMessage* msg)
         EV<<"EasyToFind....goti"<<positionHelper->getId()<< endl;
         //shortPath_fn();
         //scheduleAt(simTime() + SimTime(1), startManeuver_error);
-        app->startJoinManeuver(0, 0, -1);
+        app->startJoinManeuver(7, 7, -1);
     }
 
     if (msg == startSendPos) {
