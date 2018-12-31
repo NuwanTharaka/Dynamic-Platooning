@@ -27,7 +27,7 @@ void JoinTrafficManager::initialize(int stage)
     if (stage == 0) {
 
         insertJoinerMessage = new cMessage("");
-       // scheduleAt(platoonInsertTime + SimTime(0), insertJoinerMessage);
+        scheduleAt(platoonInsertTime + SimTime(200, SIMTIME_MS), insertJoinerMessage);
 
         insertJoinerMessage2 = new cMessage("");
         scheduleAt(platoonInsertTime + SimTime(2000, SIMTIME_MS), insertJoinerMessage2);
@@ -36,7 +36,19 @@ void JoinTrafficManager::initialize(int stage)
         scheduleAt(platoonInsertTime + SimTime(4000, SIMTIME_MS), insertJoinerMessage3);
 
         insertJoinerMessage4 = new cMessage("");
-        scheduleAt(platoonInsertTime + SimTime(6), insertJoinerMessage4);
+        scheduleAt(platoonInsertTime + SimTime(6000, SIMTIME_MS), insertJoinerMessage4);
+
+        insertJoinerMessage5 = new cMessage("");
+        scheduleAt(platoonInsertTime + SimTime(2000, SIMTIME_MS), insertJoinerMessage5);
+
+        insertJoinerMessage6 = new cMessage("");
+        scheduleAt(platoonInsertTime + SimTime(2000, SIMTIME_MS), insertJoinerMessage6);
+
+        insertJoinerMessage7 = new cMessage("");
+        scheduleAt(platoonInsertTime + SimTime(2000, SIMTIME_MS), insertJoinerMessage7);
+
+        
+
     }
 }
 

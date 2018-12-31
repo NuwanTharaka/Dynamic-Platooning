@@ -31,6 +31,11 @@ public:
         insertJoinerMessage = 0;
         insertJoinerMessage2 = 0;
         insertJoinerMessage3 = 0;
+        insertJoinerMessage4 = 0;
+        insertJoinerMessage5 = 0;
+        insertJoinerMessage6 = 0;
+        insertJoinerMessage7 = 0;
+
     }
     virtual ~JoinTrafficManager();
 
