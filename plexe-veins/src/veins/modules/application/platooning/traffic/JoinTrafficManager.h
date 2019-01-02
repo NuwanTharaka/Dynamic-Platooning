@@ -36,6 +36,7 @@ protected:
     cMessage* insertJoinerMessage;
 
     void insertJoiner();
+    void insertNodes();
 
     virtual void handleSelfMsg(cMessage* msg);
 };
