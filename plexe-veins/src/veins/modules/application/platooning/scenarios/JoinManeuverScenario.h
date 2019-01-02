@@ -27,7 +27,8 @@ class JoinManeuverScenario : public BaseScenario {
 
 protected:
     // message used to start the maneuver
-    cMessage* startManeuver_error;
+    cMessage* startManeuver;
+    cMessage* startManeuver1;
 
     //message to start sending pos
     cMessage* startSendPos;
@@ -56,7 +57,7 @@ private:
 public:
     JoinManeuverScenario()
     {
-        startManeuver_error = nullptr;
+        startManeuver = nullptr;
         app = nullptr;
     }
     virtual ~JoinManeuverScenario();
@@ -65,7 +66,7 @@ protected:
     virtual void handleSelfMsg(cMessage* msg) override;
 
     void prepareManeuverCars(int platoonLane);
-    void setupFormation();
+    void setupFormation(int a,int b);
 };
 
 #endif

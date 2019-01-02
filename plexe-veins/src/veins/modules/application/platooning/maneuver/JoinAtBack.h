@@ -44,6 +44,7 @@ public:
     int direction=0;
     int stucked=0;
     int stucked_lane=0;
+    int early=0;
 
 
   

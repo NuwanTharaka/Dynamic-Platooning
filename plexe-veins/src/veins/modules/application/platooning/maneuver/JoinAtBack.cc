@@ -68,15 +68,13 @@ void JoinAtBack::onPlatoonBeacon(const PlatooningBeacon* pb)
     
 
 
-    //    if (pb->getVehicleId() == targetPlatoonData->newFormation.at(0))
-         if (pb->getVehicleId() == 10)
+        if (pb->getVehicleId() == targetPlatoonData->newFormation.at(0))
         {
             traciVehicle->setLeaderVehicleFakeData(pb->getControllerAcceleration(), pb->getAcceleration(), pb->getSpeed());
         }
         // if the message comes from the front vehicle
         int frontPosition = targetPlatoonData->joinIndex - 1;
         int frontId = targetPlatoonData->newFormation.at(frontPosition);
-        frontId = 10;
         EV<<"EasyToFind.....1::::Beacon"<< endl;
         if (pb->getVehicleId() == frontId) {
             
@@ -89,8 +87,9 @@ void JoinAtBack::onPlatoonBeacon(const PlatooningBeacon* pb)
             double distance = position.distance(frontPosition) - pb->getLength();
             traciVehicle->setFrontVehicleFakeData(pb->getControllerAcceleration(), pb->getAcceleration(), pb->getSpeed(), distance);
             // if we are in position, tell the leader about that
+           
 
-            EV<<"EasyToFind.....2::::Beacon"<< distance<<" "<< targetPlatoonData->platoonLeader  << " " << flag_nearPlatoon<< endl;
+            EV<<"EasyToFind.....2::::Beacon"<< distance<<" "<< targetPlatoonData->platoonLeader  << " " << flag_nearPlatoon<<" "<<positionHelper->getId() << endl;
             if ((distance < 10) && (flag_shortPath==0) && (flag_nearPlatoon==0)) { // TODO fixed value? make dependent on ..................................................................metthana < daanna
                 // controller and headway time
                 // send move to position response to confirm the parameters
@@ -106,7 +105,7 @@ void JoinAtBack::onPlatoonBeacon(const PlatooningBeacon* pb)
         }
     }
 }
-
+/*
 
 void JoinAtBack::shortPath_fn()
 {
@@ -124,7 +123,7 @@ void JoinAtBack::shortPath_fn()
 
     std::vector<nodeData> vehData = getData();
     nodeData myVehicle = vehData[myVehicleId];
-    int needDistance = vehData[(targetPlatoonData->platoonLeader)+3].positionX - myVehicle.positionX;
+    int needDistance = vehData[(targetPlatoonData->platoonLeader)+((targetPlatoonData->joinIndex) - 1)].positionX - myVehicle.positionX;
 
 
     int currentLane =  myVehicle.positionY;
@@ -147,6 +146,16 @@ void JoinAtBack::shortPath_fn()
     int speed_side2;
 
     bool p;
+
+    if(needDistance > - 10){
+        direction = 1;
+    }else{
+        direction = -1;
+    }
+
+
+
+
     if(currentLane == (targetPlatoonData->platoonLane)){
         if((needDistance>0) && (needDistance<10)){
             p= false;
@@ -154,7 +163,7 @@ void JoinAtBack::shortPath_fn()
             p=true;
         }
     }else{
-        if((needDistance>-20) && (needDistance<10) ){
+        if((needDistance> -20) && (needDistance<10) ){
             p= false;
         }else{
             p=true;
@@ -167,7 +176,7 @@ void JoinAtBack::shortPath_fn()
         traciVehicle->setCruiseControlDesiredSpeed(targetPlatoonData->platoonSpeed + ((30 / 3.6)*direction));
         for(nodeData item:eachLane[currentLane]){
             int distance= (item.positionX - myVehicle.positionX)*direction;
-            if((distance>0 && distance < 20) || (stucked!=0)){
+            if((distance>0 && distance < (25-5*direction)) || (stucked!=0)){
                 final_speed = 1;
                 traciVehicle->setCruiseControlDesiredSpeed(item.speed);
                 speed_front= item.speed;
@@ -239,6 +248,198 @@ void JoinAtBack::shortPath_fn()
 
                 }else{
                     traciVehicle->setFixedLane(moveLane);
+                    traciVehicle->setCruiseControlDesiredSpeed(targetPlatoonData->platoonSpeed + ((30 / 3.6)*direction));
+                    final_speed = 3;
+                    int val= stucked*stucked; 
+                    if( val == 4){
+                        stucked = stucked/2;
+                    }else if(val == 1){
+                        stucked = 0;
+                    }
+                    gotoback=0;
+                }
+
+                if(gotoback){
+                    if(currentLane<2){
+                        stucked= 2;
+                    }else{
+                        stucked= -2;
+                    }
+
+                    traciVehicle->setCruiseControlDesiredSpeed(targetPlatoonData->platoonSpeed - ((30 / 3.6)*direction));
+                    final_speed = 4;
+                }         
+                ////
+                break;
+            }
+
+        }
+    }else{
+        flag_shortPath = 0;
+        flag_nearPlatoon = 1;
+    }
+    EV<<"EasyToFind.....3::::"<<final_speed<< endl;
+} 
+*/
+
+
+void JoinAtBack::shortPath_fn()
+{
+    int final_speed=0;
+    flag_shortPath =1;
+    std::vector< std::vector<nodeData> > eachLane;
+    for(int x=0;x<6;x=x+1){
+        std::vector<nodeData> kill;
+        eachLane.push_back(kill);
+    }
+    int nLanes = 4;
+    int state = 0;
+
+    int myVehicleId = positionHelper->getId();
+
+    std::vector<nodeData> vehData = getData();
+    nodeData myVehicle = vehData[myVehicleId];
+    int needDistance = vehData[(targetPlatoonData->platoonLeader)+((targetPlatoonData->joinIndex) - 1)].positionX - myVehicle.positionX;
+
+
+    int currentLane =  myVehicle.positionY;
+
+    int i=0;
+    for(nodeData vehicle:vehData){
+
+        if(myVehicleId == i){ 
+
+        }else {
+            int a = vehicle.positionY; 
+            eachLane[a].push_back(vehicle);
+            
+        }
+        i=i+1;
+
+    }
+    int speed_front;
+    int speed_side1;
+    int speed_side2;
+
+    bool p;
+
+    if(needDistance > -5){
+        direction = 1;
+    }else{
+        direction = -1;
+    }
+
+
+
+
+    if(currentLane == (targetPlatoonData->platoonLane)){
+        if((needDistance>0) && (needDistance<10)){
+            p= false;
+        }else{
+            p=true;
+        }
+    }else{
+        if((needDistance> -20) && (needDistance<10) ){
+            p= false;
+        }else{
+            p=true;
+        }
+
+    }
+    
+
+    if(p){
+        traciVehicle->setCruiseControlDesiredSpeed(targetPlatoonData->platoonSpeed + ((30 / 3.6)*direction));
+        int sideGo = 0;
+
+        if(early!= 0){
+            sideGo = early;
+        }
+        early = 0;
+
+        for(nodeData item:eachLane[currentLane]){
+            int distance= (item.positionX - myVehicle.positionX)*direction;
+            if((distance>0 && distance < (25-5*direction)) || (stucked!=0)){
+                final_speed = 1;
+                traciVehicle->setCruiseControlDesiredSpeed(item.speed);
+                speed_front= item.speed;
+                state=1;
+                ///awlak atha front speed item1
+                /////
+                int identy = targetPlatoonData->platoonLane - currentLane;
+                int moveLane;
+                if(identy>0 || currentLane==0 ){
+                    moveLane = currentLane + 1; 
+                }else{
+                    moveLane = currentLane - 1; 
+                }
+
+
+                stucked= sideGo;
+
+                if((stucked>0) && (currentLane!=(nLanes-1))){
+                    moveLane = currentLane + 1; 
+                }else if((stucked<0) && (currentLane!=0)){
+                    moveLane = currentLane - 1; 
+                }
+                
+
+
+
+                int flag = 0;
+                for(nodeData side:eachLane[moveLane]){
+                    distance=side.positionX- myVehicle.positionX;
+                    if(distance>-8 && distance < 8){
+                        flag=1;
+                        speed_side1 = side.speed;
+                        break;
+                    }
+                }
+
+                int noption1 = 0;
+                int noption2 = 0;
+
+                if(flag==1){
+                    state=2;
+                    moveLane = 2*currentLane - moveLane;
+                    if(((moveLane==-1) || (moveLane==nLanes))  || (stucked!=0)){
+                        noption1 = 1;
+                        state=3;
+                    }else{
+                        for(nodeData side:eachLane[moveLane]){
+                            distance=side.positionX- myVehicle.positionX;
+                            if(distance>-8 && distance < 8){
+                                noption2=1;
+                                state=4;
+                                speed_side2 = side.speed;
+                                break;
+                            }
+                        }
+                    } 
+
+                }
+                int gotoback=0;
+                if (noption1){
+                    if((speed_front == speed_side1) && (stucked==0)){
+                        gotoback=1;
+                    }else if(stucked!=0){
+                        traciVehicle->setCruiseControlDesiredSpeed(targetPlatoonData->platoonSpeed - ((30 / 3.6)*direction));
+                        final_speed = 2;
+                    }else{
+
+                    }
+                }else if(noption2){
+                    if(((speed_front == speed_side1) && (speed_front == speed_side2))){
+                        gotoback=1;
+                    }else{
+                        
+                    }
+
+                }else{
+
+                    early = moveLane - currentLane;
+                    traciVehicle->setFixedLane(moveLane);
+
                     traciVehicle->setCruiseControlDesiredSpeed(targetPlatoonData->platoonSpeed + ((30 / 3.6)*direction));
                     final_speed = 3;
                     int val= stucked*stucked; 
@@ -452,7 +653,7 @@ void JoinAtBack::handleMoveToPosition(const MoveToPosition* msg)
 
     // activate faked CACC. this way we can approach the front car
     // using data obtained through GPS
-    traciVehicle->setCACCConstantSpacing(10);
+    traciVehicle->setCACCConstantSpacing(5);
     // we have no data so far, so for the moment just initialize
     // with some fake data
     traciVehicle->setLeaderVehicleFakeData(0, 0, targetPlatoonData->platoonSpeed);
@@ -468,8 +669,8 @@ void JoinAtBack::handleMoveToPosition(const MoveToPosition* msg)
     joinManeuverState = JoinManeuverState::J_MOVE_IN_POSITION;
 
     flag_shortPath =1;
-    direction= -1;
-    traciVehicle->setCruiseControlDesiredSpeed(targetPlatoonData->platoonSpeed + ((20 / 3.6)*direction));
+    direction= 0;
+   // traciVehicle->setCruiseControlDesiredSpeed(targetPlatoonData->platoonSpeed + ((20 / 3.6)*direction));
     EV<<"EasyToFind.....4"<<positionHelper->getId()<< endl;
 }
 
