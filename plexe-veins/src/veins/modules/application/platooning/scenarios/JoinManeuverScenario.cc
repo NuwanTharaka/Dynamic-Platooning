@@ -213,7 +213,7 @@ void JoinManeuverScenario::platoonPath()
 
     int myVehicleId = positionHelper->getId();
 
-    std::vector<nodeData> vehData = getData();
+    std::vector<nodeData> vehData = getDattaa();
     nodeData myVehicle = vehData[myVehicleId];
 
     int currentLane =  myVehicle.positionY;

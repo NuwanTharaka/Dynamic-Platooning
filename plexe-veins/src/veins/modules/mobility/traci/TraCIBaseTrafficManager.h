@@ -25,7 +25,7 @@
 
 /**create a map with data of nodes*/
 void sendData(int index, double speed, double acceleration, double positionX, double positionY);
-std::vector<nodeData> getData();
+std::vector<nodeData> getDattaa();
 
 /** Structure for map data*/
 struct nodeData {

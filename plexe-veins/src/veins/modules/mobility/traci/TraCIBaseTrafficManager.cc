@@ -235,9 +235,10 @@ void sendData(int index, double speed, double acceleration, double positionX, do
 }
 
 
-std::vector<nodeData> getData(){
+std::vector<nodeData> getDattaa(){
 
     return vehData;
-
-
+    
 }
+
+
