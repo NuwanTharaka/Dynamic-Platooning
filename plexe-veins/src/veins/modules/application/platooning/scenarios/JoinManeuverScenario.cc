@@ -53,7 +53,42 @@ void JoinManeuverScenario::setupFormation()
 
 void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
 {
+    int ID = positionHelper->getId();
 
+    if(ID == 18){
+        traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
+        traciVehicle->setActiveController(Plexe::ACC);
+        traciVehicle->setFixedLane(platoonLane);
+
+        positionHelper->setIsLeader(true);
+        positionHelper->setPlatoonLane(platoonLane);
+        positionHelper->setPlatoonSpeed(100 / 3.6);
+        positionHelper->setPlatoonId(positionHelper->getId());
+        setupFormation();
+        startManeuver = new cMessage();
+        scheduleAt(simTime() + SimTime(20), startManeuver);
+
+    }else if(ID>18 && ID<22){
+        traciVehicle->setCruiseControlDesiredSpeed(130.0 / 3.6);
+        traciVehicle->setActiveController(Plexe::CACC);
+        traciVehicle->setFixedLane(platoonLane);
+
+        positionHelper->setIsLeader(false);
+        positionHelper->setPlatoonLane(platoonLane);
+        positionHelper->setPlatoonSpeed(100 / 3.6);
+        positionHelper->setPlatoonId(positionHelper->getLeaderId());
+        setupFormation();
+
+    }else{
+        traciVehicle->setCruiseControlDesiredSpeed(100 / 3.6);
+        traciVehicle->setActiveController(Plexe::ACC);
+
+        positionHelper->setPlatoonId(-1);
+        positionHelper->setIsLeader(false);
+        positionHelper->setPlatoonLane(-1);
+         
+    }
+/*
     switch (positionHelper->getId()) {
 
     case 0: {
@@ -88,7 +123,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
         break;
     }
 
-  /*  case 4: {
+    case 4: {
         // this is the car which will join
         traciVehicle->setCruiseControlDesiredSpeed(100 / 3.6);
         traciVehicle->setFixedLane(2);
@@ -102,7 +137,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
         startManeuver = new cMessage();
         scheduleAt(simTime() + SimTime(10), startManeuver);
         break;
-    }*/
+    }
     case 4:
     case 5:
     case 6:
@@ -122,7 +157,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
         break;
 
     }
-    }
+    } */
 }
 
 JoinManeuverScenario::~JoinManeuverScenario()
@@ -140,7 +175,13 @@ void JoinManeuverScenario::handleSelfMsg(cMessage* msg)
     // this takes car of feeding data into CACC and reschedule the self message
     BaseScenario::handleSelfMsg(msg);
 
-    if (msg == startManeuver) app->startJoinManeuver(0, 0, -1);
+    if (msg == startManeuver){
+      //app->startJoinManeuver(0, 0, -1); 
+        startManeuver = new cMessage();
+        scheduleAt(simTime() + SimTime(25, SIMTIME_MS), startManeuver); 
+        platoonPath();
+
+    } 
 
     if (msg == startSendPos) {
         mobility = Veins::TraCIMobilityAccess().get(getParentModule());
@@ -155,4 +196,169 @@ void JoinManeuverScenario::handleSelfMsg(cMessage* msg)
         startSendPos = new cMessage();
         scheduleAt(simTime() + SimTime(1, SIMTIME_MS), startSendPos);
     }
+}
+
+
+void JoinManeuverScenario::platoonPath()
+{
+    int final_speed=0;
+   // flag_shortPath =1;
+    std::vector< std::vector<nodeData> > eachLane;
+    for(int x=0;x<6;x=x+1){
+        std::vector<nodeData> kill;
+        eachLane.push_back(kill);
+    }
+    int nLanes = 6;
+    int state = 0;
+
+    int myVehicleId = positionHelper->getId();
+
+    std::vector<nodeData> vehData = getData();
+    nodeData myVehicle = vehData[myVehicleId];
+
+    int currentLane =  myVehicle.positionY;
+
+    int i=0;
+    for(nodeData vehicle:vehData){
+
+        if(myVehicleId == i){ 
+
+        }else {
+            int a = vehicle.positionY; 
+            eachLane[a].push_back(vehicle);
+            
+        }
+        i=i+1;
+
+    }
+    int speed_front;
+    int speed_side1;
+    int speed_side2;
+
+    int sideGo = 0;
+
+    if(early!= 0){
+        sideGo = early;
+    }
+    early = 0;
+    traciVehicle->setCruiseControlDesiredSpeed(130 / 3.6);
+    for(nodeData item:eachLane[currentLane]){
+        int distance= (item.positionX - myVehicle.positionX);
+        if((distance>(40)) && (distance < 90)){
+            traciVehicle->setCruiseControlDesiredSpeed( 110 / 3.6);
+        }
+        else if((distance>0 && distance < (40)) || (stucked!=0)){
+            final_speed = 1;
+            traciVehicle->setCruiseControlDesiredSpeed(item.speed);
+            speed_front= item.speed;
+            state=1;
+            ///awlak atha front speed item1
+            /////
+            
+            int moveLane;
+            if(currentLane==0 ){
+                moveLane = currentLane + 1; 
+            }else{
+                moveLane = currentLane - 1; 
+            }
+
+            if(sideGo != 0){
+                stucked= sideGo;
+            }
+
+
+
+
+            if((stucked>0) && (currentLane!=(nLanes-1))){
+                moveLane = currentLane + 1; 
+            }else if((stucked<0) && (currentLane!=0)){
+                moveLane = currentLane - 1; 
+            }
+            
+
+
+
+            int flag = 0;
+            for(nodeData side:eachLane[moveLane]){
+                distance=side.positionX- myVehicle.positionX;
+                if(distance>-8 && distance < 8){
+                    flag=1;
+                    speed_side1 = side.speed;
+                    break;
+                }
+            }
+
+            int noption1 = 0;
+            int noption2 = 0;
+
+            if(flag==1){
+                state=2;
+                moveLane = 2*currentLane - moveLane;
+                if(((moveLane==-1) || (moveLane==nLanes))  || (stucked!=0)){
+                    noption1 = 1;
+                    state=3;
+                }else{
+                    for(nodeData side:eachLane[moveLane]){
+                        distance=side.positionX- myVehicle.positionX;
+                        if(distance>-8 && distance < 8){
+                            noption2=1;
+                            state=4;
+                            speed_side2 = side.speed;
+                            break;
+                        }
+                    }
+                } 
+
+            }
+            int gotoback=0;
+            if (noption1){
+                if((speed_front == speed_side1)){
+                    gotoback=1;
+                }else if(stucked!=0){
+                    traciVehicle->setCruiseControlDesiredSpeed(80 / 3.6);
+                    final_speed = 2;
+                }else{
+
+                }
+            }else if(noption2){
+                if(((speed_front == speed_side1) && (speed_front == speed_side2))){
+                    gotoback=1;
+                }else{
+                    
+                }
+
+            }else{
+
+                early = moveLane - currentLane;
+                traciVehicle->setFixedLane(moveLane);
+
+                traciVehicle->setCruiseControlDesiredSpeed(130 / 3.6);
+                final_speed = 3;
+                int val= stucked*stucked; 
+                if( val == 4){
+                    stucked = stucked/2;
+                }else if(val == 1){
+                    stucked = 0;
+                }
+                gotoback=0;
+            }
+
+            if(gotoback){
+                if(currentLane<2){
+                    stucked= 2;
+                }else{
+                    stucked= -2;
+                }
+
+                traciVehicle->setCruiseControlDesiredSpeed(80 / 3.6);
+                final_speed = 4;
+            }       
+            ////
+            break;
+        }
+    }
+    
+
+
+
 }

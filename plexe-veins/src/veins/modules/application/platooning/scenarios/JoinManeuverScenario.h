@@ -34,6 +34,9 @@ protected:
     // pointer to protocol
     GeneralPlatooningApp* app;
 
+     int early = 0;
+     int stucked = 0;
+
 public:
     static const int MANEUVER_TYPE = 12347;
 
@@ -56,6 +59,8 @@ protected:
 
     void prepareManeuverCars(int platoonLane);
     void setupFormation();
+    void platoonPath();
+
 };
 
 #endif

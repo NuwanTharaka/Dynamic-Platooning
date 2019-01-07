@@ -27,7 +27,7 @@ void JoinTrafficManager::initialize(int stage)
     if (stage == 0) {
 
         insertJoinerMessage = new cMessage("");
-        scheduleAt(platoonInsertTime + SimTime(10), insertJoinerMessage);
+        scheduleAt(platoonInsertTime + SimTime(1), insertJoinerMessage);
     }
 }
 
@@ -109,14 +109,27 @@ JoinTrafficManager::~JoinTrafficManager()
 
 void JoinTrafficManager::insertNodes()
 {
+    int g = 200;
+    int s = 25;
 
     std::vector< std::vector<int> > v;
-    std::vector<int> ln0 = {150,75,30};
-    std::vector<int> ln1 = {110,95,50};
-    std::vector<int> ln2 = {120,110,40};
-    std::vector<int> ln3 = {80,70,35};
-    std::vector<int> ln4 = {100,80,40};
-    std::vector<int> ln5 = {130,100,30};
+    std::vector<int> ln0 = {g,g-2*s,g-4*s};
+    std::vector<int> ln1 = {g-s,g-3*s,g-5*s};
+    std::vector<int> ln2 = {g,g-2*s,g-4*s};
+    std::vector<int> ln3 = {g-s,g-3*s,g-5*s};
+    std::vector<int> ln4 = {g,g-2*s,g-4*s};
+    std::vector<int> ln5 = {g-s,g-3*s,g-5*s};
+
+
+/*
+    std::vector< std::vector<int> > v;
+    std::vector<int> ln0 = {150,100,50};
+    std::vector<int> ln1 = {150,100,50};
+    std::vector<int> ln2 = {150,100,50};
+    std::vector<int> ln3 = {150,100,50};
+    std::vector<int> ln4 = {150,100,50};
+    std::vector<int> ln5 = {150,100,50};
+*/
     v.push_back(ln0);
     v.push_back(ln1);
     v.push_back(ln2);
