@@ -118,6 +118,10 @@ public:
      */
     virtual void handleJoinFormationAck(const JoinFormationAck* msg) override;
 
+    virtual int getPlatoon() override;
+
+    virtual void setTheFormation(const std::vector<int>& ftion) override;
+
 protected:
     /** Possible states a vehicle can be in during a join maneuver */
     enum class JoinManeuverState {

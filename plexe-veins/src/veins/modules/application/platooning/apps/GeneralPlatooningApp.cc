@@ -97,16 +97,28 @@ void GeneralPlatooningApp::handleLowerMsg(cMessage* msg)
 
 void GeneralPlatooningApp::handleUpdatePlatoonFormation(const UpdatePlatoonFormation* msg)
 {
-    if (getPlatoonRole() != PlatoonRole::FOLLOWER) return;
-    if (msg->getPlatoonId() != positionHelper->getPlatoonId()) return;
-    if (msg->getVehicleId() != positionHelper->getLeaderId()) return;
+   std::vector<int> f;
 
-    // update formation information
-    std::vector<int> f;
-    for (unsigned int i = 0; i < msg->getPlatoonFormationArraySize(); i++) {
-        f.push_back(msg->getPlatoonFormation(i));
+    if (getPlatoonRole() == PlatoonRole::FOLLOWER){
+        if (msg->getPlatoonId() != positionHelper->getPlatoonId()) return;
+        if (msg->getVehicleId() != positionHelper->getLeaderId()) return;
+
+        // update formation information
+\
+        for (unsigned int i = 0; i < msg->getPlatoonFormationArraySize(); i++) {
+            f.push_back(msg->getPlatoonFormation(i));
+        }
+        positionHelper->setPlatoonFormation(f);
+    }else if(getPlatoonRole() == PlatoonRole::JOINER){
+        if (msg->getPlatoonId() != joinManeuver->getPlatoon()) return;
+        
+        for (unsigned int i = 0; i < msg->getPlatoonFormationArraySize(); i++) {
+            f.push_back(msg->getPlatoonFormation(i));
+        }
+        joinManeuver->setTheFormation(f);
+
     }
-    positionHelper->setPlatoonFormation(f);
+  //  joinManeuver->updateMembers();
 }
 
 void GeneralPlatooningApp::setPlatoonRole(PlatoonRole r)

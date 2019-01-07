@@ -37,6 +37,9 @@ protected:
 
     cMessage* workNearPlatoon;
 
+    int stucked=0;
+    int early=0;
+
 
 
     GeneralPlatooningApp* app;
@@ -67,6 +70,8 @@ protected:
 
     void prepareManeuverCars(int platoonLane);
     void setupFormation(int a,int b);
+
+    void platoonPath();
 };
 
 #endif

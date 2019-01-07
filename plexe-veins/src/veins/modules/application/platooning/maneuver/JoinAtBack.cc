@@ -476,7 +476,7 @@ void JoinAtBack::shortPath_fn()
         flag_shortPath = 0;
         flag_nearPlatoon = 1;
     }
-    EV<<"EasyToFind.....3::::"<<final_speed<< endl;
+    EV<<"EasyToFind.....3::::"<<(targetPlatoonData->joinIndex)<< endl;
 } 
 
 
@@ -568,7 +568,7 @@ void JoinAtBack::nearPlatoon_fn(){
         }
     }
 
-    EV<<"EasyToFind.....4::::"<< endl;
+    EV<<"EasyToFind.....4::::"<<(targetPlatoonData->joinIndex)<< endl;
        
 }
 
@@ -611,6 +611,20 @@ void JoinAtBack::handleJoinPlatoonRequest(const JoinPlatoonRequest* msg)
 
     joinManeuverState = JoinManeuverState::L_WAIT_JOINER_IN_POSITION;
 }
+
+/*
+void JoinAtBack::updateFormation(const JoinPlatoonRequest* msg)
+{
+    MoveToPosition* mtp = createMoveToPosition(positionHelper->getId(), positionHelper->getExternalId(), positionHelper->getPlatoonId(), joinerData->joinerId, positionHelper->getPlatoonSpeed(), positionHelper->getPlatoonLane(), joinerData->newFormation);
+    app->sendUnicast(mtp, joinerData->joinerId);
+
+
+}
+*/
+
+
+
+
 
 void JoinAtBack::handleJoinPlatoonResponse(const JoinPlatoonResponse* msg)
 {
@@ -756,4 +770,25 @@ void JoinAtBack::handleJoinFormationAck(const JoinFormationAck* msg)
 
     joinManeuverState = JoinManeuverState::IDLE;
     app->setInManeuver(false);
+}
+
+
+int JoinAtBack::getPlatoon()
+{
+    return targetPlatoonData->platoonId;
+}
+
+void JoinAtBack::setTheFormation(const std::vector<int>& ftion) 
+{
+    targetPlatoonData->newFormation = ftion;
+    targetPlatoonData->newFormation.resize(ftion.size());
+    for (unsigned int i = 0; i <ftion.size() ; i++) {
+                targetPlatoonData->newFormation[i] = ftion[i];
+            }
+    targetPlatoonData->joinIndex  =ftion.size();
+    
+    flag_shortPath=0;
+    flag_nearPlatoon =0;
+    traciVehicle->setCruiseControlDesiredSpeed(((30 / 3.6)*direction));
+
 }

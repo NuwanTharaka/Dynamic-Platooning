@@ -53,6 +53,9 @@ public:
     virtual void shortPath_fn() = 0;
     virtual void nearPlatoon_fn() = 0;
 
+    virtual int getPlatoon() = 0;
+    virtual void setTheFormation(const std::vector<int>& ftion) =0;
+
 
 
 protected:
@@ -169,6 +172,10 @@ protected:
      * @param JoinFormationAck msg to handle
      */
     virtual void handleJoinFormationAck(const JoinFormationAck* msg) = 0;
+
+    
+
+    
 
 
 };
