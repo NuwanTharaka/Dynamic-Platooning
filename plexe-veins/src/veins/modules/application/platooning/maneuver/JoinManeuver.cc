@@ -26,11 +26,14 @@ JoinManeuver::JoinManeuver(GeneralPlatooningApp* app)
 
 void JoinManeuver::onManeuverMessage(const ManeuverMessage* mm)
 {
-    if (const JoinPlatoonRequest* msg = dynamic_cast<const JoinPlatoonRequest*>(mm)) {
-        handleJoinPlatoonRequest(msg);
+    if (const SendMTP* msg = dynamic_cast<const SendMTP*>(mm)) {
+        handleSendMTP(msg);
     }
     else if (const JoinPlatoonResponse* msg = dynamic_cast<const JoinPlatoonResponse*>(mm)) {
         handleJoinPlatoonResponse(msg);
+    }
+    else if (const RequestPlatoonInfo* msg = dynamic_cast<const RequestPlatoonInfo*>(mm)) {
+        handleRequestPlatoonInfo(msg);
     }
     else if (const MoveToPosition* msg = dynamic_cast<const MoveToPosition*>(mm)) {
         handleMoveToPosition(msg);
@@ -44,6 +47,7 @@ void JoinManeuver::onManeuverMessage(const ManeuverMessage* mm)
     else if (const JoinFormationAck* msg = dynamic_cast<const JoinFormationAck*>(mm)) {
         handleJoinFormationAck(msg);
     }
+
 }
 
 JoinPlatoonRequest* JoinManeuver::createJoinPlatoonRequest(int vehicleId, std::string externalId, int platoonId, int destinationId, int currentLaneIndex, double xPos, double yPos)
@@ -64,9 +68,27 @@ JoinPlatoonResponse* JoinManeuver::createJoinPlatoonResponse(int vehicleId, std:
     return msg;
 }
 
+
+
+
+
+
 MoveToPosition* JoinManeuver::createMoveToPosition(int vehicleId, std::string externalId, int platoonId, int destinationId, double platoonSpeed, int platoonLane, const std::vector<int>& newPlatoonFormation)
 {
     MoveToPosition* msg = new MoveToPosition("MoveToPosition");
+    app->fillManeuverMessage(msg, vehicleId, externalId, platoonId, destinationId);
+    msg->setPlatoonSpeed(platoonSpeed);
+    msg->setPlatoonLane(platoonLane);
+    msg->setNewPlatoonFormationArraySize(newPlatoonFormation.size());
+    for (unsigned int i = 0; i < newPlatoonFormation.size(); i++) {
+        msg->setNewPlatoonFormation(i, newPlatoonFormation[i]);
+    }
+    return msg;
+}
+
+PlatoonInfo* JoinManeuver::createPlatoonInfo(int vehicleId, std::string externalId, int platoonId, int destinationId, double platoonSpeed, int platoonLane, const std::vector<int>& newPlatoonFormation)
+{
+    PlatoonInfo* msg = new PlatoonInfo("PlatoonInfo"); 
     app->fillManeuverMessage(msg, vehicleId, externalId, platoonId, destinationId);
     msg->setPlatoonSpeed(platoonSpeed);
     msg->setPlatoonLane(platoonLane);

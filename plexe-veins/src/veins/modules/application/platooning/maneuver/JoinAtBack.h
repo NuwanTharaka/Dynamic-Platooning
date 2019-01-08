@@ -64,7 +64,20 @@ public:
      *
      * @param JoinPlatoonRequest msg to handle
      */
-    virtual void handleJoinPlatoonRequest(const JoinPlatoonRequest* msg) override;
+    virtual void handleSendMTP(const SendMTP* msg) override;
+
+    /**
+     * Handles a RequestPlatoonInfo in the context of this application
+     *
+     * @param RequestPlatoonInfo msg to handle
+     */
+    virtual void handleRequestPlatoonInfo(const RequestPlatoonInfo* msg) override;
+
+
+
+    
+
+
 
     /**
      * Handles a JoinPlatoonResponse in the context of this application

@@ -24,7 +24,12 @@ void LocalPlatoonPositionHelper::initialize(int stage)
     BasePositionHelper::initialize(stage);
 
     if (stage == 1) {
+    	if(RSU_or_Veh == "Veh" ){
         myId = getIdFromExternalId(getExternalId());
+    	}
+    	else if (RSU_or_Veh == "RSU"){
+        myId =99999;
+    	}
     }
 }
 

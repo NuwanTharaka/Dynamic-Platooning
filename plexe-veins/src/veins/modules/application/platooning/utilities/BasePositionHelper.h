@@ -231,6 +231,11 @@ protected:
     int platoonLane;
     // speed of the platoon
     double platoonSpeed;
+private:
+    /** the role of this vehicle */
+    std::string RSU_or_Veh;
+
+
 
 public:
     BasePositionHelper()

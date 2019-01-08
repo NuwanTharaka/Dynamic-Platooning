@@ -37,7 +37,11 @@ const double MY_INFINITY = (std::numeric_limits<double>::has_infinity ? std::num
 }
 
 void TraCIMobility::Statistics::initialize()
-{
+{   
+    if(RSU_or_Veh == "RSU" ){
+        external_id = "99999";
+        }
+  
     firstRoadNumber = MY_INFINITY;
     startTime = simTime();
     totalTime = 0;

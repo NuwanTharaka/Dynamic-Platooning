@@ -25,7 +25,7 @@ Define_Module(SimplePlatooningBeaconing)
 
     if (stage == 0) {
         // random start time
-        SimTime beginTime = SimTime(uniform(0.001, beaconingInterval));
+        SimTime beginTime = SimTime(uniform(0.001, beaconingInterval));   //Random Access //Yasitha
         if (beaconingInterval > 0) scheduleAt(simTime() + beaconingInterval + beginTime, sendBeacon);
     }
 }

@@ -27,6 +27,7 @@ void BasePositionHelper::initialize(int stage)
     BaseApplLayer::initialize(stage);
 
     if (stage == 0) {
+        
         mobility = Veins::TraCIMobilityAccess().get(getParentModule());
         traci = mobility->getCommandInterface();
         traciVehicle = mobility->getVehicleCommandInterface();
@@ -39,7 +40,13 @@ void BasePositionHelper::initialize(int stage)
 
 std::string BasePositionHelper::getExternalId() const
 {
-    return mobility->getExternalId();
+    if(RSU_or_Veh == "Veh" ){
+        return mobility->getExternalId();
+        }
+    else if(RSU_or_Veh == "RSU") {
+        return "99999";
+        }
+    
 }
 
 int BasePositionHelper::getId() const

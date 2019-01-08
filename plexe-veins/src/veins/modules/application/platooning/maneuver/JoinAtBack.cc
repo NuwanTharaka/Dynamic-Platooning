@@ -41,7 +41,8 @@ void JoinAtBack::startManeuver(const void* parameters)
 
         // send join request to leader
         JoinPlatoonRequest* req = createJoinPlatoonRequest(positionHelper->getId(), positionHelper->getExternalId(), targetPlatoonData->platoonId, targetPlatoonData->platoonLeader, traciVehicle->getLaneIndex(), mobility->getCurrentPosition().x, mobility->getCurrentPosition().y);
-        app->sendUnicast(req, targetPlatoonData->platoonLeader);
+        app->sendUnicast(req, 99999);    // make it send to all RSU's
+        //app->sendUnicast(req, targetPlatoonData->platoonLeader);
         joinManeuverState = JoinManeuverState::J_WAIT_REPLY;
     }
 }
@@ -84,42 +85,87 @@ void JoinAtBack::onPlatoonBeacon(const PlatooningBeacon* pb)
     }
 }
 
-void JoinAtBack::handleJoinPlatoonRequest(const JoinPlatoonRequest* msg)
+void JoinAtBack::handleSendMTP(const SendMTP* msg)
 {
 
-    if (msg->getPlatoonId() != positionHelper->getPlatoonId()) return;
+    //if (msg->getPlatoonId() != positionHelper->getPlatoonId()) return;
 
-    if (app->getPlatoonRole() != PlatoonRole::LEADER && app->getPlatoonRole() != PlatoonRole::NONE) return;
+    //if (app->getPlatoonRole() != PlatoonRole::LEADER && app->getPlatoonRole() != PlatoonRole::NONE) return;
 
-    bool permission = app->isJoinAllowed();
+    //bool permission = app->isJoinAllowed();
 
     // send response to the joiner
-    JoinPlatoonResponse* response = createJoinPlatoonResponse(positionHelper->getId(), positionHelper->getExternalId(), msg->getPlatoonId(), msg->getVehicleId(), permission);
-    app->sendUnicast(response, msg->getVehicleId());
+    //JoinPlatoonResponse* response = createJoinPlatoonResponse(positionHelper->getId(), positionHelper->getExternalId(), msg->getPlatoonId(), msg->getVehicleId(), permission);
+    //app->sendUnicast(response, msg->getVehicleId());
 
-    if (!permission) return;
+    //if (!permission) return;
 
     app->setInManeuver(true);
     app->setPlatoonRole(PlatoonRole::LEADER);
 
-    // disable lane changing during maneuver
+    //disable lane changing during maneuver
     traciVehicle->setFixedLane(traciVehicle->getLaneIndex());
     positionHelper->setPlatoonLane(traciVehicle->getLaneIndex());
 
     // save some data. who is joining?
-    joinerData.reset(new JoinerData());
-    joinerData->from(msg);
+    //joinerData.reset(new JoinerData());
+    //joinerData->from(msg);
 
     // this was only to grant the request
     // now send the data about the platoon to the joiner
     // add the joiner to the end of the platoon
-    joinerData->newFormation = positionHelper->getPlatoonFormation();
-    joinerData->newFormation.push_back(joinerData->joinerId);
+    //joinerData->newFormation = positionHelper->getPlatoonFormation();
+    //joinerData->newFormation.push_back(joinerData->joinerId);
 
-    MoveToPosition* mtp = createMoveToPosition(positionHelper->getId(), positionHelper->getExternalId(), positionHelper->getPlatoonId(), joinerData->joinerId, positionHelper->getPlatoonSpeed(), positionHelper->getPlatoonLane(), joinerData->newFormation);
-    app->sendUnicast(mtp, joinerData->joinerId);
+    MoveToPosition* mtp = createMoveToPosition(positionHelper->getId(), positionHelper->getExternalId(), positionHelper->getPlatoonId(), msg->getVehicleId(), positionHelper->getPlatoonSpeed(), positionHelper->getPlatoonLane(), joinerData->newFormation);
+    app->sendUnicast(mtp, msg->getVehicleId());
 
     joinManeuverState = JoinManeuverState::L_WAIT_JOINER_IN_POSITION;
+}
+
+void JoinAtBack::handleRequestPlatoonInfo(const RequestPlatoonInfo* msg)
+{
+
+    //if (msg->getPlatoonId() != positionHelper->getPlatoonId()) return;
+
+    if (app->getPlatoonRole() != PlatoonRole::LEADER && app->getPlatoonRole() != PlatoonRole::NONE) return;
+
+    bool permission = app->isJoinAllowed();
+/*
+    // send response to the joiner
+    JoinPlatoonResponse* response = createJoinPlatoonResponse(positionHelper->getId(), positionHelper->getExternalId(), msg->getPlatoonId(), msg->getVehicleId(), permission);
+    app->sendUnicast(response, msg->getVehicleId()); */
+
+    if (!permission) return;
+
+    //Send platoon information to RSU if the platoon can accept a joiner
+
+    //MoveToPosition* mtp = createMoveToPosition(positionHelper->getId(), positionHelper->getExternalId(), positionHelper->getPlatoonId(), joinerData->joinerId, positionHelper->getPlatoonSpeed(), positionHelper->getPlatoonLane(), joinerData->newFormation);
+    PlatoonInfo* pf = createPlatoonInfo(positionHelper->getId(), positionHelper->getExternalId(), positionHelper->getPlatoonId(), 99999, positionHelper->getPlatoonSpeed(), positionHelper->getPlatoonLane(), positionHelper->getPlatoonFormation());
+    app->sendUnicast(pf, 99999);
+    //
+
+    //app->setInManeuver(true);
+    // app->setPlatoonRole(PlatoonRole::LEADER); not yet set it to leader when RSU gives confirmation
+
+    // disable lane changing during maneuver
+    //traciVehicle->setFixedLane(traciVehicle->getLaneIndex());
+    //positionHelper->setPlatoonLane(traciVehicle->getLaneIndex());
+
+    // save some data. who is joining?
+    //joinerData.reset(new JoinerData());
+    //joinerData->from(msg);
+
+    // this was only to grant the request
+    // now send the data about the platoon to the joiner
+    // add the joiner to the end of the platoon
+    //joinerData->newFormation = positionHelper->getPlatoonFormation();
+    //joinerData->newFormation.push_back(joinerData->joinerId);
+
+    //MoveToPosition* mtp = createMoveToPosition(positionHelper->getId(), positionHelper->getExternalId(), positionHelper->getPlatoonId(), joinerData->joinerId, positionHelper->getPlatoonSpeed(), positionHelper->getPlatoonLane(), joinerData->newFormation);
+    //app->sendUnicast(mtp, joinerData->joinerId);
+
+    //joinManeuverState = JoinManeuverState::L_WAIT_JOINER_IN_POSITION;
 }
 
 void JoinAtBack::handleJoinPlatoonResponse(const JoinPlatoonResponse* msg)

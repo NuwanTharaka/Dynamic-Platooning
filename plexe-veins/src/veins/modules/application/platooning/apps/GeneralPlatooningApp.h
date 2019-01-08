@@ -26,6 +26,10 @@
 #include "veins/modules/application/platooning/maneuver/JoinManeuver.h"
 #include "veins/modules/application/platooning/maneuver/JoinAtBack.h"
 
+#include "veins/modules/application/platooning/maneuver/RSU_JoinManeuver.h"
+#include "veins/modules/application/platooning/maneuver/RSU_JoinAtBack.h"
+
+
 #include "veins/modules/application/platooning/messages/ManeuverMessage_m.h"
 
 #include "veins/modules/mobility/traci/TraCIConstants.h"
@@ -61,6 +65,7 @@ public:
         : inManeuver(false)
         , role(PlatoonRole::NONE)
         , joinManeuver(nullptr)
+        , rsu_joinManeuver(nullptr)
     {
     }
 
@@ -203,6 +208,9 @@ private:
     PlatoonRole role;
     /** join maneuver implementation */
     JoinManeuver* joinManeuver;
+    RSU_JoinManeuver* rsu_joinManeuver;
+    std::string joinManeuverName;
+
 };
 
 #endif

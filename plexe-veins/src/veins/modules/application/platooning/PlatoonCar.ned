@@ -27,6 +27,7 @@ import org.car2x.veins.modules.application.platooning.scenarios.BaseScenario;
 import org.car2x.veins.modules.application.platooning.protocols.BaseProtocol;
 import org.car2x.veins.modules.application.platooning.apps.BaseApp;
 import org.car2x.veins.modules.application.platooning.UnicastProtocol;
+//import org.car2x.veins.modules.application.platooning.apps.RSUApp;
 import org.car2x.veins.modules.mobility.traci.TraCIMobility;
 import org.car2x.veins.modules.nic.Nic80211p;
 
@@ -45,17 +46,17 @@ module PlatoonCar
 
         helper: <helper_type> like BasePositionHelper {
             parameters:
-                @display("p=90,100");
+                @display("p=60,127");
         }
 
         scenario: <scenario_type> like BaseScenario {
             parameters:
-                @display("p=90,100");
+                @display("p=130,88");
         }
 
         appl: <appl_type> like BaseApp {
             parameters:
-                @display("p=60,100");
+                @display("p=51,49");
         }
 
         prot: <protocol_type> like BaseProtocol {

@@ -25,6 +25,8 @@ import org.car2x.veins.base.modules.BaseWorldUtility;
 import org.car2x.veins.modules.mobility.traci.TraCIScenarioManagerForker;
 import org.car2x.veins.modules.mobility.traci.TraCIBaseTrafficManager;
 import org.car2x.veins.modules.world.annotations.AnnotationManager;
+import org.car2x.veins.modules.application.platooning.RSU;
+//import org.car2x.veins.nodes.RSU;
 
 network Highway
 {
@@ -56,6 +58,9 @@ network Highway
         traffic: <traffic_type> like TraCIBaseTrafficManager {
             parameters:
                 @display("p=200,200");
+        }
+        rsu[1]: RSU {
+            @display("p=150,140;i=veins/sign/yellowdiamond;is=vs");
         }
 
     connections allowunconnected:

@@ -28,6 +28,12 @@
 #include "veins/modules/application/platooning/messages/MoveToPositionAck_m.h"
 #include "veins/modules/application/platooning/messages/MoveToPosition_m.h"
 
+#include "veins/modules/application/platooning/messages/PlatoonInfo_m.h"
+#include "veins/modules/application/platooning/messages/PlatooningBeacon_m.h"
+#include "veins/modules/application/platooning/messages/RequestPlatoonInfo_m.h"
+#include "veins/modules/application/platooning/messages/SendMTP_m.h"
+
+
 struct JoinManeuverParameters {
     int platoonId;
     int leaderId;
@@ -81,6 +87,19 @@ protected:
      */
     MoveToPosition* createMoveToPosition(int vehicleId, std::string externalId, int platoonId, int destinationId, double platoonSpeed, int platoonLane, const std::vector<int>& newPlatoonFormation);
 
+        /**
+     * Creates a MoveToPosition message
+     *
+     * @param int vehicleId the id of the sending vehicle
+     * @param int platoonId the id of the platoon of the sending vehicle
+     * @param int destinationId the id of the destination
+     * @param int platoonSpeed the speed of the platoon
+     * @param int platoonLane the id of the lane of the platoon
+     * @param std::vector<int> newPlatoonFormation the platoon formation after
+     * the join maneuver
+     */
+    PlatoonInfo* createPlatoonInfo(int vehicleId, std::string externalId, int platoonId, int destinationId, double platoonSpeed, int platoonLane, const std::vector<int>& newPlatoonFormation);
+
     /**
      * Creates a MoveToPositionAck message
      *
@@ -125,7 +144,16 @@ protected:
      *
      * @param JoinPlatoonRequest msg to handle
      */
-    virtual void handleJoinPlatoonRequest(const JoinPlatoonRequest* msg) = 0;
+    //virtual void handleJoinPlatoonRequest(const JoinPlatoonRequest* msg) = 0;
+
+     /**
+     * Handles a JoinPlatoonRequest in the context of this application
+     *
+     * @param JoinPlatoonRequest msg to handle
+     */
+    virtual void handleRequestPlatoonInfo(const RequestPlatoonInfo* msg) = 0;
+
+    virtual void handleSendMTP(const SendMTP* msg) =0;
 
     /**
      * Handles a JoinPlatoonResponse in the context of this application

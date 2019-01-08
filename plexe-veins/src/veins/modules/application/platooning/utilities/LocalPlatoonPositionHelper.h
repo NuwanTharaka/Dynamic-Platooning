@@ -56,75 +56,7 @@ protected:
     std::vector<int> formation;
 
     static int getIdFromExternalId(const std::string externalId);
-
-public:
-    /** c'tor of LocalPlatoonPositionHelper */
-    LocalPlatoonPositionHelper()
-    {
-    }
-
-    /** d'tor of LocalPositionHelper */
-    virtual ~LocalPlatoonPositionHelper()
-    {
-    }
-
-    /** Override from BasePositionHelper */
-    virtual void initialize(int stage) override;
-
-    /**
-     * Return the numeric id of this vehicle
-     *
-     * @return the id of this vehicle
-     */
-    virtual int getId() const override
-    {
-        return myId;
-    }
-
-    /**
-     * Set the id of this vehicle
-     *
-     * @param id the new id for this vehicle
-     */
-    virtual void setId(int id) override
-    {
-        myId = id;
-    }
-
-    /**
-     * Return the id of the platoon
-     *
-     * @return the id of this vehicle's platoon
-     */
-    virtual int getPlatoonId() const override
-    {
-        return platoonId;
-    }
-
-    /**
-     * Set the id of the platoon
-     *
-     * @param id the id for this vehicle's platoon
-     */
-    virtual void setPlatoonId(int id) override
-    {
-        platoonId = id;
-    }
-
-    /**
-     * Return the id of the leader of the own platoon
-     *
-     * @return the id of this vehicle's platoon's leader
-     */
-    virtual int getLeaderId() const override
-    {
-        if (getPlatoonSize() > 0) {
-            return formation.at(0);
-        }
-        else {
-            return INVALID_VEHICLE_ID;
-        }
-    }
+no external_id set yet
 
     /**
      * Return whether this vehicle is the leader of the platoon

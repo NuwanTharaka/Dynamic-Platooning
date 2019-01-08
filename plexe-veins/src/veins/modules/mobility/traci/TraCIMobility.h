@@ -94,7 +94,16 @@ public:
     }
     virtual std::string getExternalId() const
     {
-        if (external_id == "") throw cRuntimeError("TraCIMobility::getExternalId called with no external_id set yet");
+        if (external_id == "") {
+            throw cRuntimeError("TraCIMobility::getExternalId called with no external_id set yet"); /*
+                if(RSU_or_Veh == "RSU" ){
+                    std::string RSU_ID = "99999";
+                    external_id = RSU_ID;
+                 }
+                 else {
+                    //throw cRuntimeError("TraCIMobility::getExternalId called with no external_id set yet");
+                }*/
+        }
         return external_id;
     }
     virtual double getAntennaPositionOffset() const
@@ -197,6 +206,10 @@ protected:
      * Calculates where the antenna of this car is, given its front bumper position
      */
     Coord calculateAntennaPosition(const Coord& vehiclePos) const;
+private:
+    /** the role of this vehicle */
+    std::string RSU_or_Veh;
+
 };
 } // namespace Veins
 

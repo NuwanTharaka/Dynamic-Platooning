@@ -35,10 +35,12 @@ void GeneralPlatooningApp::initialize(int stage)
         // connect maneuver application to protocol
         protocol->registerApplication(MANEUVER_TYPE, gate("lowerLayerIn"), gate("lowerLayerOut"), gate("lowerControlIn"), gate("lowerControlOut"));
 
-        std::string joinManeuverName = par("joinManeuver").stdstringValue();
+        joinManeuverName = par("joinManeuver").stdstringValue();
         if (joinManeuverName == "JoinAtBack")
             joinManeuver = new JoinAtBack(this);
-        else
+        else if (joinManeuverName == "RSU_JoinAtBack")
+            rsu_joinManeuver = new RSU_JoinAtBack(this);
+        else    
             throw new cRuntimeError("Invalid join maneuver implementation chosen");
     }
 }
@@ -115,14 +117,22 @@ void GeneralPlatooningApp::setPlatoonRole(PlatoonRole r)
 
 void GeneralPlatooningApp::onPlatoonBeacon(const PlatooningBeacon* pb)
 {
-    joinManeuver->onPlatoonBeacon(pb);
+        if (joinManeuverName == "JoinAtBack")
+            joinManeuver->onPlatoonBeacon(pb);
+        else if (joinManeuverName == "RSU_JoinAtBack")
+            rsu_joinManeuver->onPlatoonBeacon(pb);
+    
     // maintain platoon
     BaseApp::onPlatoonBeacon(pb);
 }
 
 void GeneralPlatooningApp::onManeuverMessage(ManeuverMessage* mm)
 {
-    joinManeuver->onManeuverMessage(mm);
+  if (joinManeuverName == "JoinAtBack")
+        joinManeuver->onManeuverMessage(mm);
+  else if (joinManeuverName == "RSU_JoinAtBack")
+        rsu_joinManeuver->onManeuverMessage(mm);
+    
     delete mm;
 }
 
@@ -151,4 +161,5 @@ UpdatePlatoonFormation* GeneralPlatooningApp::createUpdatePlatoonFormation(int v
 GeneralPlatooningApp::~GeneralPlatooningApp()
 {
     delete joinManeuver;
+    delete rsu_joinManeuver;
 }
