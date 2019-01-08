@@ -123,44 +123,45 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
         break;
     }
 
-    case 20: {
+    case 8: {
         // this is the car which will join
         traciVehicle->setCruiseControlDesiredSpeed(100 / 3.6);
-        traciVehicle->setFixedLane(0);
+        traciVehicle->setFixedLane(2);
         traciVehicle->setActiveController(Plexe::ACC);
 
         positionHelper->setPlatoonId(-1);
         positionHelper->setIsLeader(false);
         positionHelper->setPlatoonLane(-1);
-        break;
-
-    }case 8: {
-        traciVehicle->setCruiseControlDesiredSpeed(100 / 3.6);
-        traciVehicle->setActiveController(Plexe::ACC);
-        traciVehicle->setFixedLane(1);
-
-        positionHelper->setPlatoonId(-1);
-        positionHelper->setIsLeader(false);
-        positionHelper->setPlatoonLane(-1);
-        break;
-
-    }
-
-    case 9: {
-        traciVehicle->setCruiseControlDesiredSpeed(100 / 3.6);
-        traciVehicle->setActiveController(Plexe::ACC);
-        traciVehicle->setFixedLane(0);
-
-        positionHelper->setPlatoonId(-1);
-        positionHelper->setIsLeader(false);
-        positionHelper->setPlatoonLane(-1);
-
         startManeuver1 = new cMessage();
-       // scheduleAt(simTime() + SimTime(14), startManeuver1);
+        scheduleAt(simTime() + SimTime(21), startManeuver1);
+        break;
+
+    }case 9: {
+        traciVehicle->setCruiseControlDesiredSpeed(100 / 3.6);
+        traciVehicle->setActiveController(Plexe::ACC);
+        traciVehicle->setFixedLane(2);
+
+        positionHelper->setPlatoonId(-1);
+        positionHelper->setIsLeader(false);
+        positionHelper->setPlatoonLane(-1);
         break;
 
     }
+
     case 10: {
+        traciVehicle->setCruiseControlDesiredSpeed(100 / 3.6);
+        traciVehicle->setActiveController(Plexe::ACC);
+        traciVehicle->setFixedLane(2);
+
+        positionHelper->setPlatoonId(-1);
+        positionHelper->setIsLeader(false);
+        positionHelper->setPlatoonLane(-1);
+
+        
+        break;
+
+    }
+    case 11: {
        // traciVehicle->setCruiseControlDesiredSpeed(100 / 3.6);
         traciVehicle->setCruiseControlDesiredSpeed((100 / 3.6));
         traciVehicle->setActiveController(Plexe::ACC);
@@ -173,7 +174,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
         // after 30 seconds of simulation, start the maneuver
         //EV<<"EasyToFind.....sheduling"<<positionHelper->getId()<< endl;
         startManeuver = new cMessage();
-        scheduleAt(simTime() + SimTime(12), startManeuver);
+        scheduleAt(simTime() + SimTime(8), startManeuver);
         break;
     }
     }
@@ -208,7 +209,9 @@ void JoinManeuverScenario::handleSelfMsg(cMessage* msg)
         EV<<"EasyToFind....goti"<<positionHelper->getId()<< endl;
         //shortPath_fn();
         //scheduleAt(simTime() + SimTime(1), startManeuver_error);
-        app->startJoinManeuver(0, 0, -1);
+
+        traciVehicle->setFixedLane(1);
+       // app->startJoinManeuver(10, 10, -1);
     }
 
 

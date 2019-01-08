@@ -349,17 +349,19 @@ void JoinAtBack::shortPath_fn()
     
 
     if(p){
-        traciVehicle->setCruiseControlDesiredSpeed(targetPlatoonData->platoonSpeed + ((30 / 3.6)*direction));
         int sideGo = 0;
 
         if(early!= 0){
             sideGo = early;
         }
         early = 0;
-
+        traciVehicle->setCruiseControlDesiredSpeed(targetPlatoonData->platoonSpeed + ((30 / 3.6)*direction));
         for(nodeData item:eachLane[currentLane]){
             int distance= (item.positionX - myVehicle.positionX)*direction;
-            if((distance>0 && distance < (25-5*direction)) || (stucked!=0)){
+            if((distance>(45-5*direction)) && (distance < 90)){
+                traciVehicle->setCruiseControlDesiredSpeed(targetPlatoonData->platoonSpeed + ((10 / 3.6)*direction));
+            }
+            else if((distance>0 && distance < (45-5*direction)) || (stucked!=0)){
                 final_speed = 1;
                 traciVehicle->setCruiseControlDesiredSpeed(item.speed);
                 speed_front= item.speed;
@@ -374,8 +376,12 @@ void JoinAtBack::shortPath_fn()
                     moveLane = currentLane - 1; 
                 }
 
+                if(sideGo != 0){
+                    stucked= sideGo;
+                }
 
-                stucked= sideGo;
+
+
 
                 if((stucked>0) && (currentLane!=(nLanes-1))){
                     moveLane = currentLane + 1; 
@@ -420,7 +426,7 @@ void JoinAtBack::shortPath_fn()
                 }
                 int gotoback=0;
                 if (noption1){
-                    if((speed_front == speed_side1) && (stucked==0)){
+                    if((speed_front == speed_side1)){
                         gotoback=1;
                     }else if(stucked!=0){
                         traciVehicle->setCruiseControlDesiredSpeed(targetPlatoonData->platoonSpeed - ((30 / 3.6)*direction));
