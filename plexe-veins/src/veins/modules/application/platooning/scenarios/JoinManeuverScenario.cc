@@ -72,7 +72,6 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
     }
 
     case 1:
-    case 2:
     case 3: {
         // these are the followers which are already in the platoon
         traciVehicle->setCruiseControlDesiredSpeed(130.0 / 3.6);
@@ -84,6 +83,25 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
         positionHelper->setPlatoonSpeed(100 / 3.6);
         positionHelper->setPlatoonId(positionHelper->getLeaderId());
         setupFormation();
+
+        break;
+    }
+
+    case 2: {
+        // these are the followers which are already in the platoon
+        traciVehicle->setCruiseControlDesiredSpeed(130.0 / 3.6);
+        traciVehicle->setActiveController(Plexe::CACC);
+        traciVehicle->setFixedLane(platoonLane);
+
+        positionHelper->setIsLeader(false);
+        positionHelper->setPlatoonLane(platoonLane);
+        positionHelper->setPlatoonSpeed(100 / 3.6);
+        positionHelper->setPlatoonId(positionHelper->getLeaderId());
+        setupFormation();
+
+        // after 30 seconds of simulation, start the maneuver
+        startManeuver2 = new cMessage();
+        scheduleAt(simTime() + SimTime(60), startManeuver2);
 
         break;
     }
@@ -122,6 +140,8 @@ void JoinManeuverScenario::handleSelfMsg(cMessage* msg)
     BaseScenario::handleSelfMsg(msg);
 
     if (msg == startManeuver) app->startJoinManeuver(0, 0, -1);
+
+    if (msg == startManeuver2) app->startLeaveManeuver();
 
     if (msg == startSendPos) {
         mobility = Veins::TraCIMobilityAccess().get(getParentModule());

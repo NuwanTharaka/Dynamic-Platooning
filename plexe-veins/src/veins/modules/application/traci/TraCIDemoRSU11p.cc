@@ -36,5 +36,5 @@ void TraCIDemoRSU11p::onWSM(WaveShortMessage* wsm)
 {
     // this rsu repeats the received traffic update in 2 seconds plus some random delay
     wsm->setSenderAddress(myId);
-    sendDelayedDown(wsm->dup(), 2 + uniform(0.01, 0.2));
+    sendDelayedDown(wsm->dup(), uniform(0.01, 0.2));
 }

@@ -18,6 +18,11 @@
 #include "veins/modules/application/platooning/maneuver/JoinAtBack.h"
 #include "veins/modules/application/platooning/apps/GeneralPlatooningApp.h"
 
+#ifndef coreEV
+#define coreEV_clear EV
+#define coreEV EV << logName() << "::" << getClassName() << ": "
+#endif
+
 JoinAtBack::JoinAtBack(GeneralPlatooningApp* app)
     : JoinManeuver(app)
     , joinManeuverState(JoinManeuverState::IDLE)
@@ -45,6 +50,30 @@ void JoinAtBack::startManeuver(const void* parameters)
         joinManeuverState = JoinManeuverState::J_WAIT_REPLY;
     }
 }
+
+void JoinAtBack::leaveManeuver()
+{
+   // if (joinManeuverState == JoinManeuverState::IDLE) {
+    //    ASSERT(app->getPlatoonRole() == PlatoonRole::NONE);
+     //   ASSERT(!app->isInManeuver());
+
+        EV << "leaving started " << std::endl;
+
+        //app->setInManeuver(true);
+        traciVehicle->setCACCConstantSpacing(15);
+        traciVehicle->setFixedLane(2);
+        // we have no data so far, so for the moment just initialize
+        // with some fake data
+        //traciVehicle->setLeaderVehicleFakeData(0, 0, targetPlatoonData->platoonSpeed);
+        //traciVehicle->setFrontVehicleFakeData(0, 0, targetPlatoonData->platoonSpeed, 20);
+        //traciVehicle->setCruiseControlDesiredSpeed(targetPlatoonData->platoonSpeed - (30 / 3.6));
+        //traciVehicle->setActiveController(Plexe::FAKED_CACC);
+
+        //joinManeuverState = JoinManeuverState::J_MOVE_IN_POSITION;
+   // }
+}
+
+
 
 void JoinAtBack::abortManeuver()
 {

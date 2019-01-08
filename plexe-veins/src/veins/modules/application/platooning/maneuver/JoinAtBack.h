@@ -47,6 +47,8 @@ public:
      */
     virtual void startManeuver(const void* parameters) override;
 
+    virtual void leaveManeuver() override;
+
     /**
      * Handles the abortion of the maneuver when required by the generic application.
      * This method does currently nothing and it is meant for future used and improved maneuvers.

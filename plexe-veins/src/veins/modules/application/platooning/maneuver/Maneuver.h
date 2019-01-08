@@ -45,6 +45,8 @@ public:
      * @param parameters parameters passed to the maneuver
      */
     virtual void startManeuver(const void* parameters) = 0;
+
+    virtual void leaveManeuver() = 0;
     /**
      * This method is invoked by the generic application to abort the maneuver
      */

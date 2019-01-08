@@ -60,6 +60,13 @@ void GeneralPlatooningApp::startJoinManeuver(int platoonId, int leaderId, int po
     joinManeuver->startManeuver(&params);
 }
 
+void GeneralPlatooningApp::startLeaveManeuver()
+{
+    ASSERT(!isInManeuver());
+
+    joinManeuver->leaveManeuver();
+}
+
 void GeneralPlatooningApp::sendUnicast(cPacket* msg, int destination)
 {
     Enter_Method_Silent();

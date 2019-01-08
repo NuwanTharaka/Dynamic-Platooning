@@ -25,6 +25,7 @@ import org.car2x.veins.base.modules.BaseWorldUtility;
 import org.car2x.veins.modules.mobility.traci.TraCIScenarioManagerForker;
 import org.car2x.veins.modules.mobility.traci.TraCIBaseTrafficManager;
 import org.car2x.veins.modules.world.annotations.AnnotationManager;
+import org.car2x.veins.nodes.RSU;
 
 network Highway
 {
@@ -57,6 +58,7 @@ network Highway
             parameters:
                 @display("p=200,200");
         }
+        
 
     connections allowunconnected:
 }

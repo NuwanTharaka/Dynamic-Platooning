@@ -98,6 +98,8 @@ public:
      */
     void startJoinManeuver(int platoonId, int leaderId, int position);
 
+    void startLeaveManeuver();
+
     /** Abort join maneuver */
     void abortJoinManeuver();
 

@@ -28,6 +28,7 @@ class JoinManeuverScenario : public BaseScenario {
 protected:
     // message used to start the maneuver
     cMessage* startManeuver;
+    cMessage* startManeuver2;
 
     //message to start sending pos
     cMessage* startSendPos;
