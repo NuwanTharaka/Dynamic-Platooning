@@ -24,16 +24,22 @@
 #include "veins/modules/mobility/traci/TraCICommandInterface.h"
 
 /**create a map with data of nodes*/
-void sendData(int index, double speed, double acceleration, double positionX, double positionY);
-std::vector<nodeData> getDattaa();
-
-/** Structure for map data*/
 struct nodeData {
     double speed; // vehicle speed
     double acceleration; // vehicle acceleration
     double positionX; // position of the vehicle in the simulation
     double positionY; // position of the vehicle in the simulation
 };
+
+
+
+
+
+void sendData(int index, double speed, double acceleration, double positionX, double positionY);
+std::vector<nodeData> getDattaa();
+
+/** Structure for map data*/
+
 
 class TraCIBaseTrafficManager : public cSimpleModule {
 
@@ -44,6 +50,8 @@ public:
     int findVehicleTypeIndex(std::string vehType);
 
 public:
+
+
     TraCIBaseTrafficManager()
     {
         insertVehiclesTrigger = 0;

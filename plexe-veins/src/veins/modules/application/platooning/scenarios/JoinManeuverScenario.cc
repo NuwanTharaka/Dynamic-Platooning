@@ -44,18 +44,21 @@ void JoinManeuverScenario::initialize(int stage)
 
 }
 
-void JoinManeuverScenario::setupFormation()
+void JoinManeuverScenario::setupFormation(int a,int b)
 {
     std::vector<int> formation;
-    for (int i = 0; i < 4; i++) formation.push_back(i);
+    for (int i = a; i < b; i++) formation.push_back(i);
     positionHelper->setPlatoonFormation(formation);
 }
 
 void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
 {
     int ID = positionHelper->getId();
+  /*  std::string platooningVType;
+    platooningVType = platooningVType = "vtypeauto";
+*/
 
-    if(ID == 18){
+    if(ID == 10){
         traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
         traciVehicle->setActiveController(Plexe::ACC);
         traciVehicle->setFixedLane(platoonLane);
@@ -64,12 +67,14 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
         positionHelper->setPlatoonLane(platoonLane);
         positionHelper->setPlatoonSpeed(100 / 3.6);
         positionHelper->setPlatoonId(positionHelper->getId());
-        setupFormation();
-        startManeuver = new cMessage();
-        scheduleAt(simTime() + SimTime(20), startManeuver);
 
-    }else if(ID>18 && ID<22){
-        traciVehicle->setCruiseControlDesiredSpeed(130.0 / 3.6);
+     //   traciVehicle->enableAutoLaneChanging(true);
+        setupFormation(10,18);
+        startManeuver = new cMessage();
+        scheduleAt(simTime() + SimTime(3), startManeuver);
+
+    }else if((ID>10)){
+        traciVehicle->setCruiseControlDesiredSpeed(150.0 / 3.6);
         traciVehicle->setActiveController(Plexe::CACC);
         traciVehicle->setFixedLane(platoonLane);
 
@@ -77,16 +82,46 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
         positionHelper->setPlatoonLane(platoonLane);
         positionHelper->setPlatoonSpeed(100 / 3.6);
         positionHelper->setPlatoonId(positionHelper->getLeaderId());
-        setupFormation();
 
-    }else{
+        platoonChange = new cMessage();
+        scheduleAt(simTime() + SimTime(2), platoonChange);
+
+     //   positionHelper->setFrontId(ID-1);
+      /*  int LID = positionHelper->getLeaderId();
+        platooningVType = "vtypeauto";
+        std::stringstream ssl, ss;
+        ssl << platooningVType << "." << 9;
+        ss << platooningVType << "." << ID-1;
+        traciVehicle -> enableAutoFeed(true, ssl.str(), ss.str());
+        */
+
+        setupFormation(10,18);
+
+    }else if(ID<5){
+        traciVehicle->setCruiseControlDesiredSpeed(110 / 3.6);
+        traciVehicle->setActiveController(Plexe::ACC);
+
+        positionHelper->setPlatoonId(-1);
+        positionHelper->setIsLeader(false);
+        positionHelper->setPlatoonLane(-1);
+        traciVehicle->enableAutoLaneChanging(false);
+
+        std::vector<nodeData> vehData = getDattaa();
+        traciVehicle->setFixedLane(traciVehicle->getLaneIndex());
+        
+         
+    }else if(ID<10){
         traciVehicle->setCruiseControlDesiredSpeed(100 / 3.6);
         traciVehicle->setActiveController(Plexe::ACC);
 
         positionHelper->setPlatoonId(-1);
         positionHelper->setIsLeader(false);
         positionHelper->setPlatoonLane(-1);
-         
+        traciVehicle->enableAutoLaneChanging(false);
+
+        std::vector<nodeData> vehData = getDattaa();
+        traciVehicle->setFixedLane(traciVehicle->getLaneIndex());
+
     }
 /*
     switch (positionHelper->getId()) {
@@ -183,6 +218,24 @@ void JoinManeuverScenario::handleSelfMsg(cMessage* msg)
 
     } 
 
+    if (msg == platoonChange){
+      //app->startJoinManeuver(0, 0, -1); 
+        platoonChange = new cMessage();
+        scheduleAt(simTime() + SimTime(1, SIMTIME_MS), platoonChange); 
+        std::vector<nodeData> vehData = getDattaa();
+
+        if(vehData[positionHelper->getId()].positionY != vehData[10].positionY){
+            traciVehicle->setFixedLane(vehData[9].positionY);
+        }
+
+    } 
+
+
+
+
+
+
+
     if (msg == startSendPos) {
         mobility = Veins::TraCIMobilityAccess().get(getParentModule());
         traciVehicle = mobility->getVehicleCommandInterface();
@@ -241,14 +294,14 @@ void JoinManeuverScenario::platoonPath()
         sideGo = early;
     }
     early = 0;
-    traciVehicle->setCruiseControlDesiredSpeed(130 / 3.6);
+    final_speed = 130;
     for(nodeData item:eachLane[currentLane]){
         int distance= (item.positionX - myVehicle.positionX);
-        if((distance>(40)) && (distance < 90)){
-            traciVehicle->setCruiseControlDesiredSpeed( 110 / 3.6);
+        if((distance>(80)) && (distance < 120)){
+            final_speed = 120;
         }
-        else if((distance>0 && distance < (40)) || (stucked!=0)){
-            final_speed = 1;
+        else if((distance>0 && distance < (80)) || (stucked!=0)){
+            
             traciVehicle->setCruiseControlDesiredSpeed(item.speed);
             speed_front= item.speed;
             state=1;
@@ -281,7 +334,7 @@ void JoinManeuverScenario::platoonPath()
             int flag = 0;
             for(nodeData side:eachLane[moveLane]){
                 distance=side.positionX- myVehicle.positionX;
-                if(distance>-8 && distance < 8){
+                if(distance>0 && distance < 8){
                     flag=1;
                     speed_side1 = side.speed;
                     break;
@@ -300,7 +353,7 @@ void JoinManeuverScenario::platoonPath()
                 }else{
                     for(nodeData side:eachLane[moveLane]){
                         distance=side.positionX- myVehicle.positionX;
-                        if(distance>-8 && distance < 8){
+                        if(distance>0 && distance < 8){
                             noption2=1;
                             state=4;
                             speed_side2 = side.speed;
@@ -315,8 +368,8 @@ void JoinManeuverScenario::platoonPath()
                 if((speed_front == speed_side1)){
                     gotoback=1;
                 }else if(stucked!=0){
-                    traciVehicle->setCruiseControlDesiredSpeed(80 / 3.6);
-                    final_speed = 2;
+                    final_speed = 80;
+                    
                 }else{
 
                 }
@@ -332,8 +385,8 @@ void JoinManeuverScenario::platoonPath()
                 early = moveLane - currentLane;
                 traciVehicle->setFixedLane(moveLane);
 
-                traciVehicle->setCruiseControlDesiredSpeed(130 / 3.6);
-                final_speed = 3;
+                final_speed =130;
+                
                 int val= stucked*stucked; 
                 if( val == 4){
                     stucked = stucked/2;
@@ -350,15 +403,17 @@ void JoinManeuverScenario::platoonPath()
                     stucked= -2;
                 }
 
-                traciVehicle->setCruiseControlDesiredSpeed(80 / 3.6);
-                final_speed = 4;
+                final_speed = 80 ;
+                
             }       
             ////
             break;
         }
+
+
     }
     
-
+    traciVehicle->setCruiseControlDesiredSpeed(final_speed / 3.6);
 
 
 }

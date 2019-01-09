@@ -19,6 +19,11 @@
 
 using namespace Veins;
 
+#ifndef coreEV
+#define coreEV_clear EV
+#define coreEV EV << logName() << "::" << getClassName() << ": "
+#endif
+
 Define_Module(AutoLaneChangeScenario);
 
 void AutoLaneChangeScenario::initialize(int stage)
@@ -32,6 +37,8 @@ void AutoLaneChangeScenario::initialize(int stage)
 
     if (stage == 1) {
         platooningVType = par("platooningVType").stdstringValue();
+
+        EV << "easy............"<< platooningVType << std::endl;
 
         traciVehicle->setFixedLane(traciVehicle->getLaneIndex(), false);
         traciVehicle->setSpeedMode(0);
@@ -48,7 +55,9 @@ void AutoLaneChangeScenario::initialize(int stage)
             std::stringstream ssl, ss;
             ssl << platooningVType << "." << positionHelper->getLeaderId();
             ss << platooningVType << "." << positionHelper->getFrontId();
-            traciVehicle->enableAutoFeed(true, ssl.str(), ss.str());
+
+            EV << "easy2............"<< positionHelper->getLeaderId() << positionHelper->getFrontId() << std::endl;
+            // traciVehicle->enableAutoFeed(true, ssl.str(), ss.str());
             traciVehicle->setCruiseControlDesiredSpeed(mobility->getSpeed() + 10);
         }
     }

@@ -28,6 +28,9 @@ void JoinTrafficManager::initialize(int stage)
 
         insertJoinerMessage = new cMessage("");
         scheduleAt(platoonInsertTime + SimTime(1), insertJoinerMessage);
+
+        insertJoinerMessage2 = new cMessage("");
+        scheduleAt(platoonInsertTime + SimTime(2), insertJoinerMessage2);
     }
 }
 
@@ -38,6 +41,10 @@ void JoinTrafficManager::handleSelfMsg(cMessage* msg)
 
     if (msg == insertJoinerMessage) {
         insertNodes();
+    }
+
+    if (msg == insertJoinerMessage2) {
+        insertNodes2();
     }
 }
 
@@ -109,16 +116,73 @@ JoinTrafficManager::~JoinTrafficManager()
 
 void JoinTrafficManager::insertNodes()
 {
-    int g = 200;
-    int s = 25;
+    int g = 250;
+    int s = 50;
 
     std::vector< std::vector<int> > v;
-    std::vector<int> ln0 = {g,g-2*s,g-4*s};
-    std::vector<int> ln1 = {g-s,g-3*s,g-5*s};
-    std::vector<int> ln2 = {g,g-2*s,g-4*s};
-    std::vector<int> ln3 = {g-s,g-3*s,g-5*s};
-    std::vector<int> ln4 = {g,g-2*s,g-4*s};
-    std::vector<int> ln5 = {g-s,g-3*s,g-5*s};
+    std::vector<int> ln0 = {};
+    std::vector<int> ln1 = {g-s};
+    std::vector<int> ln2 = {g};
+    std::vector<int> ln3 = {g-s};
+    std::vector<int> ln4 = {g};
+    std::vector<int> ln5 = {g-s};
+
+
+/*
+    std::vector< std::vector<int> > v;
+    std::vector<int> ln0 = {150,100,50};
+    std::vector<int> ln1 = {150,100,50};
+    std::vector<int> ln2 = {150,100,50};
+    std::vector<int> ln3 = {150,100,50};
+    std::vector<int> ln4 = {150,100,50};
+    std::vector<int> ln5 = {150,100,50};
+*/
+    v.push_back(ln0);
+    v.push_back(ln1);
+    v.push_back(ln2);
+    v.push_back(ln3);
+    v.push_back(ln4);
+    v.push_back(ln5);
+
+    int automatedCars = 18;
+    int automatedLanes = 6;
+    // keep 50 m between human vehicles (random number)
+    double distance = 50;
+    // total number of cars per lane
+    int carsPerLane = automatedCars / automatedLanes;
+    // total length for one lane
+    double totalLength = carsPerLane * (4 + distance);
+
+    // for each lane, we create an offset to have misaligned platoons
+    double* laneOffset = new double[automatedLanes];
+    for (int l = 0; l < automatedLanes; l++) laneOffset[l] = uniform(0, 20);
+
+    double currentPos = totalLength;
+    for (int i = 0; i < 6; i++) {
+        for (int l = 0; l < v[i].size(); l++) {
+            automated.position = v[i][l];
+            automated.lane = i;
+            addVehicleToQueue(0, automated);
+        }
+        currentPos -= (4 + distance);
+    }
+
+    delete[] laneOffset;
+}
+
+
+void JoinTrafficManager::insertNodes2()
+{
+    int g = 150;
+    int s = 50;
+
+    std::vector< std::vector<int> > v;
+    std::vector<int> ln0 = {g};
+    std::vector<int> ln1 = {g-s};
+    std::vector<int> ln2 = {g};
+    std::vector<int> ln3 = {g-s};
+    std::vector<int> ln4 = {g};
+    std::vector<int> ln5 = {};
 
 
 /*

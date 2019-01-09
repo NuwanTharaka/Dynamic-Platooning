@@ -25,9 +25,11 @@
 
 class JoinManeuverScenario : public BaseScenario {
 
+
 protected:
     // message used to start the maneuver
     cMessage* startManeuver;
+    cMessage* platoonChange;
 
     //message to start sending pos
     cMessage* startSendPos;
@@ -38,6 +40,11 @@ protected:
      int stucked = 0;
 
 public:
+
+
+
+
+
     static const int MANEUVER_TYPE = 12347;
 
     virtual void initialize(int stage) override;
@@ -58,7 +65,7 @@ protected:
     virtual void handleSelfMsg(cMessage* msg) override;
 
     void prepareManeuverCars(int platoonLane);
-    void setupFormation();
+    void setupFormation(int a,int b);
     void platoonPath();
 
 };

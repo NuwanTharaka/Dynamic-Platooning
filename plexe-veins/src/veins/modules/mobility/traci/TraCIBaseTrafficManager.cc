@@ -23,6 +23,7 @@ std::vector<nodeData> vehData;
 
 Define_Module(TraCIBaseTrafficManager);
 
+
 void TraCIBaseTrafficManager::initialize(int stage)
 {
 
@@ -55,6 +56,8 @@ void TraCIBaseTrafficManager::initialize(int stage)
         scheduleAt(simTime() + manager->getUpdateInterval(), insertVehiclesTrigger);
     }
 }
+
+
 
 void TraCIBaseTrafficManager::handleSelfMsg(cMessage* msg)
 {

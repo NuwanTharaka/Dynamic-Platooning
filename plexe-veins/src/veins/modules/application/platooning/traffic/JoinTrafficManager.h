@@ -34,9 +34,12 @@ public:
 
 protected:
     cMessage* insertJoinerMessage;
+    cMessage* insertJoinerMessage2;
+
 
     void insertJoiner();
     void insertNodes();
+    void insertNodes2();
 
     virtual void handleSelfMsg(cMessage* msg);
 };

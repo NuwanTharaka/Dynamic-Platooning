@@ -43,7 +43,7 @@ protected:
     // this is used to start traffic generation
     cMessage* insertPlatoonMessage;
 
-    void insertPlatoons();
+    void insertPlatoons(int size);
 
     virtual void handleSelfMsg(cMessage* msg);
 
