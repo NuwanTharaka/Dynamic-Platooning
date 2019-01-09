@@ -133,7 +133,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
         positionHelper->setIsLeader(false);
         positionHelper->setPlatoonLane(-1);
         startManeuver1 = new cMessage();
-        scheduleAt(simTime() + SimTime(9), startManeuver1);
+        scheduleAt(simTime() + SimTime(8), startManeuver1);
         break;
 
     }case 9: {
@@ -174,7 +174,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
         // after 30 seconds of simulation, start the maneuver
         //EV<<"EasyToFind.....sheduling"<<positionHelper->getId()<< endl;
         startManeuver = new cMessage();
-        scheduleAt(simTime() + SimTime(8), startManeuver);
+        scheduleAt(simTime() + SimTime(75), startManeuver);
         break;
     }
     }
@@ -266,8 +266,7 @@ void JoinManeuverScenario::handleSelfMsg(cMessage* msg)
 
 }
 
-
-
+/*
 void JoinManeuverScenario::platoonPath()
 {
     int final_speed=0;
@@ -432,5 +431,5 @@ void JoinManeuverScenario::platoonPath()
 
 }
 
-
+*/
 

@@ -38,7 +38,7 @@ void PlatoonsTrafficManager::initialize(int stage)
         insertPlatoonMessage = new cMessage("");
         scheduleAt(platoonInsertTime+ SimTime(0), insertPlatoonMessage);
         insertPlatoonMessage1 = new cMessage("");
-        scheduleAt(platoonInsertTime+ SimTime(2), insertPlatoonMessage1);
+        scheduleAt(platoonInsertTime+ SimTime(4), insertPlatoonMessage1);
     }
 }
 

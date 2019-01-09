@@ -299,7 +299,8 @@ void JoinAtBack::shortPath_fn()
 
     std::vector<nodeData> vehData = getData();
     nodeData myVehicle = vehData[myVehicleId];
-    int needDistance = vehData[(targetPlatoonData->platoonLeader)+((targetPlatoonData->joinIndex) - 1)].positionX - myVehicle.positionX;
+    
+    int needDistance = vehData[targetPlatoonData->newFormation.at((targetPlatoonData->joinIndex) - 1)].positionX - myVehicle.positionX;
 
 
     int currentLane =  myVehicle.positionY;
@@ -339,7 +340,7 @@ void JoinAtBack::shortPath_fn()
             p=true;
         }
     }else{
-        if((needDistance> -20) && (needDistance<10) ){
+        if((needDistance> -20) && (needDistance<20) ){
             p= false;
         }else{
             p=true;
@@ -358,7 +359,7 @@ void JoinAtBack::shortPath_fn()
         traciVehicle->setCruiseControlDesiredSpeed(targetPlatoonData->platoonSpeed + ((30 / 3.6)*direction));
         for(nodeData item:eachLane[currentLane]){
             int distance= (item.positionX - myVehicle.positionX)*direction;
-            if((distance>(45-5*direction)) && (distance < 90)){
+            if((distance>(45-5*direction)) && (distance < 60)){
                 traciVehicle->setCruiseControlDesiredSpeed(targetPlatoonData->platoonSpeed + ((10 / 3.6)*direction));
             }
             else if((distance>0 && distance < (45-5*direction)) || (stucked!=0)){
@@ -560,7 +561,7 @@ void JoinAtBack::nearPlatoon_fn(){
         }
     }else{
         flag_nearPlatoon=0;
-        if((needDistance < 0) || (needDistance > 10)){
+        if((needDistance < 0) || (needDistance > 13)){
             flag_shortPath = 1;
             direction=1;
         }else{
