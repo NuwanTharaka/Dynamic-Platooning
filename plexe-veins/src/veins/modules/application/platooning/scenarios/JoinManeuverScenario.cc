@@ -69,12 +69,12 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
         positionHelper->setPlatoonId(positionHelper->getId());
 
      //   traciVehicle->enableAutoLaneChanging(true);
-        setupFormation(10,18);
+        setupFormation(10,14);
         startManeuver = new cMessage();
         scheduleAt(simTime() + SimTime(3), startManeuver);
 
     }else if((ID>10)){
-        traciVehicle->setCruiseControlDesiredSpeed(150.0 / 3.6);
+        traciVehicle->setCruiseControlDesiredSpeed(180.0 / 3.6);
         traciVehicle->setActiveController(Plexe::CACC);
         traciVehicle->setFixedLane(platoonLane);
 
@@ -95,7 +95,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
         traciVehicle -> enableAutoFeed(true, ssl.str(), ss.str());
         */
 
-        setupFormation(10,18);
+        setupFormation(10,14);
 
     }else if(ID<5){
         traciVehicle->setCruiseControlDesiredSpeed(110 / 3.6);
@@ -221,11 +221,11 @@ void JoinManeuverScenario::handleSelfMsg(cMessage* msg)
     if (msg == platoonChange){
       //app->startJoinManeuver(0, 0, -1); 
         platoonChange = new cMessage();
-        scheduleAt(simTime() + SimTime(1, SIMTIME_MS), platoonChange); 
+        scheduleAt(simTime() + SimTime(5, SIMTIME_MS), platoonChange); 
         std::vector<nodeData> vehData = getDattaa();
 
         if(vehData[positionHelper->getId()].positionY != vehData[10].positionY){
-            traciVehicle->setFixedLane(vehData[9].positionY);
+            traciVehicle->setFixedLane(vehData[10].positionY);
         }
 
     } 
@@ -297,10 +297,10 @@ void JoinManeuverScenario::platoonPath()
     final_speed = 130;
     for(nodeData item:eachLane[currentLane]){
         int distance= (item.positionX - myVehicle.positionX);
-        if((distance>(80)) && (distance < 120)){
+        if((distance>(15)) && (distance < 40)){
             final_speed = 120;
         }
-        else if((distance>0 && distance < (80)) || (stucked!=0)){
+        else if((distance>0 && distance < (15)) || (stucked!=0)){
             
             traciVehicle->setCruiseControlDesiredSpeed(item.speed);
             speed_front= item.speed;

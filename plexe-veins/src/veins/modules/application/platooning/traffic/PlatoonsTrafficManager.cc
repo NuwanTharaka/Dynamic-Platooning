@@ -56,7 +56,7 @@ void PlatoonsTrafficManager::handleSelfMsg(cMessage* msg)
     TraCIBaseTrafficManager::handleSelfMsg(msg);
 
     if (msg == insertPlatoonMessage) {
-        insertPlatoons(8);
+        insertPlatoons(4);
 
     }
 /*
