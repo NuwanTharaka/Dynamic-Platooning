@@ -36,9 +36,7 @@ void PlatoonsTrafficManager::initialize(int stage)
         platoonLeaderHeadway = par("platoonLeaderHeadway").doubleValue();
         platooningVType = par("platooningVType").stdstringValue();
         insertPlatoonMessage = new cMessage("");
-        scheduleAt(platoonInsertTime+ SimTime(0), insertPlatoonMessage);
-        insertPlatoonMessage1 = new cMessage("");
-        scheduleAt(platoonInsertTime+ SimTime(2), insertPlatoonMessage1);
+        scheduleAt(platoonInsertTime, insertPlatoonMessage);
     }
 }
 
@@ -56,17 +54,8 @@ void PlatoonsTrafficManager::handleSelfMsg(cMessage* msg)
     TraCIBaseTrafficManager::handleSelfMsg(msg);
 
     if (msg == insertPlatoonMessage) {
-        insertPlatoons();
-
+        //insertPlatoons();
     }
-
-    if (msg == insertPlatoonMessage1) {
-        insertPlatoons();
-
-    }
-
-
-
 }
 
 void PlatoonsTrafficManager::insertPlatoons()

@@ -63,7 +63,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
         // this is the leader
         traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
         traciVehicle->setActiveController(Plexe::ACC);
-        traciVehicle->setFixedLane(platoonLane);
+        //traciVehicle->setFixedLane(platoonLane);
 
         positionHelper->setIsLeader(true);
         positionHelper->setPlatoonLane(platoonLane);
@@ -80,7 +80,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
         // these are the followers which are already in the platoon
         traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
         traciVehicle->setActiveController(Plexe::CACC);
-        traciVehicle->setFixedLane(platoonLane);
+        //traciVehicle->setFixedLane(platoonLane);
 
         positionHelper->setIsLeader(false);
         positionHelper->setPlatoonLane(platoonLane);
@@ -95,7 +95,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
         // this is the leader
         traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
         traciVehicle->setActiveController(Plexe::ACC);
-        traciVehicle->setFixedLane(platoonLane);
+        //traciVehicle->setFixedLane(platoonLane);
 
         positionHelper->setIsLeader(true);
         positionHelper->setPlatoonLane(platoonLane);
@@ -112,7 +112,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
         // these are the followers which are already in the platoon
         traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
         traciVehicle->setActiveController(Plexe::CACC);
-        traciVehicle->setFixedLane(platoonLane);
+        //traciVehicle->setFixedLane(platoonLane);
 
         positionHelper->setIsLeader(false);
         positionHelper->setPlatoonLane(platoonLane);
@@ -126,7 +126,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
     case 8: {
         // this is the car which will join
         traciVehicle->setCruiseControlDesiredSpeed(100 / 3.6);
-        traciVehicle->setFixedLane(2);
+        //traciVehicle->setFixedLane(2);
         traciVehicle->setActiveController(Plexe::ACC);
 
         positionHelper->setPlatoonId(-1);
@@ -139,7 +139,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
     }case 9: {
         traciVehicle->setCruiseControlDesiredSpeed(100 / 3.6);
         traciVehicle->setActiveController(Plexe::ACC);
-        traciVehicle->setFixedLane(2);
+        //traciVehicle->setFixedLane(2);
 
         positionHelper->setPlatoonId(-1);
         positionHelper->setIsLeader(false);
@@ -151,7 +151,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
     case 10: {
         traciVehicle->setCruiseControlDesiredSpeed(100 / 3.6);
         traciVehicle->setActiveController(Plexe::ACC);
-        traciVehicle->setFixedLane(2);
+        //traciVehicle->setFixedLane(2);
 
         positionHelper->setPlatoonId(-1);
         positionHelper->setIsLeader(false);
@@ -165,7 +165,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
        // traciVehicle->setCruiseControlDesiredSpeed(100 / 3.6);
         traciVehicle->setCruiseControlDesiredSpeed((100 / 3.6));
         traciVehicle->setActiveController(Plexe::ACC);
-        traciVehicle->setFixedLane(0);
+        //traciVehicle->setFixedLane(0);
 
         positionHelper->setPlatoonId(-1);
         positionHelper->setIsLeader(false);
