@@ -63,9 +63,15 @@ JoinTrafficManager::~JoinTrafficManager()
 
 void JoinTrafficManager::insertNodes()
 {
+/*
+    std::vector<int> v;
+    std::vector<int> node;
+    node.push_back(0);
+    node.push_back(0);
+    node.push_back(0);
 
-    std::vector< std::vector<int> > v;
-    std::vector<int> ln0 = {150,75,30};
+
+    std::vector<int> ln0;
     std::vector<int> ln1 = {110,95,50};
     std::vector<int> ln2 = {120,110,40};
     std::vector<int> ln3 = {80,70,35};
@@ -76,7 +82,14 @@ void JoinTrafficManager::insertNodes()
     v.push_back(ln2);
     v.push_back(ln3);
     v.push_back(ln4);
-    v.push_back(ln5);
+    v.push_back(ln5); */
+
+    float ln0 [][3] = {{110, 120, 1}, {95,120,2}, {50, 130, 3}};
+    float ln1 [][3] = {{120, 120, 1}, {110,120,2}, {40, 130, 3}};
+    float ln2 [][3] = {{80, 120, 1}, {70,120,2}, {35, 130, 3}};
+    float ln3 [][3] = {{100, 120, 1}, {80,120,2}, {40, 130, 3}};
+    float ln4 [][3] = {{130, 120, 1}, {100,120,2}, {30, 130, 3}};
+    float ln5 [][3] = {{90, 120, 1}, {75,120,2}, {55, 130, 3}};
 
     int automatedCars = 18;
     int automatedLanes = 6;
@@ -92,13 +105,53 @@ void JoinTrafficManager::insertNodes()
     for (int l = 0; l < automatedLanes; l++) laneOffset[l] = uniform(0, 20);
 
     double currentPos = totalLength;
-    for (int i = 0; i < 6; i++) {
-        for (int l = 0; l < v[i].size(); l++) {
-            automated.position = v[i][l];
-            automated.lane = i;
-            addVehicleToQueue(0, automated);
-        }
-        currentPos -= (4 + distance);
+    for (int l = 0; l < sizeof(ln0) / sizeof(*ln0); l++) {
+        automated.position = ln0[l][0];
+        automated.lane = 0;
+        automated.destination = ln0[l][2];
+        automated.maxSpeed = ln0[l][1];
+        addVehicleToQueue(0, automated);
+    }
+
+    for (int l = 0; l < sizeof(ln1) / sizeof(*ln1); l++) {
+        automated.position = ln1[l][0];
+        automated.lane = 1;
+        automated.destination = ln1[l][2];
+        automated.maxSpeed = ln1[l][1];
+        addVehicleToQueue(0, automated);
+    }
+
+    for (int l = 0; l < sizeof(ln2) / sizeof(*ln2); l++) {
+        automated.position = ln2[l][0];
+        automated.lane = 2;
+        automated.destination = ln2[l][2];
+        automated.maxSpeed = ln2[l][1];
+        addVehicleToQueue(0, automated);
+    }
+
+    for (int l = 0; l < sizeof(ln3) / sizeof(*ln3); l++) {
+        automated.position = ln3[l][0];
+        automated.lane = 3;
+        automated.destination = ln3[l][2];
+        automated.maxSpeed = ln3[l][1];
+        addVehicleToQueue(0, automated);
+    }
+
+    currentPos = totalLength;
+    for (int l = 0; l < sizeof(ln4) / sizeof(*ln4); l++) {
+        automated.position = ln4[l][0];
+        automated.lane = 4;
+        automated.destination = ln4[l][2];
+        automated.maxSpeed = ln4[l][1];
+        addVehicleToQueue(0, automated);
+    }
+
+    for (int l = 0; l < sizeof(ln5) / sizeof(*ln5); l++) {
+        automated.position = ln5[l][0];
+        automated.lane = 5;
+        automated.destination = ln5[l][2];
+        automated.maxSpeed = ln5[l][1];
+        addVehicleToQueue(0, automated);
     }
 
     delete[] laneOffset;

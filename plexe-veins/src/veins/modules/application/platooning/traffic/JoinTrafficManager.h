@@ -25,6 +25,14 @@ class JoinTrafficManager : public PlatoonsTrafficManager {
 public:
     virtual void initialize(int stage);
 
+    struct nodes
+    {   
+        float postion;
+        int destination;
+        int maxSpeed;
+        
+    };
+
     JoinTrafficManager()
         : PlatoonsTrafficManager()
     {
