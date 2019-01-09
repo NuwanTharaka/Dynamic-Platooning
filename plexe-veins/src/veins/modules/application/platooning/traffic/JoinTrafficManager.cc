@@ -29,26 +29,6 @@ void JoinTrafficManager::initialize(int stage)
         insertJoinerMessage = new cMessage("");
         scheduleAt(platoonInsertTime + SimTime(2000, SIMTIME_MS), insertJoinerMessage);
 
-        insertJoinerMessage2 = new cMessage("");
-        scheduleAt(platoonInsertTime + SimTime(2200, SIMTIME_MS), insertJoinerMessage2);
-
-        insertJoinerMessage3 = new cMessage("");
-        scheduleAt(platoonInsertTime + SimTime(2400, SIMTIME_MS), insertJoinerMessage3);
-
-        insertJoinerMessage4 = new cMessage("");
-        scheduleAt(platoonInsertTime + SimTime(4000, SIMTIME_MS), insertJoinerMessage4);
-
-        insertJoinerMessage5 = new cMessage("");
-        scheduleAt(platoonInsertTime + SimTime(2000, SIMTIME_MS), insertJoinerMessage5);
-
-        insertJoinerMessage6 = new cMessage("");
-        scheduleAt(platoonInsertTime + SimTime(2000, SIMTIME_MS), insertJoinerMessage6);
-
-        insertJoinerMessage7 = new cMessage("");
-        scheduleAt(platoonInsertTime + SimTime(2000, SIMTIME_MS), insertJoinerMessage7);
-
-        
-
     }
 }
 
@@ -58,16 +38,7 @@ void JoinTrafficManager::handleSelfMsg(cMessage* msg)
     PlatoonsTrafficManager::handleSelfMsg(msg);
 
     if (msg == insertJoinerMessage) {
-        insertJoiner(0);
-    }
-    if (msg == insertJoinerMessage2) {
-        insertJoiner(0);
-    }
-    if (msg == insertJoinerMessage3) {
-        insertJoiner(0);
-    }
-    if (msg == insertJoinerMessage4) {
-       insertJoiner(0);
+        insertNodes();
     }
 }
 
@@ -90,3 +61,45 @@ JoinTrafficManager::~JoinTrafficManager()
     insertJoinerMessage3 = nullptr;
 }
 
+void JoinTrafficManager::insertNodes()
+{
+
+    std::vector< std::vector<int> > v;
+    std::vector<int> ln0 = {150,75,30};
+    std::vector<int> ln1 = {110,95,50};
+    std::vector<int> ln2 = {120,110,40};
+    std::vector<int> ln3 = {80,70,35};
+    std::vector<int> ln4 = {100,80,40};
+    std::vector<int> ln5 = {130,100,30};
+    v.push_back(ln0);
+    v.push_back(ln1);
+    v.push_back(ln2);
+    v.push_back(ln3);
+    v.push_back(ln4);
+    v.push_back(ln5);
+
+    int automatedCars = 18;
+    int automatedLanes = 6;
+    // keep 50 m between human vehicles (random number)
+    double distance = 50;
+    // total number of cars per lane
+    int carsPerLane = automatedCars / automatedLanes;
+    // total length for one lane
+    double totalLength = carsPerLane * (4 + distance);
+
+    // for each lane, we create an offset to have misaligned platoons
+    double* laneOffset = new double[automatedLanes];
+    for (int l = 0; l < automatedLanes; l++) laneOffset[l] = uniform(0, 20);
+
+    double currentPos = totalLength;
+    for (int i = 0; i < 6; i++) {
+        for (int l = 0; l < v[i].size(); l++) {
+            automated.position = v[i][l];
+            automated.lane = i;
+            addVehicleToQueue(0, automated);
+        }
+        currentPos -= (4 + distance);
+    }
+
+    delete[] laneOffset;
+}
