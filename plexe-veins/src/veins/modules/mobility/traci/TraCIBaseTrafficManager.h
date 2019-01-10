@@ -28,6 +28,7 @@ void sendData(int index, double speed, double acceleration, double positionX, do
 
 /** Structure for map data*/
 struct nodeData {
+    int id;
     double speed; // vehicle speed
     double acceleration; // vehicle acceleration
     double positionX; // position of the vehicle in the simulation

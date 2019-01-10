@@ -299,8 +299,10 @@ void JoinAtBack::shortPath_fn()
 
     std::vector<nodeData> vehData = getData();
     nodeData myVehicle = vehData[myVehicleId];
+
+    int sir=targetPlatoonData->newFormation.at((targetPlatoonData->joinIndex) - 1);
     
-    int needDistance = vehData[targetPlatoonData->newFormation.at((targetPlatoonData->joinIndex) - 1)].positionX - myVehicle.positionX;
+    int needDistance = vehData[sir].positionX - myVehicle.positionX;
 
 
     int currentLane =  myVehicle.positionY;
@@ -356,13 +358,15 @@ void JoinAtBack::shortPath_fn()
             sideGo = early;
         }
         early = 0;
+        int  i = -1;
         traciVehicle->setCruiseControlDesiredSpeed(targetPlatoonData->platoonSpeed + ((30 / 3.6)*direction));
         for(nodeData item:eachLane[currentLane]){
             int distance= (item.positionX - myVehicle.positionX)*direction;
+            i=i+1;
             if((distance>(45-5*direction)) && (distance < 60)){
                 traciVehicle->setCruiseControlDesiredSpeed(targetPlatoonData->platoonSpeed + ((10 / 3.6)*direction));
             }
-            else if((distance>0 && distance < (45-5*direction)) || (stucked!=0)){
+            else if(((distance>0 && distance < (45-5*direction)) && (sir != item.id)) || (stucked!=0)) {
                 final_speed = 1;
                 traciVehicle->setCruiseControlDesiredSpeed(item.speed);
                 speed_front= item.speed;

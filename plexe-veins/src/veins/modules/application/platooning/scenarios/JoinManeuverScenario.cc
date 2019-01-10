@@ -174,7 +174,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
         // after 30 seconds of simulation, start the maneuver
         //EV<<"EasyToFind.....sheduling"<<positionHelper->getId()<< endl;
         startManeuver = new cMessage();
-        scheduleAt(simTime() + SimTime(75), startManeuver);
+    //    scheduleAt(simTime() + SimTime(25), startManeuver);
         break;
     }
     }
