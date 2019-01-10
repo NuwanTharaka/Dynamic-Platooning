@@ -57,6 +57,20 @@ class GeneralPlatooningApp : public BaseApp {
 
 public:
     /** c'tor for GeneralPlatooningApp */
+
+
+    int onGame =0;
+
+
+    void highGame(){
+        onGame = 1;
+    }
+
+    void lowGame(){
+        onGame = 0;
+    }
+
+
     GeneralPlatooningApp()
         : inManeuver(false)
         , role(PlatoonRole::NONE)

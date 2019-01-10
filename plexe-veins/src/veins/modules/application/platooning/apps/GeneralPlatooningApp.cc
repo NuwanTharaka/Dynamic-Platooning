@@ -46,7 +46,7 @@ void GeneralPlatooningApp::initialize(int stage)
 bool GeneralPlatooningApp::isJoinAllowed() const
 {
    // return ((role == PlatoonRole::LEADER || role == PlatoonRole::NONE) && !inManeuver);
-    return ((role == PlatoonRole::LEADER || role == PlatoonRole::NONE));
+    return ((role == PlatoonRole::LEADER || role == PlatoonRole::NONE) && (onGame ==0));
 }
 
 void GeneralPlatooningApp::startJoinManeuver(int platoonId, int leaderId, int position)
@@ -107,6 +107,8 @@ void GeneralPlatooningApp::handleUpdatePlatoonFormation(const UpdatePlatoonForma
         f.push_back(msg->getPlatoonFormation(i));
     }
     positionHelper->setPlatoonFormation(f);
+
+    lowGame();
 }
 
 void GeneralPlatooningApp::setPlatoonRole(PlatoonRole r)

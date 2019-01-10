@@ -292,14 +292,15 @@ void JoinAtBack::shortPath_fn()
         std::vector<nodeData> kill;
         eachLane.push_back(kill);
     }
-    int nLanes = 4;
+    int nLanes = 6;
     int state = 0;
 
     int myVehicleId = positionHelper->getId();
 
     std::vector<nodeData> vehData = getData();
     nodeData myVehicle = vehData[myVehicleId];
-    int needDistance = vehData[(targetPlatoonData->platoonLeader)+((targetPlatoonData->joinIndex) - 1)].positionX - myVehicle.positionX;
+    int sir=targetPlatoonData->newFormation.at((targetPlatoonData->joinIndex) - 1);
+    int needDistance = vehData[sir].positionX - myVehicle.positionX;
 
 
     int currentLane =  myVehicle.positionY;
@@ -356,12 +357,14 @@ void JoinAtBack::shortPath_fn()
         }
         early = 0;
         traciVehicle->setCruiseControlDesiredSpeed(targetPlatoonData->platoonSpeed + ((30 / 3.6)*direction));
+        int i =-1;
         for(nodeData item:eachLane[currentLane]){
+            i=i+1;
             int distance= (item.positionX - myVehicle.positionX)*direction;
-            if((distance>(45-5*direction)) && (distance < 90)){
+            if((distance>(25-5*direction)) && (distance < 70)){
                 traciVehicle->setCruiseControlDesiredSpeed(targetPlatoonData->platoonSpeed + ((10 / 3.6)*direction));
             }
-            else if((distance>0 && distance < (45-5*direction)) || (stucked!=0)){
+            else if(((distance>0 && distance < (25-5*direction)) && (i != sir) || (stucked!=0)))  {
                 final_speed = 1;
                 traciVehicle->setCruiseControlDesiredSpeed(item.speed);
                 speed_front= item.speed;
@@ -490,7 +493,7 @@ void JoinAtBack::nearPlatoon_fn(){
         std::vector<nodeData> kill;
         eachLane.push_back(kill);
     }
-    int nLanes = 4;
+    int nLanes = 6;
     int state = 0;
 
     int myVehicleId = positionHelper->getId();
@@ -513,7 +516,7 @@ void JoinAtBack::nearPlatoon_fn(){
 
     }
 
-    int needDistance = vehData[targetPlatoonData->platoonLeader+3].positionX - myVehicle.positionX;
+    int needDistance = vehData[targetPlatoonData->newFormation.at((targetPlatoonData->joinIndex) - 1)].positionX - myVehicle.positionX;
     traciVehicle->setCruiseControlDesiredSpeed(targetPlatoonData->platoonSpeed);
     if(targetPlatoonData->platoonLane != currentLane){
         int moveto;
@@ -572,6 +575,11 @@ void JoinAtBack::nearPlatoon_fn(){
        
 }
 
+
+
+
+
+
 void JoinAtBack::handleJoinPlatoonRequest(const JoinPlatoonRequest* msg)
 {
 
@@ -586,6 +594,9 @@ void JoinAtBack::handleJoinPlatoonRequest(const JoinPlatoonRequest* msg)
     app->sendUnicast(response, msg->getVehicleId());
 
     if (!permission) return;
+    //app->highGame();
+
+    //onGame = 1;
 
     app->setInManeuver(true);
     app->setPlatoonRole(PlatoonRole::LEADER);
@@ -697,6 +708,16 @@ void JoinAtBack::handleMoveToPositionAck(const MoveToPositionAck* msg)
     JoinFormation* jf = createJoinFormation(positionHelper->getId(), positionHelper->getExternalId(), positionHelper->getPlatoonId(), joinerData->joinerId, positionHelper->getPlatoonSpeed(), traciVehicle->getLaneIndex(), joinerData->newFormation);
     app->sendUnicast(jf, joinerData->joinerId);
     joinManeuverState = JoinManeuverState::L_WAIT_JOINER_TO_JOIN;
+
+/*    positionHelper->setPlatoonFormation(joinerData->newFormation);
+
+    // send to all vehicles in Platoon
+    for (unsigned int i = 1; i < positionHelper->getPlatoonSize(); i++) {
+        UpdatePlatoonFormation* dup = app->createUpdatePlatoonFormation(positionHelper->getId(), positionHelper->getExternalId(), positionHelper->getPlatoonId(), -1, positionHelper->getPlatoonSpeed(), traciVehicle->getLaneIndex(), joinerData->newFormation);
+        int dest = positionHelper->getMemberId(i);
+        dup->setDestinationId(dest);
+        app->sendUnicast(dup, dest);
+    }*/
 }
 
 void JoinAtBack::handleJoinFormation(const JoinFormation* msg)

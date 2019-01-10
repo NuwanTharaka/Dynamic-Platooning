@@ -29,7 +29,7 @@ protected:
     // message used to start the maneuver
     cMessage* startManeuver;
     cMessage* startManeuver1;
-
+    cMessage* startManeuver2;
     //message to start sending pos
     cMessage* startSendPos;
     // pointer to protocol
@@ -37,9 +37,25 @@ protected:
 
     cMessage* workNearPlatoon;
 
+    cMessage* singleJoin;
+
 
 
     GeneralPlatooningApp* app;
+
+
+
+    int direction=0;
+    int stucked=0;
+    int stucked_lane=0;
+    int early=0;
+    int flag_shortPath = 0;
+    int flag_nearPlatoon = 0;
+    int flag_ready = 0;
+
+
+
+    int vehicle_ID=0;
 
 public:
     static const int MANEUVER_TYPE = 12347;
@@ -67,6 +83,11 @@ protected:
 
     void prepareManeuverCars(int platoonLane);
     void setupFormation(int a,int b);
+
+
+
+    void shortPath_fnc(int vehicle_id);
+    void nearPlatoon_fnc(int vehicle_id);
 };
 
 #endif
