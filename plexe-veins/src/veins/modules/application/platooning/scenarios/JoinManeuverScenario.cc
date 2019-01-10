@@ -214,8 +214,8 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
         scheduleAt(simTime() + SimTime(40), singleJoin);
         vehicle_ID = 7;
         flag_shortPath=1;
-       // startManeuver = new cMessage();
-       // scheduleAt(simTime() + SimTime(180), startManeuver);
+      //  startManeuver = new cMessage();
+      //  scheduleAt(simTime() + SimTime(180), startManeuver);
         
 
         break;
@@ -520,7 +520,7 @@ void JoinManeuverScenario::shortPath_fnc(int vehicle_id)
             if((distance>(25-5*direction)) && (distance < 40)){
                 traciVehicle->setCruiseControlDesiredSpeed(vehData[sir].speed + ((20 / 3.6)*direction));
             }
-            else if(((distance>0 && distance < (25-5*direction)) && (item.id != sir) || (stucked!=0)))  {
+            else if((((distance>0) && (distance < (25-5*direction))) && (item.id != sir) || (stucked!=0)))  {
                 final_speed = 1;
                 traciVehicle->setCruiseControlDesiredSpeed(item.speed);
                 speed_front= item.speed;

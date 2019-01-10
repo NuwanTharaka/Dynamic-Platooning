@@ -32,6 +32,7 @@ struct nodeData {
     double acceleration; // vehicle acceleration
     double positionX; // position of the vehicle in the simulation
     double positionY; // position of the vehicle in the simulation
+    int id;
 };
 
 std::vector<nodeData> getData();
