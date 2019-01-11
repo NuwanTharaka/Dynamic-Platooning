@@ -28,11 +28,11 @@ void sendData(int index, double speed, double acceleration, double positionX, do
 
 /** Structure for map data*/
 struct nodeData {
-    double speed; // vehicle speed
-    double acceleration; // vehicle acceleration
-    double positionX; // position of the vehicle in the simulation
-    double positionY; // position of the vehicle in the simulation
-    int id;
+    double speed=0; // vehicle speed
+    double acceleration=0; // vehicle acceleration
+    double positionX=0; // position of the vehicle in the simulation
+    double positionY=0; // position of the vehicle in the simulation
+    int id  =0;
 };
 
 std::vector<nodeData> getData();
