@@ -44,7 +44,7 @@ protected:
     cMessage* insertPlatoonMessage;
     cMessage* insertPlatoonMessage1;
 
-    void insertPlatoons();
+    void insertPlatoons(int a,double b);
 
     virtual void handleSelfMsg(cMessage* msg);
 

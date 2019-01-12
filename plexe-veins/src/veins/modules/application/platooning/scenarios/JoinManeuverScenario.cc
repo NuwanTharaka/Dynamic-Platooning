@@ -56,331 +56,388 @@ void JoinManeuverScenario::setupFormation(int a,int b)
 
 void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
 {
+    if(positionHelper->getId() >17){
+        int ID = positionHelper->getId();
+        if(ID==18){
+            traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
+            traciVehicle->setActiveController(Plexe::ACC);
+            traciVehicle->setFixedLane(1,false);
+          //  traciVehicle->setColor(TraCIColor(255, 255, 0, 255)); //Yello
+
+            positionHelper->setIsLeader(true);
+            positionHelper->setPlatoonLane(1);
+            positionHelper->setPlatoonSpeed(100 / 3.6);
+            positionHelper->setPlatoonId(positionHelper->getId());
+            setupFormation(18,22);
+
+        }else if(ID ==23){
+            traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
+            traciVehicle->setActiveController(Plexe::ACC);
+            traciVehicle->setFixedLane(3,false);
+          //  traciVehicle->setColor(TraCIColor(255, 255, 0, 255)); //Yello
+
+            positionHelper->setIsLeader(true);
+            positionHelper->setPlatoonLane(3);
+            positionHelper->setPlatoonSpeed(100 / 3.6);
+            positionHelper->setPlatoonId(positionHelper->getId());
+            setupFormation(23,34);
 
 
-    switch (positionHelper->getId()) {
-
-    case 8:
-    case 15:
-    case 0: {
-        // this is the leader
-        traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
-        traciVehicle->setActiveController(Plexe::ACC);
-        //traciVehicle->setFixedLane(platoonLane);
-
-        positionHelper->setIsLeader(true);
-        //positionHelper->setPlatoonLane(platoonLane);
-        positionHelper->setPlatoonSpeed(100 / 3.6);
-        positionHelper->setPlatoonId(positionHelper->getId());
-        setupFormation(positionHelper->getId(),positionHelper->getId());
-
-        startManeuver = new cMessage();
-        scheduleAt(simTime() + SimTime(75), startManeuver);
-
-        break;
-    }
-
-    case 1: {
-        // these are the followers which are already in the platoon
-        traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
-        traciVehicle->setActiveController(Plexe::ACC);
-        //traciVehicle->setFixedLane(platoonLane);
-
-        positionHelper->setPlatoonId(-1);
-        positionHelper->setIsLeader(false);
-        positionHelper->setPlatoonLane(-1);
-        traciVehicle->setACCHeadwayTime(0.09);
-        singleJoin = new cMessage();
-        scheduleAt(simTime() + SimTime(2), singleJoin);
-        vehicle_ID = 0;
-        flag_shortPath=1;
-    //    startManeuver = new cMessage();
-    //    scheduleAt(simTime() + SimTime(2), startManeuver);
-
-        break;
-    }
-
-    case 16: {
-        // these are the followers which are already in the platoon
-        traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
-        traciVehicle->setActiveController(Plexe::ACC);
-        //traciVehicle->setFixedLane(platoonLane);
-
-        positionHelper->setPlatoonId(-1);
-        positionHelper->setIsLeader(false);
-        positionHelper->setPlatoonLane(-1);
-      //  startManeuver1 = new cMessage();
-       // scheduleAt(simTime() + SimTime(3), startManeuver1);
-
-        break;
-    }
-
-    case 13: {
-        // these are the followers which are already in the platoon
-        traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
-        traciVehicle->setActiveController(Plexe::ACC);
-        //traciVehicle->setFixedLane(platoonLane);
-
-        positionHelper->setPlatoonId(-1);
-        positionHelper->setIsLeader(false);
-        positionHelper->setPlatoonLane(-1);
-     //   startManeuver2 = new cMessage();
-
-        traciVehicle->setACCHeadwayTime(0.09);
-        singleJoin = new cMessage();
-        scheduleAt(simTime() + SimTime(2), singleJoin);
-        vehicle_ID = 15;
-        flag_shortPath=1;
-       // scheduleAt(simTime() + SimTime(4), startManeuver2);
-
-        break;
-    }
-
-    case 4: {
-        // these are the followers which are already in the platoon
-        traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
-        traciVehicle->setActiveController(Plexe::ACC);
-        //traciVehicle->setFixedLane(platoonLane);
-
-        positionHelper->setPlatoonId(-1);
-        positionHelper->setIsLeader(false);
-        positionHelper->setPlatoonLane(-1);
-
-        traciVehicle->setACCHeadwayTime(0.09);
-        singleJoin = new cMessage();
-        scheduleAt(simTime() + SimTime(10), singleJoin);
-        vehicle_ID = 1;
-        flag_shortPath=1;
+        }else if(ID > 23){
+            traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
+            traciVehicle->setActiveController(Plexe::CACC);
+            traciVehicle->setFixedLane(3,false);
+           // traciVehicle->setColor(TraCIColor(124, 252, 0, 255)); //Lawn Green
 
 
-     //   startManeuver = new cMessage();
-    //    scheduleAt(simTime() + SimTime(60), startManeuver);
+            positionHelper->setIsLeader(false);
+            positionHelper->setPlatoonLane(3);
+            positionHelper->setPlatoonSpeed(100 / 3.6);
+            positionHelper->setPlatoonId(positionHelper->getLeaderId());
+            setupFormation(23,34);
 
-        break;
-    }
-
-    case 12: {
-        // these are the followers which are already in the platoon
-        traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
-        traciVehicle->setActiveController(Plexe::ACC);
-        //traciVehicle->setFixedLane(platoonLane);
-
-        positionHelper->setPlatoonId(-1);
-        positionHelper->setIsLeader(false);
-        positionHelper->setPlatoonLane(-1);
-        startManeuver1 = new cMessage();
-      //  scheduleAt(simTime() + SimTime(56), startManeuver1);
-
-        break;
-    }
-
-    case 14: {
-        // these are the followers which are already in the platoon
-        traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
-        traciVehicle->setActiveController(Plexe::ACC);
-        //traciVehicle->setFixedLane(platoonLane);
-
-        positionHelper->setPlatoonId(-1);
-        positionHelper->setIsLeader(false);
-        positionHelper->setPlatoonLane(-1);
-      //  startManeuver2 = new cMessage();
-      //  scheduleAt(simTime() + SimTime(57), startManeuver2);
-        traciVehicle->setACCHeadwayTime(0.09);
-        singleJoin = new cMessage();
-        scheduleAt(simTime() + SimTime(45), singleJoin);
-        vehicle_ID = 5;
-        flag_shortPath=1;
+        }else{
+            traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
+            traciVehicle->setActiveController(Plexe::CACC);
+            traciVehicle->setFixedLane(1,false);
+         //   traciVehicle->setColor(TraCIColor(124, 252, 0, 255)); //Lawn Green
 
 
-        break;
-    }
+            positionHelper->setIsLeader(false);
+            positionHelper->setPlatoonLane(1);
+            positionHelper->setPlatoonSpeed(100 / 3.6);
+            positionHelper->setPlatoonId(positionHelper->getLeaderId());
+            setupFormation(18,22);
+            
+        }
+    }else{
 
-    case 7: {
-        // these are the followers which are already in the platoon
-        traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
-        traciVehicle->setActiveController(Plexe::ACC);
-        //traciVehicle->setFixedLane(platoonLane);
+        switch (positionHelper->getId()) {
 
-        positionHelper->setPlatoonId(-1);
-        positionHelper->setIsLeader(false);
-        positionHelper->setPlatoonLane(-1);
+        case 8:
+        case 15:
+        case 0: {
+            // this is the leader
+            traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
+            traciVehicle->setActiveController(Plexe::ACC);
+            //traciVehicle->setFixedLane(platoonLane);
 
-        traciVehicle->setACCHeadwayTime(0.09);
-        singleJoin = new cMessage();
-        scheduleAt(simTime() + SimTime(30), singleJoin);
-        vehicle_ID = 4;
-        flag_shortPath=1;
+            positionHelper->setIsLeader(true);
+            //positionHelper->setPlatoonLane(platoonLane);
+            positionHelper->setPlatoonSpeed(100 / 3.6);
+            positionHelper->setPlatoonId(positionHelper->getId());
+            setupFormation(positionHelper->getId(),positionHelper->getId());
+
+            startManeuver = new cMessage();
+            scheduleAt(simTime() + SimTime(90), startManeuver);
+
+            break;
+        }
+
+        case 1: {
+            // these are the followers which are already in the platoon
+            traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
+            traciVehicle->setActiveController(Plexe::ACC);
+            //traciVehicle->setFixedLane(platoonLane);
+
+            positionHelper->setPlatoonId(-1);
+            positionHelper->setIsLeader(false);
+            positionHelper->setPlatoonLane(-1);
+            traciVehicle->setACCHeadwayTime(0.09);
+            singleJoin = new cMessage();
+            scheduleAt(simTime() + SimTime(2), singleJoin);
+            vehicle_ID = 0;
+            flag_shortPath=1;
+        //    startManeuver = new cMessage();
+        //    scheduleAt(simTime() + SimTime(2), startManeuver);
+
+            break;
+        }
+
+        case 16: {
+            // these are the followers which are already in the platoon
+            traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
+            traciVehicle->setActiveController(Plexe::ACC);
+            //traciVehicle->setFixedLane(platoonLane);
+
+            positionHelper->setPlatoonId(-1);
+            positionHelper->setIsLeader(false);
+            positionHelper->setPlatoonLane(-1);
+          //  startManeuver1 = new cMessage();
+           // scheduleAt(simTime() + SimTime(3), startManeuver1);
+
+            break;
+        }
+
+        case 13: {
+            // these are the followers which are already in the platoon
+            traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
+            traciVehicle->setActiveController(Plexe::ACC);
+            //traciVehicle->setFixedLane(platoonLane);
+
+            positionHelper->setPlatoonId(-1);
+            positionHelper->setIsLeader(false);
+            positionHelper->setPlatoonLane(-1);
+         //   startManeuver2 = new cMessage();
+
+            traciVehicle->setACCHeadwayTime(0.09);
+            singleJoin = new cMessage();
+            scheduleAt(simTime() + SimTime(2), singleJoin);
+            vehicle_ID = 15;
+            flag_shortPath=1;
+           // scheduleAt(simTime() + SimTime(4), startManeuver2);
+
+            break;
+        }
+
+        case 4: {
+            // these are the followers which are already in the platoon
+            traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
+            traciVehicle->setActiveController(Plexe::ACC);
+            //traciVehicle->setFixedLane(platoonLane);
+
+            positionHelper->setPlatoonId(-1);
+            positionHelper->setIsLeader(false);
+            positionHelper->setPlatoonLane(-1);
+
+            traciVehicle->setACCHeadwayTime(0.09);
+            singleJoin = new cMessage();
+            scheduleAt(simTime() + SimTime(10), singleJoin);
+            vehicle_ID = 1;
+            flag_shortPath=1;
 
 
-    //    startManeuver = new cMessage();
-    //    scheduleAt(simTime() + SimTime(120), startManeuver);
+         //   startManeuver = new cMessage();
+        //    scheduleAt(simTime() + SimTime(60), startManeuver);
 
-        break;
-    }
+            break;
+        }
 
-    case 3: {
-        // these are the followers which are already in the platoon
-        traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
-        traciVehicle->setActiveController(Plexe::ACC);
-        //traciVehicle->setFixedLane(platoonLane);
+        case 12: {
+            // these are the followers which are already in the platoon
+            traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
+            traciVehicle->setActiveController(Plexe::ACC);
+            //traciVehicle->setFixedLane(platoonLane);
 
-        positionHelper->setPlatoonId(-1);
-        positionHelper->setIsLeader(false);
-        positionHelper->setPlatoonLane(-1);
+            positionHelper->setPlatoonId(-1);
+            positionHelper->setIsLeader(false);
+            positionHelper->setPlatoonLane(-1);
+            startManeuver1 = new cMessage();
+          //  scheduleAt(simTime() + SimTime(56), startManeuver1);
 
-        traciVehicle->setACCHeadwayTime(0.09);
-        singleJoin = new cMessage();
-        scheduleAt(simTime() + SimTime(40), singleJoin);
-        vehicle_ID = 7;
-        flag_shortPath=1;
-      //  startManeuver = new cMessage();
-      //  scheduleAt(simTime() + SimTime(180), startManeuver);
-        
+            break;
+        }
 
-        break;
-    }
+        case 14: {
+            // these are the followers which are already in the platoon
+            traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
+            traciVehicle->setActiveController(Plexe::ACC);
+            //traciVehicle->setFixedLane(platoonLane);
 
-    case 66: {
-        // these are the followers which are already in the platoon
-        traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
-        traciVehicle->setActiveController(Plexe::ACC);
-        //traciVehicle->setFixedLane(platoonLane);
+            positionHelper->setPlatoonId(-1);
+            positionHelper->setIsLeader(false);
+            positionHelper->setPlatoonLane(-1);
+          //  startManeuver2 = new cMessage();
+          //  scheduleAt(simTime() + SimTime(57), startManeuver2);
+            traciVehicle->setACCHeadwayTime(0.09);
+            singleJoin = new cMessage();
+            scheduleAt(simTime() + SimTime(45), singleJoin);
+            vehicle_ID = 5;
+            flag_shortPath=1;
 
-        positionHelper->setPlatoonId(-1);
-        positionHelper->setIsLeader(false);
-        positionHelper->setPlatoonLane(-1);
-       // startManeuver = new cMessage();
-       // scheduleAt(simTime() + SimTime(200), startManeuver);
+            break;
+        }
 
-        break;
-    }
-    case 17: {
-        // these are the followers which are already in the platoon
-        traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
-        traciVehicle->setActiveController(Plexe::ACC);
-        //traciVehicle->setFixedLane(platoonLane);
+        case 7: {
+            // these are the followers which are already in the platoon
+            traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
+            traciVehicle->setActiveController(Plexe::ACC);
+            //traciVehicle->setFixedLane(platoonLane);
 
-        positionHelper->setPlatoonId(-1);
-        positionHelper->setIsLeader(false);
-        positionHelper->setPlatoonLane(-1);
-       // startManeuver = new cMessage();
-       // scheduleAt(simTime() + SimTime(200), startManeuver);
-        traciVehicle->setACCHeadwayTime(0.09);
-        singleJoin = new cMessage();
-        scheduleAt(simTime() + SimTime(10), singleJoin);
-        vehicle_ID = 13;
-        flag_shortPath=1;
+            positionHelper->setPlatoonId(-1);
+            positionHelper->setIsLeader(false);
+            positionHelper->setPlatoonLane(-1);
 
-        break;
-    }
-    case 5: {
-        // these are the followers which are already in the platoon
-        traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
-        traciVehicle->setActiveController(Plexe::ACC);
-        //traciVehicle->setFixedLane(platoonLane);
+            traciVehicle->setACCHeadwayTime(0.09);
+            singleJoin = new cMessage();
+            scheduleAt(simTime() + SimTime(30), singleJoin);
+            vehicle_ID = 4;
+            flag_shortPath=1;
 
-        positionHelper->setPlatoonId(-1);
-        positionHelper->setIsLeader(false);
-        positionHelper->setPlatoonLane(-1);
-       // startManeuver = new cMessage();
-       // scheduleAt(simTime() + SimTime(200), startManeuver);
-        traciVehicle->setACCHeadwayTime(0.09);
-        singleJoin = new cMessage();
-        scheduleAt(simTime() + SimTime(30), singleJoin);
-        vehicle_ID = 17;
-        flag_shortPath=1;
 
-        break;
-    }
-    case 10: {
-        // these are the followers which are already in the platoon
-        traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
-        traciVehicle->setActiveController(Plexe::ACC);
-        //traciVehicle->setFixedLane(platoonLane);
+        //    startManeuver = new cMessage();
+        //    scheduleAt(simTime() + SimTime(120), startManeuver);
 
-        positionHelper->setPlatoonId(-1);
-        positionHelper->setIsLeader(false);
-        positionHelper->setPlatoonLane(-1);
-       // startManeuver = new cMessage();
-       // scheduleAt(simTime() + SimTime(200), startManeuver);
-        traciVehicle->setACCHeadwayTime(0.09);
-        singleJoin = new cMessage();
-        scheduleAt(simTime() + SimTime(50), singleJoin);
-        vehicle_ID = 3;
-        flag_shortPath=1;
+            break;
+        }
 
-        break;
-    }
-    case 6: {
-        // these are the followers which are already in the platoon
-        traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
-        traciVehicle->setActiveController(Plexe::ACC);
-        //traciVehicle->setFixedLane(platoonLane);
+        case 3: {
+            // these are the followers which are already in the platoon
+            traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
+            traciVehicle->setActiveController(Plexe::ACC);
+            //traciVehicle->setFixedLane(platoonLane);
 
-        positionHelper->setPlatoonId(-1);
-        positionHelper->setIsLeader(false);
-        positionHelper->setPlatoonLane(-1);
-       // startManeuver = new cMessage();
-       // scheduleAt(simTime() + SimTime(200), startManeuver);
-        traciVehicle->setACCHeadwayTime(0.09);
-        singleJoin = new cMessage();
-        scheduleAt(simTime() + SimTime(60), singleJoin);
-        vehicle_ID = 10;
-        flag_shortPath=1;
+            traciVehicle->setColor(TraCIColor(0,0,255,255));
 
-        break;
-    }
-    case 11: {
-        // these are the followers which are already in the platoon
-        traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
-        traciVehicle->setActiveController(Plexe::ACC);
-        //traciVehicle->setFixedLane(platoonLane);
+            positionHelper->setPlatoonId(-1);
+            positionHelper->setIsLeader(false);
+            positionHelper->setPlatoonLane(-1);
 
-        positionHelper->setPlatoonId(-1);
-        positionHelper->setIsLeader(false);
-        positionHelper->setPlatoonLane(-1);
-       // startManeuver = new cMessage();
-       // scheduleAt(simTime() + SimTime(200), startManeuver);
-        traciVehicle->setACCHeadwayTime(0.09);
-        singleJoin = new cMessage();
-        scheduleAt(simTime() + SimTime(50), singleJoin);
-        vehicle_ID = 8;
-        flag_shortPath=1;
+            traciVehicle->setACCHeadwayTime(0.09);
+            singleJoin = new cMessage();
+            scheduleAt(simTime() + SimTime(40), singleJoin);
+            vehicle_ID = 14;
+            flag_shortPath=1;
+          //  startManeuver = new cMessage();
+          //  scheduleAt(simTime() + SimTime(180), startManeuver);
+            
 
-        break;
-    }
-    case 2: {
-        // these are the followers which are already in the platoon
-        traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
-        traciVehicle->setActiveController(Plexe::ACC);
-        //traciVehicle->setFixedLane(platoonLane);
+            break;
+        }
 
-        positionHelper->setPlatoonId(-1);
-        positionHelper->setIsLeader(false);
-        positionHelper->setPlatoonLane(-1);
-       // startManeuver = new cMessage();
-       // scheduleAt(simTime() + SimTime(200), startManeuver);
-        traciVehicle->setACCHeadwayTime(0.09);
-        singleJoin = new cMessage();
-        scheduleAt(simTime() + SimTime(60), singleJoin);
-        vehicle_ID = 11;
-        flag_shortPath=1;
+        case 66: {
+            // these are the followers which are already in the platoon
+            traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
+            traciVehicle->setActiveController(Plexe::ACC);
+            //traciVehicle->setFixedLane(platoonLane);
 
-        break;
-    }
-    default: {
-        // these are the followers which are already in the platoon
-        traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
-        traciVehicle->setActiveController(Plexe::ACC);
-        //traciVehicle->setFixedLane(platoonLane);
+            positionHelper->setPlatoonId(-1);
+            positionHelper->setIsLeader(false);
+            positionHelper->setPlatoonLane(-1);
+           // startManeuver = new cMessage();
+           // scheduleAt(simTime() + SimTime(200), startManeuver);
 
-        positionHelper->setPlatoonId(-1);
-        positionHelper->setIsLeader(false);
-        positionHelper->setPlatoonLane(-1);
+            break;
+        }
+        case 17: {
+            // these are the followers which are already in the platoon
+            traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
+            traciVehicle->setActiveController(Plexe::ACC);
+            //traciVehicle->setFixedLane(platoonLane);
 
-        break;
-    }
-    traciVehicle->setFixedLane(traciVehicle->getLaneIndex());
+            positionHelper->setPlatoonId(-1);
+            positionHelper->setIsLeader(false);
+            positionHelper->setPlatoonLane(-1);
+           // startManeuver = new cMessage();
+           // scheduleAt(simTime() + SimTime(200), startManeuver);
+            traciVehicle->setACCHeadwayTime(0.09);
+            singleJoin = new cMessage();
+            scheduleAt(simTime() + SimTime(10), singleJoin);
+            vehicle_ID = 13;
+            flag_shortPath=1;
+
+            break;
+        }
+        case 5: {
+            // these are the followers which are already in the platoon
+            traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
+            traciVehicle->setActiveController(Plexe::ACC);
+            //traciVehicle->setFixedLane(platoonLane);
+
+            positionHelper->setPlatoonId(-1);
+            positionHelper->setIsLeader(false);
+            positionHelper->setPlatoonLane(-1);
+           // startManeuver = new cMessage();
+           // scheduleAt(simTime() + SimTime(200), startManeuver);
+            traciVehicle->setACCHeadwayTime(0.09);
+            singleJoin = new cMessage();
+            scheduleAt(simTime() + SimTime(30), singleJoin);
+            vehicle_ID = 17;
+            flag_shortPath=1;
+
+            break;
+        }
+        case 10: {
+            // these are the followers which are already in the platoon
+            traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
+            traciVehicle->setActiveController(Plexe::ACC);
+            //traciVehicle->setFixedLane(platoonLane);
+            traciVehicle->setColor(TraCIColor(0,255,0,255));
+
+            positionHelper->setPlatoonId(-1);
+            positionHelper->setIsLeader(false);
+            positionHelper->setPlatoonLane(-1);
+           // startManeuver = new cMessage();
+           // scheduleAt(simTime() + SimTime(200), startManeuver);
+            traciVehicle->setACCHeadwayTime(0.09);
+            singleJoin = new cMessage();
+            scheduleAt(simTime() + SimTime(65), singleJoin);
+            vehicle_ID = 2;
+            flag_shortPath=1;
+
+            break;
+        }
+        case 6: {
+            // these are the followers which are already in the platoon
+            traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
+            traciVehicle->setActiveController(Plexe::ACC);
+            //traciVehicle->setFixedLane(platoonLane);
+
+            positionHelper->setPlatoonId(-1);
+            positionHelper->setIsLeader(false);
+            positionHelper->setPlatoonLane(-1);
+           // startManeuver = new cMessage();
+           // scheduleAt(simTime() + SimTime(200), startManeuver);
+            traciVehicle->setACCHeadwayTime(0.09);
+            singleJoin = new cMessage();
+            scheduleAt(simTime() + SimTime(40), singleJoin);
+            vehicle_ID = 7;
+            flag_shortPath=1;
+
+            break;
+        }
+        case 11: {
+            // these are the followers which are already in the platoon
+            traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
+            traciVehicle->setActiveController(Plexe::ACC);
+            //traciVehicle->setFixedLane(platoonLane);
+
+            positionHelper->setPlatoonId(-1);
+            positionHelper->setIsLeader(false);
+            positionHelper->setPlatoonLane(-1);
+           // startManeuver = new cMessage();
+           // scheduleAt(simTime() + SimTime(200), startManeuver);
+            traciVehicle->setACCHeadwayTime(0.09);
+            singleJoin = new cMessage();
+            scheduleAt(simTime() + SimTime(50), singleJoin);
+            vehicle_ID = 8;
+            flag_shortPath=1;
+
+            break;
+        }
+        case 2: {
+            // these are the followers which are already in the platoon
+            traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
+            traciVehicle->setActiveController(Plexe::ACC);
+            //traciVehicle->setFixedLane(platoonLane);
+
+            positionHelper->setPlatoonId(-1);
+            positionHelper->setIsLeader(false);
+            positionHelper->setPlatoonLane(-1);
+           // startManeuver = new cMessage();
+           // scheduleAt(simTime() + SimTime(200), startManeuver);
+            traciVehicle->setACCHeadwayTime(0.09);
+            singleJoin = new cMessage();
+            scheduleAt(simTime() + SimTime(60), singleJoin);
+            vehicle_ID = 11;
+            flag_shortPath=1;
+
+            break;
+        }
+        default: {
+            // these are the followers which are already in the platoon
+            traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
+            traciVehicle->setActiveController(Plexe::ACC);
+            //traciVehicle->setFixedLane(platoonLane);
+
+            positionHelper->setPlatoonId(-1);
+            positionHelper->setIsLeader(false);
+            positionHelper->setPlatoonLane(-1);
+
+            break;
+        }
+        traciVehicle->setFixedLane(traciVehicle->getLaneIndex());
+        }
     }
 }
 
