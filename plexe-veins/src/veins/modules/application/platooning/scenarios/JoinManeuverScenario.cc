@@ -417,3 +417,216 @@ void JoinManeuverScenario::platoonPath()
 
 
 }
+
+void JoinManeuverScenario::shortPath_fnc(int vehicle_id)
+{
+    int final_speed=0;
+    flag_shortPath =1;
+    std::vector< std::vector<nodeData> > eachLane;
+    for(int x=0;x<6;x=x+1){
+        std::vector<nodeData> kill;
+        eachLane.push_back(kill);
+    }
+    int nLanes = 6;
+    int state = 0;
+
+    int myVehicleId = positionHelper->getId();
+
+    std::vector<nodeData> vehData = getData();
+    nodeData myVehicle = vehData[myVehicleId];
+ //   int sir=targetPlatoonData->newFormation.at((targetPlatoonData->joinIndex) - 1);
+    int sir= vehicle_id;
+    int needDistance = vehData[sir].positionX - myVehicle.positionX;
+
+
+    int currentLane =  myVehicle.positionY;
+
+    int i=0;
+    for(nodeData vehicle:vehData){
+
+        if(myVehicleId == i){ 
+
+        }else {
+            int a = vehicle.positionY; 
+            eachLane[a].push_back(vehicle);
+            
+        }
+        i=i+1;
+
+    }
+    int speed_front;
+    int speed_side1;
+    int speed_side2;
+
+    bool p;
+
+    if(needDistance > -5){
+        direction = 1;
+    }else{
+        direction = -1;
+    }
+
+
+
+
+    if(currentLane == (vehData[sir].positionY)){
+        if((needDistance>0) && (needDistance<5)){
+            p= false;
+        }else{
+            p=true;
+        }
+    }else{
+        if((needDistance> -20) && (needDistance<15) ){
+            p= false;
+        }else{
+            p=true;
+        }
+
+    }
+    
+
+    if(p){
+        int sideGo = 0;
+
+        if(early!= 0){
+            sideGo = early;
+        }
+        early = 0;
+        traciVehicle->setCruiseControlDesiredSpeed(vehData[sir].speed + ((30 / 3.6)*direction));
+        int i =-1;
+
+
+        int distance =400;
+        nodeData item;
+        int mess =-400;
+        for(nodeData vehicle:eachLane[currentLane]){
+            mess  = (vehicle.positionX - myVehicle.positionX)*direction;
+            if(mess > 0 && mess<distance){
+                item = vehicle;
+                distance = mess;
+            }
+        }
+
+      
+        //distance= (item.positionX - myVehicle.positionX)*direction;
+        if((distance>(25-5*direction)) && (distance < 40)){
+            traciVehicle->setCruiseControlDesiredSpeed(vehData[sir].speed +(5 / 3.6)+ ((15 / 3.6)*direction));
+        }
+        else if((((distance>0) && (distance < (25-5*direction))) && (item.id != sir) || (stucked!=0)))  {
+            final_speed = 1;
+            traciVehicle->setCruiseControlDesiredSpeed(item.speed);
+            speed_front= item.speed;
+            state=1;
+            ///awlak atha front speed item1
+            /////
+            int identy = vehData[sir].positionY - currentLane;
+            int moveLane;
+            if(identy>0 || currentLane==0 ){
+                moveLane = currentLane + 1; 
+            }else{
+                moveLane = currentLane - 1; 
+            }
+
+            if(sideGo != 0){
+                stucked= sideGo;
+            }
+
+
+
+
+            if((stucked>0) && (currentLane!=(nLanes-1))){
+                moveLane = currentLane + 1; 
+            }else if((stucked<0) && (currentLane!=0)){
+                moveLane = currentLane - 1; 
+            }
+            
+
+
+
+            int flag = 0;
+            for(nodeData side:eachLane[moveLane]){
+                distance=side.positionX- myVehicle.positionX;
+                if(distance>-8 && distance < 8){
+                    flag=1;
+                    speed_side1 = side.speed;
+                    break;
+                }
+            }
+
+            int noption1 = 0;
+            int noption2 = 0;
+
+            if(flag==1){
+                state=2;
+                moveLane = 2*currentLane - moveLane;
+                if(((moveLane==-1) || (moveLane==nLanes))  || (stucked!=0)){
+                    noption1 = 1;
+                    state=3;
+                }else{
+                    for(nodeData side:eachLane[moveLane]){
+                        distance=side.positionX- myVehicle.positionX;
+                        if(distance>-8 && distance < 8){
+                            noption2=1;
+                            state=4;
+                            speed_side2 = side.speed;
+                            break;
+                        }
+                    }
+                } 
+
+            }
+            int gotoback=0;
+            if (noption1){
+                if((speed_front == speed_side1)){
+                    gotoback=1;
+                }else if(stucked!=0){
+                    traciVehicle->setCruiseControlDesiredSpeed(vehData[sir].speed - ((30 / 3.6)*direction));
+                    final_speed = 2;
+                }else{
+
+                }
+            }else if(noption2){
+                if(((speed_front == speed_side1) && (speed_front == speed_side2))){
+                    gotoback=1;
+                }else{
+                    
+                }
+
+            }else{
+
+                early = moveLane - currentLane;
+                traciVehicle->setFixedLane(moveLane);
+                EV<<"EasyToFind.....4::::"<<moveLane << item.id << sir<< endl;
+                traciVehicle->setCruiseControlDesiredSpeed(vehData[sir].speed +(5 / 3.6)+ ((25 / 3.6)*direction));
+                final_speed = 3;
+                int val= stucked*stucked; 
+                if( val == 4){
+                    stucked = stucked/2;
+                }else if(val == 1){
+                    stucked = 0;
+                }
+                gotoback=0;
+            }
+
+            if(gotoback){
+                if(currentLane<2){
+                    stucked= 2;
+                }else{
+                    stucked= -2;
+                }
+
+                traciVehicle->setCruiseControlDesiredSpeed(vehData[sir].speed- ((30 / 3.6)*direction));
+                final_speed = 4;
+            }         
+            ////
+        
+    
+        }
+    }else{
+        flag_shortPath = 0;
+        flag_nearPlatoon = 1;
+    }
+    if(positionHelper->getId()==3){
+        EV<<"EasyToFind.....3::"<<positionHelper->getId()<<"::"<<final_speed<< endl;
+    }
+}
