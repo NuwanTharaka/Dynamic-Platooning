@@ -30,7 +30,10 @@ protected:
     // message used to start the maneuver
     cMessage* startManeuver;
     cMessage* platoonChange;
-    cMessage* active67;
+    cMessage* active30;
+    cMessage* platoonChange1;
+    cMessage* runin78;
+
 
     //message to start sending pos
     cMessage* startSendPos;
@@ -41,7 +44,8 @@ protected:
      int stucked = 0;
 
 
-    int flag_67=0;
+    int flag_30=0;
+    int flag_ok = 0;
 
 public:
 
