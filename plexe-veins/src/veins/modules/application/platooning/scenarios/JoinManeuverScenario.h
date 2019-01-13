@@ -38,6 +38,7 @@ protected:
     cMessage* workNearPlatoon;
 
     cMessage* singleJoin;
+    cMessage* singleJoin1;
 
 
 
@@ -52,6 +53,7 @@ protected:
     int flag_shortPath = 0;
     int flag_nearPlatoon = 0;
     int flag_ready = 0;
+ //   int g=2;
 
 
 

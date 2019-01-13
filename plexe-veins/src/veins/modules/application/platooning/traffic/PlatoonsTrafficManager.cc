@@ -36,7 +36,10 @@ void PlatoonsTrafficManager::initialize(int stage)
         platoonLeaderHeadway = par("platoonLeaderHeadway").doubleValue();
         platooningVType = par("platooningVType").stdstringValue();
         insertPlatoonMessage = new cMessage("");
-        scheduleAt(platoonInsertTime, insertPlatoonMessage);
+      //  scheduleAt(platoonInsertTime + SimTime(2), insertPlatoonMessage);
+
+        insertPlatoonMessage1 = new cMessage("");
+      //  scheduleAt(platoonInsertTime+ SimTime(1), insertPlatoonMessage1);
     }
 }
 
@@ -54,13 +57,18 @@ void PlatoonsTrafficManager::handleSelfMsg(cMessage* msg)
     TraCIBaseTrafficManager::handleSelfMsg(msg);
 
     if (msg == insertPlatoonMessage) {
-        //insertPlatoons();
+        insertPlatoons(6,6000);
+    }
+    if (msg == insertPlatoonMessage) {
+        insertPlatoons(10,8000);
     }
 }
 
-void PlatoonsTrafficManager::insertPlatoons()
+void PlatoonsTrafficManager::insertPlatoons(int a,double b)
 {
-
+    platoonSize = a;
+    nCars   = nCars + a - 3;
+     double totalLength = b;
     // compute intervehicle distance
     double distance = platoonInsertSpeed / 3.6 * platoonInsertHeadway + platoonInsertDistance;
     // total number of platoons per lane
@@ -70,7 +78,7 @@ void PlatoonsTrafficManager::insertPlatoons()
     // inter-platoon distance
     double platoonDistance = platoonInsertSpeed / 3.6 * platoonLeaderHeadway;
     // total length for one lane
-    double totalLength = nPlatoons * platoonLength + (nPlatoons - 1) * platoonDistance;
+    //double totalLength = nPlatoons * platoonLength + (nPlatoons - 1) * platoonDistance;
 
     // for each lane, we create an offset to have misaligned platoons
     double* laneOffset = new double[nLanes];

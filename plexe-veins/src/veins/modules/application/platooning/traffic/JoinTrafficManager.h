@@ -52,6 +52,8 @@ protected:
     void insertJoiner(int lane);
 
     void insertNodes();
+    void insertNodes1();
+
 
     virtual void handleSelfMsg(cMessage* msg);
 };
