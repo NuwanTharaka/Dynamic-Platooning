@@ -43,8 +43,8 @@ void PlatoonsTrafficManager::initialize(int stage)
 
        // insertPlatoonMessage1 = new cMessage("");
        // scheduleAt(platoonInsertTime+ SimTime(3), insertPlatoonMessage1);
-       // insertPlatoonMessage1 = new cMessage("");
-       // scheduleAt(simTime() + SimTime(5200, SIMTIME_MS), insertPlatoonMessage1); 
+        insertPlatoonMessage2 = new cMessage("");
+        scheduleAt(simTime() + SimTime(4400, SIMTIME_MS), insertPlatoonMessage2); 
     }
 }
 
@@ -62,12 +62,17 @@ void PlatoonsTrafficManager::handleSelfMsg(cMessage* msg)
     TraCIBaseTrafficManager::handleSelfMsg(msg);
 
     if (msg == insertPlatoonMessage) {
-        insertPlatoons(4);
+        insertPlatoon(4,50,3);
 
     }
 
     if (msg == insertPlatoonMessage1) {
-        insertPlatoons(4);
+        insertPlatoon(4,50,3);
+
+    }
+
+    if (msg == insertPlatoonMessage2) {
+        insertPlatoon(4,50,3);
 
     }
 /*
@@ -120,6 +125,19 @@ void PlatoonsTrafficManager::insertPlatoons(int size)
     }
 
     delete[] laneOffset;
+}
+
+void PlatoonsTrafficManager::insertPlatoon (int a, double b , int lane){
+
+
+    double laneOffset = 0;
+    for (int i = 0; i < a; i++){
+
+        automated.position = b - laneOffset;
+        automated.lane = lane;
+        addVehicleToQueue(0,automated);
+        laneOffset = laneOffset + 10;
+    }
 }
 
 PlatoonsTrafficManager::~PlatoonsTrafficManager()

@@ -32,7 +32,14 @@ protected:
     cMessage* platoonChange;
     cMessage* active30;
     cMessage* platoonChange1;
+    cMessage* platoonChange2;
+
+
     cMessage* runin78;
+
+
+    cMessage* flag_Off;
+    cMessage* flag_On;
 
 
     //message to start sending pos

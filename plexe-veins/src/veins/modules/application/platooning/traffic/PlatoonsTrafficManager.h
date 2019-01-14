@@ -46,6 +46,7 @@ protected:
     cMessage* insertPlatoonMessage2;
 
     void insertPlatoons(int size);
+    void insertPlatoon(int a, double b , int lane);
 
     virtual void handleSelfMsg(cMessage* msg);
 
