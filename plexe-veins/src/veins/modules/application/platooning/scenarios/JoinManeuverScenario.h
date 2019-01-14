@@ -41,6 +41,9 @@ protected:
     cMessage* singleJoin1;
 
 
+    cMessage* changeSir;
+
+
 
     GeneralPlatooningApp* app;
 

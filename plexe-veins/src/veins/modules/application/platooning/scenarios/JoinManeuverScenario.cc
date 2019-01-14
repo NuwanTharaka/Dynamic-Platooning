@@ -54,6 +54,88 @@ void JoinManeuverScenario::setupFormation(int a,int b)
 
 }
 
+
+void JoinManeuverScenario::prepareManeuverCars(int platoonLane){
+
+    int ID =positionHelper->getId();
+
+     if(ID == 6){
+        traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
+        traciVehicle->setActiveController(Plexe::ACC);
+    //traciVehicle->setFixedLane(platoonLane);
+
+        positionHelper->setPlatoonId(-1);
+        positionHelper->setIsLeader(false);
+        positionHelper->setPlatoonLane(-1);
+        traciVehicle->setACCHeadwayTime(0.09);
+       
+        singleJoin = new cMessage();
+        scheduleAt(simTime() + SimTime(2), singleJoin);
+        vehicle_ID = 5;
+        flag_shortPath=1;
+
+
+        traciVehicle->setColor(TraCIColor(0,0,255,255));
+
+      //  changeSir = new cMessage();
+       // scheduleAt(simTime() + SimTime(35), changeSir);
+
+
+
+
+    }else if(ID == 7){
+        traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
+        traciVehicle->setActiveController(Plexe::ACC);
+    //traciVehicle->setFixedLane(platoonLane);
+
+        positionHelper->setPlatoonId(-1);
+        positionHelper->setIsLeader(false);
+        positionHelper->setPlatoonLane(-1);
+        traciVehicle->setACCHeadwayTime(0.09);
+        singleJoin1 = new cMessage();
+        scheduleAt(simTime() + SimTime(22), singleJoin1);
+        vehicle_ID = 5;
+        flag_shortPath=1;
+
+
+    //    traciVehicle->setColor(TraCIColor(0,0,255,255));
+
+   
+        
+
+
+
+    }else if(ID < 15){
+        traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
+        traciVehicle->setActiveController(Plexe::ACC);
+      //  traciVehicle->setFixedLane(3);
+
+        positionHelper->setPlatoonId(-1);
+        positionHelper->setIsLeader(false);
+        positionHelper->setPlatoonLane(-1);
+        traciVehicle->setACCHeadwayTime(0.09);
+
+
+
+    }else{
+        traciVehicle->setCruiseControlDesiredSpeed(130.0 / 3.6);
+        traciVehicle->setActiveController(Plexe::ACC);
+    //traciVehicle->setFixedLane(platoonLane);
+
+        positionHelper->setPlatoonId(-1);
+        positionHelper->setIsLeader(false);
+        positionHelper->setPlatoonLane(-1);
+        traciVehicle->setACCHeadwayTime(0.09);
+    }
+
+
+    
+    traciVehicle->setFixedLane(traciVehicle->getLaneIndex());
+
+}
+
+
+/*
 void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
 {
     if(positionHelper->getId() >17){
@@ -441,6 +523,8 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
     }
 }
 
+*/
+
 JoinManeuverScenario::~JoinManeuverScenario()
 {
     cancelAndDelete(startManeuver);
@@ -467,7 +551,7 @@ void JoinManeuverScenario::handleSelfMsg(cMessage* msg)
         //shortPath_fn();
         //scheduleAt(simTime() + SimTime(1), startManeuver_error);
      //   app->startJoinManeuver(0,0, -1);
-        
+        /*
         int idd =positionHelper->getId();
         if(idd == 15){
             traciVehicle->setCruiseControlDesiredSpeed((130 / 3.6));
@@ -478,10 +562,15 @@ void JoinManeuverScenario::handleSelfMsg(cMessage* msg)
          //   scheduleAt(simTime() + SimTime(30, SIMTIME_MS), workNearPlatoon);
         }
 
-
+*/
 
 
     }
+
+
+ 
+
+
 
     if (msg == startManeuver1){
         EV<<"EasyToFind....goti"<<positionHelper->getId()<< endl;
@@ -527,22 +616,22 @@ void JoinManeuverScenario::handleSelfMsg(cMessage* msg)
 
     if (msg == workShortPath) {
         if(app->isShortPath()){
-            app->shortPath_function();
+          //  app->shortPath_function();
             workShortPath = new cMessage();
-            scheduleAt(simTime() + SimTime(30, SIMTIME_MS), workShortPath);
+           // scheduleAt(simTime() + SimTime(30, SIMTIME_MS), workShortPath);
         }else{
             joinReady = 1;
             workNearPlatoon = new cMessage();
-            scheduleAt(simTime() + SimTime(30, SIMTIME_MS), workNearPlatoon);
+          //  scheduleAt(simTime() + SimTime(30, SIMTIME_MS), workNearPlatoon);
         }
         
     }
 
     if(msg == workNearPlatoon){
         if(app->isNearPlatoon()){
-            app->nearPlatoon_function();
+         //   app->nearPlatoon_function();
             workNearPlatoon = new cMessage();
-            scheduleAt(simTime() + SimTime(30, SIMTIME_MS), workNearPlatoon);
+        //    scheduleAt(simTime() + SimTime(30, SIMTIME_MS), workNearPlatoon);
         }else{
 
 
@@ -554,6 +643,18 @@ void JoinManeuverScenario::handleSelfMsg(cMessage* msg)
 
     if(msg == singleJoin){
       //  traciVehicle->setActiveController(Plexe::FAKED_CACC);
+        std::vector<nodeData> vehData = getData();
+
+        if((vehData[6].positionX - vehData[18].positionX) <50){
+            vehicle_ID = 18;
+        }
+
+        if((vehData[14].positionX - vehData[6].positionX) <50){
+            vehicle_ID = 14;
+        }
+
+
+
         singleJoin = new cMessage();
         scheduleAt(simTime() + SimTime(30, SIMTIME_MS), singleJoin);
         if(flag_shortPath){
@@ -561,10 +662,29 @@ void JoinManeuverScenario::handleSelfMsg(cMessage* msg)
         }else if(flag_nearPlatoon){
             nearPlatoon_fnc(vehicle_ID);
         }else if(flag_ready){
-         //   app->startJoinManeuver(0,0, -1);
+            shortPath_fnc(vehicle_ID);
         }
 
     }
+
+
+
+
+    if(msg == singleJoin1){
+      //  traciVehicle->setActiveController(Plexe::FAKED_CACC);
+
+        singleJoin = new cMessage();
+        scheduleAt(simTime() + SimTime(30, SIMTIME_MS), singleJoin1);
+        if(flag_shortPath){
+            shortPath_fnc(vehicle_ID);
+        }else if(flag_nearPlatoon){
+            nearPlatoon_fnc(vehicle_ID);
+        }else if(flag_ready){
+            shortPath_fnc(vehicle_ID);
+        }
+
+    }
+/*
 /*
     if(msg == singleJoin1){
       //  traciVehicle->setActiveController(Plexe::FAKED_CACC);
@@ -702,8 +822,6 @@ void JoinManeuverScenario::shortPath_fnc(int vehicle_id)
     }else{
         direction = -1;
     }
-
-
 
 
     if(currentLane == (vehData[sir].positionY)){

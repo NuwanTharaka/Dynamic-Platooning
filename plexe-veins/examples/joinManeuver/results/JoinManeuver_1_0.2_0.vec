@@ -1,10 +1,10 @@
 version 2
-run JoinManeuver-0-20190111-21:21:51-4295
+run JoinManeuver-0-20190114-11:43:25-7015
 attr beaconInterval 0.1
 attr caccOmegaN 0.2
 attr caccXi 1
 attr configname JoinManeuver
-attr datetime 20190111-21:21:51
+attr datetime 20190114-11:43:25
 attr experiment JoinManeuver
 attr inifile omnetpp.ini
 attr iterationvars "$nCars=2, $platoonSize=1, $nLanes=1, $caccXi=1, $caccOmegaN=0.2, $ploegH=0.5, $leaderHeadway=2, $leaderSpeed=100, $beaconInterval=0.1, $priority=2, $packetSize=200"
@@ -19,7 +19,7 @@ attr packetSize 200
 attr platoonSize 1
 attr ploegH 0.5
 attr priority 2
-attr processid 4295
+attr processid 7015
 attr repetition 0
 attr replication #0
 attr resultdir results
@@ -242,6 +242,14 @@ vector 399  Highway.node[17].appl  controllerAcceleration  ETV
 vector 395  Highway.node[17].appl  speed  ETV
 vector 396  Highway.node[17].appl  posx  ETV
 vector 397  Highway.node[17].appl  posy  ETV
+vector 415  Highway.node[18].appl  distance  ETV
+vector 416  Highway.node[18].appl  relativeSpeed  ETV
+vector 417  Highway.node[18].appl  nodeId  ETV
+vector 421  Highway.node[18].appl  acceleration  ETV
+vector 422  Highway.node[18].appl  controllerAcceleration  ETV
+vector 418  Highway.node[18].appl  speed  ETV
+vector 419  Highway.node[18].appl  posx  ETV
+vector 420  Highway.node[18].appl  posy  ETV
 vector 9  Highway.node[0].prot  nodeId  ETV
 vector 10  Highway.node[0].prot  busyTime  ETV
 vector 11  Highway.node[0].prot  collisions  ETV
@@ -260,13 +268,4 @@ vector 103  Highway.node[4].prot  collisions  ETV
 vector 124  Highway.node[5].prot  nodeId  ETV
 vector 125  Highway.node[5].prot  busyTime  ETV
 vector 126  Highway.node[5].prot  collisions  ETV
-vector 147  Highway.node[6].prot  nodeId  ETV
-vector 148  Highway.node[6].prot  busyTime  ETV
-vector 149  Highway.node[6].prot  collisions  ETV
-vector 170  Highway.node[7].prot  nodeId  ETV
-vector 171  Highway.node[7].prot  busyTime  ETV
-vector 172  Highway.node[7].prot  collisions  ETV
-vector 193  Highway.node[8].prot  nodeId  ETV
-vector 194  Highway.node[8].prot  busyTime  ETV
-vector 195  Highway.node[8].prot  collisions  ETV
-vecto
+vector 147  Highway.node[6].prot  n
