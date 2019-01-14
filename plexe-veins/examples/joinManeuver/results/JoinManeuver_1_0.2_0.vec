@@ -1,18 +1,10 @@
 version 2
-<<<<<<< HEAD
-run JoinManeuver-0-20190111-02:49:54-11902
-=======
-run JoinManeuver-0-20190111-21:21:51-4295
->>>>>>> f7e94c498da57ad1c7ddebb3cf12eb3a94369ee9
+run JoinManeuver-0-20190114-21:36:06-2880
 attr beaconInterval 0.1
 attr caccOmegaN 0.2
 attr caccXi 1
 attr configname JoinManeuver
-<<<<<<< HEAD
-attr datetime 20190111-02:49:54
-=======
-attr datetime 20190111-21:21:51
->>>>>>> f7e94c498da57ad1c7ddebb3cf12eb3a94369ee9
+attr datetime 20190114-21:36:06
 attr experiment JoinManeuver
 attr inifile omnetpp.ini
 attr iterationvars "$nCars=2, $platoonSize=1, $nLanes=1, $caccXi=1, $caccOmegaN=0.2, $ploegH=0.5, $leaderHeadway=2, $leaderSpeed=100, $beaconInterval=0.1, $priority=2, $packetSize=200"
@@ -27,11 +19,7 @@ attr packetSize 200
 attr platoonSize 1
 attr ploegH 0.5
 attr priority 2
-<<<<<<< HEAD
-attr processid 11902
-=======
-attr processid 4295
->>>>>>> f7e94c498da57ad1c7ddebb3cf12eb3a94369ee9
+attr processid 2880
 attr repetition 0
 attr replication #0
 attr resultdir results
@@ -254,72 +242,6 @@ vector 399  Highway.node[17].appl  controllerAcceleration  ETV
 vector 395  Highway.node[17].appl  speed  ETV
 vector 396  Highway.node[17].appl  posx  ETV
 vector 397  Highway.node[17].appl  posy  ETV
-<<<<<<< HEAD
-8	2073	1.16	-0.00218518
-8	6542	1.26	-0.00213419
-8	11009	1.36	-0.00205408
-8	15480	1.46	-0.00195152
-7	2073	1.16	-0.000358191
-7	6542	1.26	-0.000681704
-7	11009	1.36	-0.00093487
-7	15480	1.46	-0.00112579
-6	2073	1.16	236.4
-6	6542	1.26	236.4
-6	11009	1.36	236.4
-6	15480	1.46	236.4
-5	2073	1.16	112.5
-5	6542	1.26	115.278
-5	11009	1.36	118.056
-5	15480	1.46	120.834
-4	2073	1.16	27.78
-4	6542	1.26	27.7799
-4	11009	1.36	27.7798
-4	15480	1.46	27.7797
-2	2073	1.16	0
-2	6542	1.26	0
-2	11009	1.36	0
-2	15480	1.46	0
-1	2073	1.16	-1
-1	6542	1.26	-1
-1	11009	1.36	-1
-1	15480	1.46	-1
-3	2073	1.16	0
-3	6542	1.26	0
-3	11009	1.36	0
-3	15480	1.46	0
-31	2074	1.16	-0.00218518
-31	6543	1.26	-0.00213419
-31	11010	1.36	-0.00205408
-31	15481	1.46	-0.00195152
-30	2074	1.16	-0.000358191
-30	6543	1.26	-0.000681704
-30	11010	1.36	-0.00093487
-30	15481	1.46	-0.00112579
-29	2074	1.16	236.4
-29	6543	1.26	236.4
-29	11010	1.36	236.4
-29	15481	1.46	236.4
-28	2074	1.16	57.5002
-28	6543	1.26	60.2782
-28	11010	1.36	63.0562
-28	15481	1.46	65.8342
-27	2074	1.16	27.78
-27	6543	1.26	27.7799
-27	11010	1.36	27.7798
-27	15481	1.46	27.7797
-25	2074	1.16	0
-25	6543	1.26	0
-25	11010	1.36	0
-25	15481	1.46	0
-24	2074	1.16	51
-24	6543	1.26	51
-24	11010	1.36	51
-24	15481	1.46	51
-26	2074	1.16	1
-26	6543	1.26	1
-26	11010	1.36	1
-26	15481	1.46	1
-=======
 vector 9  Highway.node[0].prot  nodeId  ETV
 vector 10  Highway.node[0].prot  busyTime  ETV
 vector 11  Highway.node[0].prot  collisions  ETV
@@ -348,4 +270,3 @@ vector 193  Highway.node[8].prot  nodeId  ETV
 vector 194  Highway.node[8].prot  busyTime  ETV
 vector 195  Highway.node[8].prot  collisions  ETV
 vecto
->>>>>>> f7e94c498da57ad1c7ddebb3cf12eb3a94369ee9
