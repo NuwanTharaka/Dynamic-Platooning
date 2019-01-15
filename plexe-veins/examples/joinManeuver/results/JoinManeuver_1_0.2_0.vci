@@ -1,11 +1,11 @@
                                                                 
 version 2
-run JoinManeuver-0-20190114-21:36:06-2880
+run JoinManeuver-0-20190115-22:48:36-7886
 attr beaconInterval 0.1
 attr caccOmegaN 0.2
 attr caccXi 1
 attr configname JoinManeuver
-attr datetime 20190114-21:36:06
+attr datetime 20190115-22:48:36
 attr experiment JoinManeuver
 attr inifile omnetpp.ini
 attr iterationvars "$nCars=2, $platoonSize=1, $nLanes=1, $caccXi=1, $caccOmegaN=0.2, $ploegH=0.5, $leaderHeadway=2, $leaderSpeed=100, $beaconInterval=0.1, $priority=2, $packetSize=200"
@@ -20,7 +20,7 @@ attr packetSize 200
 attr platoonSize 1
 attr ploegH 0.5
 attr priority 2
-attr processid 2880
+attr processid 7886
 attr repetition 0
 attr replication #0
 attr resultdir results
@@ -227,22 +227,6 @@ vector 353  Highway.node[15].appl  controllerAcceleration  ETV
 vector 349  Highway.node[15].appl  speed  ETV
 vector 350  Highway.node[15].appl  posx  ETV
 vector 351  Highway.node[15].appl  posy  ETV
-vector 369  Highway.node[16].appl  distance  ETV
-vector 370  Highway.node[16].appl  relativeSpeed  ETV
-vector 371  Highway.node[16].appl  nodeId  ETV
-vector 375  Highway.node[16].appl  acceleration  ETV
-vector 376  Highway.node[16].appl  controllerAcceleration  ETV
-vector 372  Highway.node[16].appl  speed  ETV
-vector 373  Highway.node[16].appl  posx  ETV
-vector 374  Highway.node[16].appl  posy  ETV
-vector 392  Highway.node[17].appl  distance  ETV
-vector 393  Highway.node[17].appl  relativeSpeed  ETV
-vector 394  Highway.node[17].appl  nodeId  ETV
-vector 398  Highway.node[17].appl  acceleration  ETV
-vector 399  Highway.node[17].appl  controllerAcceleration  ETV
-vector 395  Highway.node[17].appl  speed  ETV
-vector 396  Highway.node[17].appl  posx  ETV
-vector 397  Highway.node[17].appl  posy  ETV
 vector 9  Highway.node[0].prot  nodeId  ETV
 vector 10  Highway.node[0].prot  busyTime  ETV
 vector 11  Highway.node[0].prot  collisions  ETV
@@ -268,4 +252,21 @@ vector 170  Highway.node[7].prot  nodeId  ETV
 vector 171  Highway.node[7].prot  busyTime  ETV
 vector 172  Highway.node[7].prot  collisions  ETV
 vector 193  Highway.node[8].prot  nodeId  ETV
-vector 194  Highway.node[8].prot  busy
+vector 194  Highway.node[8].prot  busyTime  ETV
+vector 195  Highway.node[8].prot  collisions  ETV
+vector 216  Highway.node[9].prot  nodeId  ETV
+vector 217  Highway.node[9].prot  busyTime  ETV
+vector 218  Highway.node[9].prot  collisions  ETV
+vector 239  Highway.node[10].prot  nodeId  ETV
+vector 240  Highway.node[10].prot  busyTime  ETV
+vector 241  Highway.node[10].prot  collisions  ETV
+vector 262  Highway.node[11].prot  nodeId  ETV
+vector 263  Highway.node[11].prot  busyTime  ETV
+vector 264  Highway.node[11].prot  collisions  ETV
+vector 285  Highway.node[12].prot  nodeId  ETV
+vector 286  Highway.node[12].prot  busyTime  ETV
+vector 287  Highway.node[12].prot  collisions  ETV
+vector 308  Highway.node[13].prot  nodeId  ETV
+vector 309  Highway.node[13].prot  busyTime  ETV
+vector 310  Highway.node[13].prot  collisions  ETV
+vector 331  

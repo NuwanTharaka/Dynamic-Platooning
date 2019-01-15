@@ -65,7 +65,7 @@ void JoinTrafficManager::handleSelfMsg(cMessage* msg)
     }
 
     if (msg == insertJoinerMessage2) {
-        insertNodes1();
+        insertNodes();
     }
 
 
@@ -181,12 +181,22 @@ void JoinTrafficManager::insertNodes()
 void JoinTrafficManager::insertNodes1()
 {
 
-    float ln0 [][3] = {{110, 120, 1}, {55,120,2}, {5, 130, 3}};
-    float ln1 [][3] = {{130, 120, 1}, {40,120,2}, {0, 130, 3}};
-    float ln2 [][3] = {{120, 120, 1}, {70,120,2}, {10, 130, 3}};
-    float ln3 [][3] = {{100, 120, 1}, {50,120,2}, {15, 130, 3}};
-    float ln4 [][3] = {{95, 120, 1}, {35,120,2}, {8, 130, 3}};
-    float ln5 [][3] = {{75, 120, 1}, {50,120,2}, {3, 130, 3}};
+
+    /*   float ln0 [][3] = {{110, 120, 1}, {55,120,2}, {5, 130, 3}};
+    float ln1 [][3] = {{105, 120, 1}, {140,120,2}, {50, 130, 3}};
+    float ln2 [][3] = {{160, 120, 1}, {170,120,2}, {110, 130, 3}};
+    float ln3 [][3] = {{90, 120, 1}, {70,120,2}, {150, 130, 3}};
+    float ln4 [][3] = {{195, 120, 1}, {135,120,2}, {80, 130, 3}};
+    float ln5 [][3] = {{120, 120, 1}, {150,120,2}, {200, 130, 3}};
+
+    */
+
+    float ln0 [][3] = {{100, 120, 1}, {75,120,2}, {25, 130, 3}};
+    float ln1 [][3] = {{125, 120, 1}, {100,120,2}, {40, 130, 3}};
+    float ln2 [][3] = {{140, 120, 1}, {130,120,2}, {70, 130, 3}};
+    float ln3 [][3] = {{90, 120, 1}, {50,120,2}, {130, 130, 3}};
+    float ln4 [][3] = {{165, 120, 1}, {105,120,2}, {80, 130, 3}};
+    float ln5 [][3] = {{180, 120, 1}, {140,120,2}, {230, 130, 3}};
 
     int automatedCars = 18;
     int automatedLanes = 6;
@@ -255,3 +265,77 @@ void JoinTrafficManager::insertNodes1()
 }
 
 
+void JoinTrafficManager::insertNodes2() 
+{
+
+    float ln0 [][3] = {{115, 120, 1}, {60,120,2}, {10, 130, 3}};
+    float ln1 [][3] = {{100, 120, 1}, {135,120,2}, {45, 130, 3}};
+    float ln2 [][3] = {{165, 120, 1}, {175,120,2}, {115, 130, 3}};
+    float ln3 [][3] = {{85, 120, 1}, {65,120,2}, {145, 130, 3}};
+    float ln4 [][3] = {{200, 120, 1}, {140,120,2}, {85, 130, 3}};
+    float ln5 [][3] = {{125, 120, 1}, {155,120,2}, {205, 130, 3}};
+    int automatedCars = 18;
+    int automatedLanes = 6;
+    // keep 50 m between human vehicles (random number)
+    double distance = 50;
+    // total number of cars per lane
+    int carsPerLane = automatedCars / automatedLanes;
+    // total length for one lane
+    double totalLength = carsPerLane * (4 + distance);
+
+    // for each lane, we create an offset to have misaligned platoons
+    double* laneOffset = new double[automatedLanes];
+    for (int l = 0; l < automatedLanes; l++) laneOffset[l] = uniform(0, 20);
+
+    double currentPos = totalLength;
+    for (int l = 0; l < sizeof(ln0) / sizeof(*ln0); l++) {
+        automated.position = ln0[l][0];
+        automated.lane = 0;
+        automated.destination = ln0[l][2];
+        automated.maxSpeed = ln0[l][1];
+        addVehicleToQueue(0, automated);
+    }
+
+    for (int l = 0; l < sizeof(ln1) / sizeof(*ln1); l++) {
+        automated.position = ln1[l][0];
+        automated.lane = 1;
+        automated.destination = ln1[l][2];
+        automated.maxSpeed = ln1[l][1];
+        addVehicleToQueue(0, automated);
+    }
+
+    for (int l = 0; l < sizeof(ln2) / sizeof(*ln2); l++) {
+        automated.position = ln2[l][0];
+        automated.lane = 2;
+        automated.destination = ln2[l][2];
+        automated.maxSpeed = ln2[l][1];
+        addVehicleToQueue(0, automated);
+    }
+
+    for (int l = 0; l < sizeof(ln3) / sizeof(*ln3); l++) {
+        automated.position = ln3[l][0];
+        automated.lane = 3;
+        automated.destination = ln3[l][2];
+        automated.maxSpeed = ln3[l][1];
+        addVehicleToQueue(0, automated);
+    }
+
+    currentPos = totalLength;
+    for (int l = 0; l < sizeof(ln4) / sizeof(*ln4); l++) {
+        automated.position = ln4[l][0];
+        automated.lane = 4;
+        automated.destination = ln4[l][2];
+        automated.maxSpeed = ln4[l][1];
+        addVehicleToQueue(0, automated);
+    }
+
+    for (int l = 0; l < sizeof(ln5) / sizeof(*ln5); l++) {
+        automated.position = ln5[l][0];
+        automated.lane = 5;
+        automated.destination = ln5[l][2];
+        automated.maxSpeed = ln5[l][1];
+        addVehicleToQueue(0, automated);
+    }
+
+    delete[] laneOffset;
+}
