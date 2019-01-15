@@ -27,7 +27,7 @@ void JoinTrafficManager::initialize(int stage)
     if (stage == 0) {
 
         insertJoinerMessage = new cMessage("");
-        scheduleAt(platoonInsertTime + SimTime(250, SIMTIME_MS), insertJoinerMessage);
+        scheduleAt(platoonInsertTime + SimTime(4000, SIMTIME_MS), insertJoinerMessage);
 
         insertJoinerMessage2 = new cMessage("");
         scheduleAt(platoonInsertTime + SimTime(50, SIMTIME_MS), insertJoinerMessage2);
@@ -61,7 +61,7 @@ void JoinTrafficManager::handleSelfMsg(cMessage* msg)
     PlatoonsTrafficManager::handleSelfMsg(msg);
 
     if (msg == insertJoinerMessage) {
- //       insertNodes();
+        insertNodes();
     }
 
     if (msg == insertJoinerMessage2) {
@@ -103,12 +103,13 @@ JoinTrafficManager::~JoinTrafficManager()
 void JoinTrafficManager::insertNodes()
 {
 
-    float ln0 [][3] = {{1110, 120, 1}, {1155,120,2}, {1005, 130, 3}};
-    float ln1 [][3] = {{1130, 120, 1}, {1140,120,2}, {1010, 130, 3}};
-    float ln2 [][3] = {{1120, 120, 1}, {1170,120,2}, {1010, 130, 3}};
-    float ln3 [][3] = {{1100, 120, 1}, {1150,120,2}, {1115, 130, 3}};
-    float ln4 [][3] = {{1195, 120, 1}, {1135,120,2}, {1008, 130, 3}};
-    float ln5 [][3] = {{1175, 120, 1}, {1150,120,2}, {1003, 130, 3}};
+    float ln0 [][3] = {{700, 80, 1}, {800,80,2}, {900, 80, 3}};
+    float ln1 [][3] = {{600, 80, 1}, {850, 80, 3}};
+    float ln2 [][3] = {{625,80,2}, {790, 80, 3}};
+    float ln3 [][3] = {{800, 80, 1}};
+    float ln4 [][3] = {{800, 80, 1}, {800,80,2}};
+    float ln5 [][3] = {{750, 80, 1}, {850,80,2}, {, 80, 3}};
+
 
     int automatedCars = 18;
     int automatedLanes = 6;

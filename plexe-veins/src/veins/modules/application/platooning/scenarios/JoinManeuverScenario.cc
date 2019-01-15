@@ -57,7 +57,12 @@ void JoinManeuverScenario::setupFormation(int a,int b)
 void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
 {
     if(positionHelper->getId() >17){
-        int ID = positionHelper->getId();
+        traciVehicle->setFixedLane(traciVehicle->getLaneIndex());
+        traciVehicle->setCruiseControlDesiredSpeed(90.0 / 3.6);
+            traciVehicle->setActiveController(Plexe::ACC);
+
+
+        /*int ID = positionHelper->getId();
         if(ID==18){
             traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
             traciVehicle->setActiveController(Plexe::ACC);
@@ -109,7 +114,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
             positionHelper->setPlatoonId(positionHelper->getLeaderId());
             setupFormation(18,22);
             
-        }
+        }*/
     }else{
 
         switch (positionHelper->getId()) {
@@ -143,7 +148,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
             positionHelper->setPlatoonId(-1);
             positionHelper->setIsLeader(false);
             positionHelper->setPlatoonLane(-1);
-            traciVehicle->setACCHeadwayTime(0.09);
+            traciVehicle->setACCHeadwayTime(0.18);
             singleJoin = new cMessage();
             scheduleAt(simTime() + SimTime(2), singleJoin);
             vehicle_ID = 0;
@@ -180,7 +185,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
             positionHelper->setPlatoonLane(-1);
          //   startManeuver2 = new cMessage();
 
-            traciVehicle->setACCHeadwayTime(0.09);
+            traciVehicle->setACCHeadwayTime(0.18);
             singleJoin = new cMessage();
             scheduleAt(simTime() + SimTime(2), singleJoin);
             vehicle_ID = 15;
@@ -200,7 +205,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
             positionHelper->setIsLeader(false);
             positionHelper->setPlatoonLane(-1);
 
-            traciVehicle->setACCHeadwayTime(0.09);
+            traciVehicle->setACCHeadwayTime(0.18);
             singleJoin = new cMessage();
             scheduleAt(simTime() + SimTime(10), singleJoin);
             vehicle_ID = 1;
@@ -239,7 +244,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
             positionHelper->setPlatoonLane(-1);
           //  startManeuver2 = new cMessage();
           //  scheduleAt(simTime() + SimTime(57), startManeuver2);
-            traciVehicle->setACCHeadwayTime(0.09);
+            traciVehicle->setACCHeadwayTime(0.18);
             singleJoin = new cMessage();
             scheduleAt(simTime() + SimTime(45), singleJoin);
             vehicle_ID = 5;
@@ -258,7 +263,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
             positionHelper->setIsLeader(false);
             positionHelper->setPlatoonLane(-1);
 
-            traciVehicle->setACCHeadwayTime(0.09);
+            traciVehicle->setACCHeadwayTime(0.18);
             singleJoin = new cMessage();
             scheduleAt(simTime() + SimTime(30), singleJoin);
             vehicle_ID = 4;
@@ -283,7 +288,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
             positionHelper->setIsLeader(false);
             positionHelper->setPlatoonLane(-1);
 
-            traciVehicle->setACCHeadwayTime(0.09);
+            traciVehicle->setACCHeadwayTime(0.18);
             singleJoin = new cMessage();
             scheduleAt(simTime() + SimTime(40), singleJoin);
             vehicle_ID = 14;
@@ -295,7 +300,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
             break;
         }
 
-        case 66: {
+        case 9: {
             // these are the followers which are already in the platoon
             traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
             traciVehicle->setActiveController(Plexe::ACC);
@@ -320,7 +325,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
             positionHelper->setPlatoonLane(-1);
            // startManeuver = new cMessage();
            // scheduleAt(simTime() + SimTime(200), startManeuver);
-            traciVehicle->setACCHeadwayTime(0.09);
+            traciVehicle->setACCHeadwayTime(0.18);
             singleJoin = new cMessage();
             scheduleAt(simTime() + SimTime(10), singleJoin);
             vehicle_ID = 13;
@@ -339,7 +344,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
             positionHelper->setPlatoonLane(-1);
            // startManeuver = new cMessage();
            // scheduleAt(simTime() + SimTime(200), startManeuver);
-            traciVehicle->setACCHeadwayTime(0.09);
+            traciVehicle->setACCHeadwayTime(0.18);
             singleJoin = new cMessage();
             scheduleAt(simTime() + SimTime(30), singleJoin);
             vehicle_ID = 17;
@@ -359,7 +364,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
             positionHelper->setPlatoonLane(-1);
            // startManeuver = new cMessage();
            // scheduleAt(simTime() + SimTime(200), startManeuver);
-            traciVehicle->setACCHeadwayTime(0.09);
+            traciVehicle->setACCHeadwayTime(0.18);
             singleJoin = new cMessage();
             scheduleAt(simTime() + SimTime(65), singleJoin);
             vehicle_ID = 2;
@@ -378,7 +383,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
             positionHelper->setPlatoonLane(-1);
            // startManeuver = new cMessage();
            // scheduleAt(simTime() + SimTime(200), startManeuver);
-            traciVehicle->setACCHeadwayTime(0.09);
+            traciVehicle->setACCHeadwayTime(0.18);
             singleJoin = new cMessage();
             scheduleAt(simTime() + SimTime(40), singleJoin);
             vehicle_ID = 7;
@@ -397,7 +402,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
             positionHelper->setPlatoonLane(-1);
            // startManeuver = new cMessage();
            // scheduleAt(simTime() + SimTime(200), startManeuver);
-            traciVehicle->setACCHeadwayTime(0.09);
+            traciVehicle->setACCHeadwayTime(0.18);
             singleJoin = new cMessage();
             scheduleAt(simTime() + SimTime(50), singleJoin);
             vehicle_ID = 8;
@@ -416,7 +421,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
             positionHelper->setPlatoonLane(-1);
            // startManeuver = new cMessage();
            // scheduleAt(simTime() + SimTime(200), startManeuver);
-            traciVehicle->setACCHeadwayTime(0.09);
+            traciVehicle->setACCHeadwayTime(0.18);
             singleJoin = new cMessage();
             scheduleAt(simTime() + SimTime(60), singleJoin);
             vehicle_ID = 11;
@@ -426,7 +431,7 @@ void JoinManeuverScenario::prepareManeuverCars(int platoonLane)
         }
         default: {
             // these are the followers which are already in the platoon
-            traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
+            traciVehicle->setCruiseControlDesiredSpeed(80.0 / 3.6);
             traciVehicle->setActiveController(Plexe::ACC);
             //traciVehicle->setFixedLane(platoonLane);
 
@@ -707,7 +712,7 @@ void JoinManeuverScenario::shortPath_fnc(int vehicle_id)
 
 
     if(currentLane == (vehData[sir].positionY)){
-        if((needDistance>0) && (needDistance<5)){
+        if((needDistance>0) && (needDistance<15)){
             p= false;
         }else{
             p=true;
@@ -953,7 +958,7 @@ void JoinManeuverScenario::nearPlatoon_fnc(int vehicle_id){
         }
     }else{
         flag_nearPlatoon=0;
-        if((needDistance < 0) || (needDistance > 5.5)){
+        if((needDistance < 0) || (needDistance > 15.5)){
             flag_shortPath = 1;
             direction=1;
         }else{
