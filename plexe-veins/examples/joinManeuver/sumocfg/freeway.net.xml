@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2019-01-09 04:44:23 +0530 by Eclipse SUMO netedit Version 619df18
+<!-- generated on Tue 15 Jan 2019 05:57:30 PM +0530 by Eclipse SUMO netedit Version 619df18
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
 
     <input>
-        <sumo-net-file value="/home/entc80/git/Dynamic-Platooning/plexe-veins/examples/joinManeuver/sumocfg/freeway.net.xml"/>
+        <sumo-net-file value="./sumocfg/freeway.net.xml"/>
     </input>
 
     <output>
-        <output-file value="/home/entc80/git/Dynamic-Platooning/plexe-veins/examples/joinManeuver/sumocfg/freeway.net.xml"/>
+        <output-file value="./sumocfg/freeway.net.xml"/>
     </output>
 
     <processing>
@@ -430,12 +430,12 @@
         <lane id="absorption_4_0" index="0" speed="25.00" length="4.00" shape="49698.40,4.00 49698.40,0.00"/>
     </edge>
     <edge id="edge_0_0" from="node_0_0" to="node_0_1" priority="7">
-        <lane id="edge_0_0_0" index="0" speed="90.11" length="9398.50" shape="0.00,236.40 9398.50,236.40"/>
-        <lane id="edge_0_0_1" index="1" speed="90.11" length="9398.50" shape="0.00,239.60 9398.50,239.60"/>
-        <lane id="edge_0_0_2" index="2" speed="90.11" length="9398.50" shape="0.00,242.80 9398.50,242.80"/>
-        <lane id="edge_0_0_3" index="3" speed="90.11" length="9398.50" shape="0.00,246.00 9398.50,246.00"/>
-        <lane id="edge_0_0_4" index="4" speed="90.11" length="9398.50" shape="0.00,249.20 9398.50,249.20"/>
-        <lane id="edge_0_0_5" index="5" speed="90.11" length="9398.50" shape="0.00,252.40 9398.50,252.40"/>
+        <lane id="edge_0_0_0" index="0" speed="90.11" length="19398.50" shape="0.00,236.40 9398.50,236.40"/>
+        <lane id="edge_0_0_1" index="1" speed="90.11" length="19398.50" shape="0.00,239.60 9398.50,239.60"/>
+        <lane id="edge_0_0_2" index="2" speed="90.11" length="19398.50" shape="0.00,242.80 9398.50,242.80"/>
+        <lane id="edge_0_0_3" index="3" speed="90.11" length="19398.50" shape="0.00,246.00 9398.50,246.00"/>
+        <lane id="edge_0_0_4" index="4" speed="90.11" length="19398.50" shape="0.00,249.20 9398.50,249.20"/>
+        <lane id="edge_0_0_5" index="5" speed="90.11" length="19398.50" shape="0.00,252.40 9398.50,252.40"/>
     </edge>
     <edge id="edge_0_1" from="node_0_1" to="node_0_2" priority="7">
         <lane id="edge_0_1_0" index="0" speed="90.11" length="234.64" shape="9401.50,233.20 9636.14,233.20"/>

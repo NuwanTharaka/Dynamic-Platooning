@@ -511,10 +511,19 @@ void JoinManeuverScenario::handleSelfMsg(cMessage* msg)
         int indexLane = traciVehicle->getLaneIndex();
         double position = traciVehicle->getLanePosition();
 
-        sendData(positionHelper->getId(), data.speed, data.acceleration, position, indexLane);
+        mobility = TraCIMobilityAccess().get(getParentModule());
+        traci = mobility->getCommandInterface();
+        traciVehicle = mobility->getVehicleCommandInterface();
+        double CO2_emission =  traciVehicle->getCO2Emissions();
+        double fuel_consumption = traciVehicle->getFuelConsumption();
+
+
+        sendData(positionHelper->getId(), data.speed, data.acceleration, position, indexLane, CO2_emission, fuel_consumption);
 
         startSendPos = new cMessage();
         scheduleAt(simTime() + SimTime(1, SIMTIME_MS), startSendPos);
+
+
 
         if(app->isShortPath() && (joinReady==1)){
             workShortPath = new cMessage();
