@@ -1,10 +1,10 @@
 version 2
-run JoinManeuver-0-20190115-23:52:38-15570
+run JoinManeuver-0-20190116-02:56:00-2362
 attr beaconInterval 0.1
 attr caccOmegaN 0.2
 attr caccXi 1
 attr configname JoinManeuver
-attr datetime 20190115-23:52:38
+attr datetime 20190116-02:56:00
 attr experiment JoinManeuver
 attr inifile omnetpp.ini
 attr iterationvars "$nCars=2, $platoonSize=1, $nLanes=1, $caccXi=1, $caccOmegaN=0.2, $ploegH=0.5, $leaderHeadway=2, $leaderSpeed=100, $beaconInterval=0.1, $priority=2, $packetSize=200"
@@ -19,7 +19,7 @@ attr packetSize 200
 attr platoonSize 1
 attr ploegH 0.5
 attr priority 2
-attr processid 15570
+attr processid 2362
 attr repetition 0
 attr replication #0
 attr resultdir results
@@ -433,4 +433,4 @@ vector 632  Highway.node[27].prot  collisions  ETV
 vector 653  Highway.node[28].prot  nodeId  ETV
 vector 654  Highway.node[28].prot  busyTime  ETV
 vector 655  Highway.node[28].prot  collisions  ETV
-vector 676  Highway.node[29].pro
+vector 676  Highway.node[29].prot 

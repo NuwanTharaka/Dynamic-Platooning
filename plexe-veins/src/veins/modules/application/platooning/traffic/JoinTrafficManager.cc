@@ -108,7 +108,7 @@ void JoinTrafficManager::insertNodes()
     float ln2 [][3] = {{625,80,2}, {790, 80, 3}};
     float ln3 [][3] = {{800, 80, 1}};
     float ln4 [][3] = {{800, 80, 1}, {800,80,2}};
-    float ln5 [][3] = {{750, 80, 1}, {850,80,2}, {, 80, 3}};
+    float ln5 [][3] = {{750, 80, 1}, {850,80,2}, {950, 80, 3}};
 
 
     int automatedCars = 18;
