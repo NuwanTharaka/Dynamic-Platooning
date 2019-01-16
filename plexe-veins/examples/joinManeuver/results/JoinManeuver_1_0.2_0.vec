@@ -1,10 +1,10 @@
 version 2
-run JoinManeuver-0-20190116-01:04:36-10264
+run JoinManeuver-0-20190116-03:01:47-18072
 attr beaconInterval 0.1
 attr caccOmegaN 0.2
 attr caccXi 1
 attr configname JoinManeuver
-attr datetime 20190116-01:04:36
+attr datetime 20190116-03:01:47
 attr experiment JoinManeuver
 attr inifile omnetpp.ini
 attr iterationvars "$nCars=2, $platoonSize=1, $nLanes=1, $caccXi=1, $caccOmegaN=0.2, $ploegH=0.5, $leaderHeadway=2, $leaderSpeed=100, $beaconInterval=0.1, $priority=2, $packetSize=200"
@@ -19,7 +19,7 @@ attr packetSize 200
 attr platoonSize 1
 attr ploegH 0.5
 attr priority 2
-attr processid 10264
+attr processid 18072
 attr repetition 0
 attr replication #0
 attr resultdir results
@@ -242,3 +242,200 @@ vector 399  Highway.node[17].appl  controllerAcceleration  ETV
 vector 395  Highway.node[17].appl  speed  ETV
 vector 396  Highway.node[17].appl  posx  ETV
 vector 397  Highway.node[17].appl  posy  ETV
+vector 9  Highway.node[0].prot  nodeId  ETV
+vector 10  Highway.node[0].prot  busyTime  ETV
+vector 11  Highway.node[0].prot  collisions  ETV
+vector 32  Highway.node[1].prot  nodeId  ETV
+vector 33  Highway.node[1].prot  busyTime  ETV
+vector 34  Highway.node[1].prot  collisions  ETV
+vector 55  Highway.node[2].prot  nodeId  ETV
+vector 56  Highway.node[2].prot  busyTime  ETV
+vector 57  Highway.node[2].prot  collisions  ETV
+vector 78  Highway.node[3].prot  nodeId  ETV
+vector 79  Highway.node[3].prot  busyTime  ETV
+vector 80  Highway.node[3].prot  collisions  ETV
+vector 101  Highway.node[4].prot  nodeId  ETV
+vector 102  Highway.node[4].prot  busyTime  ETV
+vector 103  Highway.node[4].prot  collisions  ETV
+vector 124  Highway.node[5].prot  nodeId  ETV
+vector 125  Highway.node[5].prot  busyTime  ETV
+vector 126  Highway.node[5].prot  collisions  ETV
+vector 147  Highway.node[6].prot  nodeId  ETV
+vector 148  Highway.node[6].prot  busyTime  ETV
+vector 149  Highway.node[6].prot  collisions  ETV
+vector 170  Highway.node[7].prot  nodeId  ETV
+vector 171  Highway.node[7].prot  busyTime  ETV
+vector 172  Highway.node[7].prot  collisions  ETV
+vector 193  Highway.node[8].prot  nodeId  ETV
+vector 194  Highway.node[8].prot  busyTime  ETV
+vector 195  Highway.node[8].prot  collisions  ETV
+vector 216  Highway.node[9].prot  nodeId  ETV
+vector 217  Highway.node[9].prot  busyTime  ETV
+vector 218  Highway.node[9].prot  collisions  ETV
+vector 239  Highway.node[10].prot  nodeId  ETV
+vector 240  Highway.node[10].prot  busyTime  ETV
+vector 241  Highway.node[10].prot  collisions  ETV
+vector 262  Highway.node[11].prot  nodeId  ETV
+vector 263  Highway.node[11].prot  busyTime  ETV
+vector 264  Highway.node[11].prot  collisions  ETV
+vector 285  Highway.node[12].prot  nodeId  ETV
+vector 286  Highway.node[12].prot  busyTime  ETV
+vector 287  Highway.node[12].prot  collisions  ETV
+vector 308  Highway.node[13].prot  nodeId  ETV
+vector 309  Highway.node[13].prot  busyTime  ETV
+vector 310  Highway.node[13].prot  collisions  ETV
+vector 331  Highway.node[14].prot  nodeId  ETV
+vector 332  Highway.node[14].prot  busyTime  ETV
+vector 333  Highway.node[14].prot  collisions  ETV
+vector 354  Highway.node[15].prot  nodeId  ETV
+vector 355  Highway.node[15].prot  busyTime  ETV
+vector 356  Highway.node[15].prot  collisions  ETV
+vector 377  Highway.node[16].prot  nodeId  ETV
+vector 378  Highway.node[16].prot  busyTime  ETV
+vector 379  Highway.node[16].prot  collisions  ETV
+vector 400  Highway.node[17].prot  nodeId  ETV
+vector 401  Highway.node[17].prot  busyTime  ETV
+vector 402  Highway.node[17].prot  collisions  ETV
+vector 415  Highway.node[18].appl  distance  ETV
+vector 416  Highway.node[18].appl  relativeSpeed  ETV
+vector 417  Highway.node[18].appl  nodeId  ETV
+vector 421  Highway.node[18].appl  acceleration  ETV
+vector 422  Highway.node[18].appl  controllerAcceleration  ETV
+vector 418  Highway.node[18].appl  speed  ETV
+vector 419  Highway.node[18].appl  posx  ETV
+vector 420  Highway.node[18].appl  posy  ETV
+vector 438  Highway.node[19].appl  distance  ETV
+vector 439  Highway.node[19].appl  relativeSpeed  ETV
+vector 440  Highway.node[19].appl  nodeId  ETV
+vector 444  Highway.node[19].appl  acceleration  ETV
+vector 445  Highway.node[19].appl  controllerAcceleration  ETV
+vector 441  Highway.node[19].appl  speed  ETV
+vector 442  Highway.node[19].appl  posx  ETV
+vector 443  Highway.node[19].appl  posy  ETV
+vector 461  Highway.node[20].appl  distance  ETV
+vector 462  Highway.node[20].appl  relativeSpeed  ETV
+vector 463  Highway.node[20].appl  nodeId  ETV
+vector 467  Highway.node[20].appl  acceleration  ETV
+vector 468  Highway.node[20].appl  controllerAcceleration  ETV
+vector 464  Highway.node[20].appl  speed  ETV
+vector 465  Highway.node[20].appl  posx  ETV
+vector 466  Highway.node[20].appl  posy  ETV
+vector 484  Highway.node[21].appl  distance  ETV
+vector 485  Highway.node[21].appl  relativeSpeed  ETV
+vector 486  Highway.node[21].appl  nodeId  ETV
+vector 490  Highway.node[21].appl  acceleration  ETV
+vector 491  Highway.node[21].appl  controllerAcceleration  ETV
+vector 487  Highway.node[21].appl  speed  ETV
+vector 488  Highway.node[21].appl  posx  ETV
+vector 489  Highway.node[21].appl  posy  ETV
+vector 507  Highway.node[22].appl  distance  ETV
+vector 508  Highway.node[22].appl  relativeSpeed  ETV
+vector 509  Highway.node[22].appl  nodeId  ETV
+vector 513  Highway.node[22].appl  acceleration  ETV
+vector 514  Highway.node[22].appl  controllerAcceleration  ETV
+vector 510  Highway.node[22].appl  speed  ETV
+vector 511  Highway.node[22].appl  posx  ETV
+vector 512  Highway.node[22].appl  posy  ETV
+vector 530  Highway.node[23].appl  distance  ETV
+vector 531  Highway.node[23].appl  relativeSpeed  ETV
+vector 532  Highway.node[23].appl  nodeId  ETV
+vector 536  Highway.node[23].appl  acceleration  ETV
+vector 537  Highway.node[23].appl  controllerAcceleration  ETV
+vector 533  Highway.node[23].appl  speed  ETV
+vector 534  Highway.node[23].appl  posx  ETV
+vector 535  Highway.node[23].appl  posy  ETV
+vector 553  Highway.node[24].appl  distance  ETV
+vector 554  Highway.node[24].appl  relativeSpeed  ETV
+vector 555  Highway.node[24].appl  nodeId  ETV
+vector 559  Highway.node[24].appl  acceleration  ETV
+vector 560  Highway.node[24].appl  controllerAcceleration  ETV
+vector 556  Highway.node[24].appl  speed  ETV
+vector 557  Highway.node[24].appl  posx  ETV
+vector 558  Highway.node[24].appl  posy  ETV
+vector 576  Highway.node[25].appl  distance  ETV
+vector 577  Highway.node[25].appl  relativeSpeed  ETV
+vector 578  Highway.node[25].appl  nodeId  ETV
+vector 582  Highway.node[25].appl  acceleration  ETV
+vector 583  Highway.node[25].appl  controllerAcceleration  ETV
+vector 579  Highway.node[25].appl  speed  ETV
+vector 580  Highway.node[25].appl  posx  ETV
+vector 581  Highway.node[25].appl  posy  ETV
+vector 599  Highway.node[26].appl  distance  ETV
+vector 600  Highway.node[26].appl  relativeSpeed  ETV
+vector 601  Highway.node[26].appl  nodeId  ETV
+vector 605  Highway.node[26].appl  acceleration  ETV
+vector 606  Highway.node[26].appl  controllerAcceleration  ETV
+vector 602  Highway.node[26].appl  speed  ETV
+vector 603  Highway.node[26].appl  posx  ETV
+vector 604  Highway.node[26].appl  posy  ETV
+vector 622  Highway.node[27].appl  distance  ETV
+vector 623  Highway.node[27].appl  relativeSpeed  ETV
+vector 624  Highway.node[27].appl  nodeId  ETV
+vector 628  Highway.node[27].appl  acceleration  ETV
+vector 629  Highway.node[27].appl  controllerAcceleration  ETV
+vector 625  Highway.node[27].appl  speed  ETV
+vector 626  Highway.node[27].appl  posx  ETV
+vector 627  Highway.node[27].appl  posy  ETV
+vector 645  Highway.node[28].appl  distance  ETV
+vector 646  Highway.node[28].appl  relativeSpeed  ETV
+vector 647  Highway.node[28].appl  nodeId  ETV
+vector 651  Highway.node[28].appl  acceleration  ETV
+vector 652  Highway.node[28].appl  controllerAcceleration  ETV
+vector 648  Highway.node[28].appl  speed  ETV
+vector 649  Highway.node[28].appl  posx  ETV
+vector 650  Highway.node[28].appl  posy  ETV
+vector 668  Highway.node[29].appl  distance  ETV
+vector 669  Highway.node[29].appl  relativeSpeed  ETV
+vector 670  Highway.node[29].appl  nodeId  ETV
+vector 674  Highway.node[29].appl  acceleration  ETV
+vector 675  Highway.node[29].appl  controllerAcceleration  ETV
+vector 671  Highway.node[29].appl  speed  ETV
+vector 672  Highway.node[29].appl  posx  ETV
+vector 673  Highway.node[29].appl  posy  ETV
+vector 691  Highway.node[30].appl  distance  ETV
+vector 692  Highway.node[30].appl  relativeSpeed  ETV
+vector 693  Highway.node[30].appl  nodeId  ETV
+vector 697  Highway.node[30].appl  acceleration  ETV
+vector 698  Highway.node[30].appl  controllerAcceleration  ETV
+vector 694  Highway.node[30].appl  speed  ETV
+vector 695  Highway.node[30].appl  posx  ETV
+vector 696  Highway.node[30].appl  posy  ETV
+vector 423  Highway.node[18].prot  nodeId  ETV
+vector 424  Highway.node[18].prot  busyTime  ETV
+vector 425  Highway.node[18].prot  collisions  ETV
+vector 446  Highway.node[19].prot  nodeId  ETV
+vector 447  Highway.node[19].prot  busyTime  ETV
+vector 448  Highway.node[19].prot  collisions  ETV
+vector 469  Highway.node[20].prot  nodeId  ETV
+vector 470  Highway.node[20].prot  busyTime  ETV
+vector 471  Highway.node[20].prot  collisions  ETV
+vector 492  Highway.node[21].prot  nodeId  ETV
+vector 493  Highway.node[21].prot  busyTime  ETV
+vector 494  Highway.node[21].prot  collisions  ETV
+vector 515  Highway.node[22].prot  nodeId  ETV
+vector 516  Highway.node[22].prot  busyTime  ETV
+vector 517  Highway.node[22].prot  collisions  ETV
+vector 538  Highway.node[23].prot  nodeId  ETV
+vector 539  Highway.node[23].prot  busyTime  ETV
+vector 540  Highway.node[23].prot  collisions  ETV
+vector 561  Highway.node[24].prot  nodeId  ETV
+vector 562  Highway.node[24].prot  busyTime  ETV
+vector 563  Highway.node[24].prot  collisions  ETV
+vector 584  Highway.node[25].prot  nodeId  ETV
+vector 585  Highway.node[25].prot  busyTime  ETV
+vector 586  Highway.node[25].prot  collisions  ETV
+vector 607  Highway.node[26].prot  nodeId  ETV
+vector 608  Highway.node[26].prot  busyTime  ETV
+vector 609  Highway.node[26].prot  collisions  ETV
+vector 630  Highway.node[27].prot  nodeId  ETV
+vector 631  Highway.node[27].prot  busyTime  ETV
+vector 632  Highway.node[27].prot  collisions  ETV
+vector 653  Highway.node[28].prot  nodeId  ETV
+vector 654  Highway.node[28].prot  busyTime  ETV
+vector 655  Highway.node[28].prot  collisions  ETV
+vector 676  Highway.node[29].prot  nodeId  ETV
+vector 677  Highway.node[29].prot  busyTime  ETV
+vector 678  Highway.node[29].prot  collisions  ETV
+vector 699  Highway.node[30].prot  nodeId  ETV
+vector 700  Highway.node[30].prot  busyTime  ETV
+vector 701  Highway.node[30].prot  collisions  ETV

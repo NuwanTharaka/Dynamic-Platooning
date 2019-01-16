@@ -22,9 +22,9 @@
 #include <queue>
 #include "veins/modules/mobility/traci/TraCIScenarioManager.h"
 #include "veins/modules/mobility/traci/TraCICommandInterface.h"
-
+extern int startPositionData[18];
 /**create a map with data of nodes*/
-void sendData(int index, double speed, double acceleration, double positionX, double positionY);
+void sendData(int index, double speed, double acceleration, double positionX, double positionY, double CO2_emission, double fuel_consumption);
 
 /** Structure for map data*/
 struct nodeData {
@@ -33,6 +33,10 @@ struct nodeData {
     double positionX=0; // position of the vehicle in the simulation
     double positionY=0; // position of the vehicle in the simulation
     int id  =0;
+    double CO2_emission;
+    double fuel_consumption;
+    double co2_in_timestep;
+    double fuel_in_timestep;
 };
 
 std::vector<nodeData> getData();

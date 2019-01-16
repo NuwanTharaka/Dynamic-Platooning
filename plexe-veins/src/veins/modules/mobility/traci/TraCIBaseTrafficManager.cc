@@ -226,14 +226,87 @@ void TraCIBaseTrafficManager::addVehicleToQueue(int routeId, struct Vehicle v){
     vehData.push_back(nodeData());
 }
 
-void sendData(int index, double speed, double acceleration, double positionX, double positionY){
+void sendData(int index, double speed, double acceleration, double positionX, double positionY, double CO2_emission, double fuel_consumption){
+    int startPositionData[] = {110,55,5,130,40,0,120,70,10,100,50,15,95,35,8,75,50,3};
     vehData[index].speed = speed;
     vehData[index].acceleration = acceleration;
     vehData[index].positionX = positionX;
     vehData[index].positionY = positionY;
     vehData[index].id = index;
-    EV << "Vehicle data: " << "Node " << index << ", speed " << vehData[index].speed << ", posX " << vehData[index].positionX << ", posY " << vehData[index].positionY << endl;
+    vehData[index].fuel_in_timestep = fuel_consumption;
+    vehData[index].co2_in_timestep = CO2_emission;
+
+    vehData[index].CO2_emission = CO2_emission + vehData[index].CO2_emission;
+    vehData[index].fuel_consumption = fuel_consumption + vehData[index].fuel_consumption;
+
+//    if (50 < simTime <= 65){
+//        switch (index){
+//        case 0:{
+//            vehData[index].CO2_emission = CO2_emission*0.02 + vehData[index].CO2_emission;
+//
+//        }
+//
+//        }
+//    }
+//    if (65 < simTime <= 68){
+//
+//    }
+//    if (68 < simTime <= 77){
+//
+//    }
+//    if (simTime() > 77){
+//        switch (index){
+//        case 1:
+//        case 13:
+//        case 11:{
+//            vehData[index].CO2_emission = CO2_emission*0.9733 + vehData[index].CO2_emission;
+//            vehData[index].fuel_consumption = fuel_consumption*0.9733 + vehData[index].fuel_consumption;
+//            break;
+//        }
+//        case 4:
+//        case 17:
+//        case 2: {
+//            vehData[index].CO2_emission = CO2_emission*0.961 + vehData[index].CO2_emission;
+//            vehData[index].fuel_consumption = fuel_consumption*0.961 + vehData[index].fuel_consumption;
+//            break;
+//        }
+//
+//        case 7:
+//        case 5:
+//        case 10:
+//        case 14:
+//        case 3:
+//        case 6:{
+//            vehData[index].CO2_emission = CO2_emission*0.9548 + vehData[index].CO2_emission;
+//            vehData[index].fuel_consumption = fuel_consumption*0.9548 + vehData[index].fuel_consumption;
+//            break;
+//        }
+//        default :{
+//            vehData[index].CO2_emission = CO2_emission + vehData[index].CO2_emission;
+//            vehData[index].fuel_consumption = fuel_consumption + vehData[index].fuel_consumption;
+//            break;
+//        }
+//        }
+//
+//    }
+    if ((positionX - startPositionData[index]) >= 100){
+
+            EV << "Vehicle data: " << "Node " << index << ", speed " << vehData[index].speed << ", posX " << vehData[index].positionX << ", posY " << vehData[index].positionY << ", CO2_emission " << vehData[index].CO2_emission << ", fuel_consumption" << vehData[index].fuel_consumption << ", CO2_eimssion_in_timestep" << vehData[index].co2_in_timestep << ", fuel_consumption_in_timestep" << vehData[index].fuel_in_timestep << endl;
+            }
+            else {
+                EV << "not reached till 100 mark " << simTime() << endl;
+            }
+   // EV << "Vehicle data: " << "Node " << index << ", speed " << vehData[index].speed << ", posX " << vehData[index].positionX << ", posY " << vehData[index].positionY << " , CO2 emission " << vehData[index].CO2_emission << " , fuel_consumption" << vehData[index].fuel_consumption <<  ", CO2_eimssion_in_timestep" << vehData[index].co2_in_timestep << endl;
 }
+
+//void sendData(int index, double speed, double acceleration, double positionX, double positionY){
+//    vehData[index].speed = speed;
+//    vehData[index].acceleration = acceleration;
+//    vehData[index].positionX = positionX;
+//    vehData[index].positionY = positionY;
+//    vehData[index].id = index;
+//    EV << "Vehicle data: " << "Node " << index << ", speed " << vehData[index].speed << ", posX " << vehData[index].positionX << ", posY " << vehData[index].positionY << endl;
+//}
 
 std::vector<nodeData> getData() {
     return vehData;
